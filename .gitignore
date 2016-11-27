@@ -1,0 +1,21 @@
+*.log
+*.out
+build/
+.stryker-tmp/
+
+# Intellij
+.idea/
+*.iml
+*.iws
+*.eml
+out/
+
+# NPM
+node_modules/
+npm-debug.log.*
+
+# Bower
+app/bower_components/
+
+# App
+dist/
