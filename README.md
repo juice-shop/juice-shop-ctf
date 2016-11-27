@@ -1,5 +1,37 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo_50px.png) OWASP Juice Shop CTF-Server [![OWASP Labs](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Incubator_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf-server.svg)](https://github.com/bkimminich/juice-shop-ctf-server/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 
+OWASP Juice Shop CTF-Server is an optional component for the [OWASP Juice Shop](https://github.com/bkimminich/juice-shop) when used in classroom and group training setups. 
+
+## Description
+
+The CTF-Server collects and scores the hacking progress of all connected instances of the Juice Shop application. It displays the participants progress in a leaderboard which updates in real-time on every solved challenge.
+     
+Optionally, participants get extra score for being the firstone to solve any given challenge to add even more competition.
+         
+## Setup
+         
+### Deploy on Heroku (free ($0/month) dyno)
+
+### From Sources
+
+### Docker Container
+
+#### Even easier: Run Docker Container from Docker Toolbox (Kitematic)
+
+### Amazon EC2 Instance
+
+### Vagrant
+
+## Node.js version compatibility
+
+OWASP Juice Shop CTF-Server officially supports the same versions of [node.js](http://nodejs.org) that OWASP Juice Shop does.
+
+## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
+
+> If you need help with the application setup please check the Troubleshooting section below or post your specific problem or question in the [official Gitter Chat](https://gitter.im/bkimminich/juice-shop).
+
+- After changing to a different Node.js version it is a good idea to delete `npm_modules` and re-install all dependencies from scratch with `npm install`  
+
 ## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf-server.svg)](https://github.com/bkimminich/juice-shop-ctf-server/graphs/contributors) [![HuBoard](http://img.shields.io/badge/Hu-Board-blue.svg)](https://huboard.com/bkimminich/juice-shop-ctf-server) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 Found a bug? Got an idea for enhancement? Improvement for cheating prevention?
