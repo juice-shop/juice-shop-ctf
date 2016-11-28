@@ -1,5 +1,7 @@
 # Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf-server.svg)](https://github.com/bkimminich/juice-shop-ctf-server/graphs/contributors) [![HuBoard](http://img.shields.io/badge/Hu-Board-blue.svg)](https://huboard.com/bkimminich/juice-shop-ctf-server) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
+[![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf-server.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf-server)
+
 Found a bug? Got an idea for enhancement? Improvement for cheating prevention?
 
 Feel free to [create an issue](https://github.com/bkimminich/juice-shop-ctf-server/issues) or [post your ideas in the chat](https://gitter.im/bkimminich/juice-shop)! Pull requests are also highly welcome - please follow the guidelines below to make sure your PR can be merged and doesn't break anything.

@@ -1,5 +1,7 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo_50px.png) OWASP Juice Shop CTF-Server [![OWASP Labs](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Incubator_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf-server.svg)](https://github.com/bkimminich/juice-shop-ctf-server/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 
+[![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf-server.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf-server)
+
 OWASP Juice Shop CTF-Server is an optional component for the [OWASP Juice Shop](https://github.com/bkimminich/juice-shop) when used in classroom and group training setups. 
 
 ## Description
