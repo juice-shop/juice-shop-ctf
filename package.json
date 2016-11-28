@@ -1,0 +1,48 @@
+{
+  "name": "juice-shop-ctf-server",
+  "version": "0.1.0",
+  "description": "CTF-Server component for OWASP Juice Shop in classrom or training setups",
+  "homepage": "https://www.owasp.org/index.php/OWASP_Juice_Shop_Project",
+  "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
+  "contributors": [
+    "Bjoern Kimminich"
+  ],
+  "private": true,
+  "keywords": [
+    "web security",
+    "web application security",
+    "webappsec",
+    "owasp",
+    "pentest",
+    "pentesting",
+    "security",
+    "vulnerable",
+    "vulnerability",
+    "broken",
+    "bodgeit",
+    "ctf",
+    "capture the flag",
+    "classroom",
+    "training"
+  ],
+  "dependencies": {
+  },
+  "devDependencies": {
+    "standard": "~8.5"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/bkimminich/juice-shop-ctf-server.git"
+  },
+  "bugs": {
+    "url": "https://github.com/bkimminich/juice-shop-ctf-server/issues"
+  },
+  "license": "MIT",
+  "scripts": {
+    "test": "standard"
+  },
+  "subdomain": "juice-shop-ctf-server",
+  "engines": {
+    "node": "~4 ~6 ~7"
+  }
+}
