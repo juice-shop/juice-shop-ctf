@@ -1,0 +1,187 @@
+<html>
+    <head>
+        <style>
+            .codeFrag {
+                font-family: courier;
+                font-size: 10pt
+            }
+        </style>
+        <h2>
+            Produce INSERT statements for the <a href='https://ctfd.io/' target="_blank">CTFd</a>
+            system for use with <a href='https://bkimminich.github.io/juice-shop/' target="_blank">OWASP JuiceShop</a>
+        </h2>
+    </head>
+    <body>
+        <b>Step 1 of 5:</b>
+        Enter the URL of a version of Juice Shop with the set of challenges that you want to use for the CTF. The default is the hosted version on Heroku.
+		<br/>
+        <input type=text style="width:600px" id="ChallengeURL" value="https://juice-shop.herokuapp.com"/>
+        <br/>
+        <br/>
+        <b>Step 2 of 5:</b>
+        Enter <b>either</b>
+        a secret key to use for generating the flag <b>or</b>
+        an http link to the ctf.key file. The default is the ctf.key hosted in the master github repository.
+        <br/>
+        Key:<br/>
+        <input type=text style="width:600px" id="SecretKey" value=""/>
+        <br/>
+        URL:<br/>
+        <input type=text style="width:600px" id="KeyURL" value="https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key"/>
+        <br/>
+        <br/>
+        <b>Step 3 of 5:</b>
+        Use the checkboxes below to decide whether you want to add:<br/>
+        <input type="checkbox" id="chkDELETE" checked/>
+        <label for="chkDELETE">A DELETE statement before the INSERT statements to clear the Challenges table.</label>
+        <br/>
+        <input type="checkbox" id="chkSELECT" checked/>
+        <label for="chkSELECT">A SELECT statement after the INSERT statements to show the contents of the Challenges table at the end.</label>
+        <br/>
+        <br/>
+        <b>Step 4 of 5:</b>
+        Press the button below to generate the INSERT statements and use these to setup the database. (Further guidance in step 5.)<br/>
+        <br/>
+        <input type=button onclick="GenerateInserts();" value="Generate INSERT statements"/>
+        <br/>
+        <br/>
+        <textarea cols="160" rows="20" id="result" value="" readonly></textarea>
+        <br/>
+        <br/>
+        <b>Step 5 of 5:</b>
+        If you don't already have a CTFd installation, the easiest way to set one up and configure it for JuiceShop is as follow<br/>
+        <ol type="a">
+            <li>
+                Setup a <a href='https://docs.docker.com/compose/install/'>docker host and docker compose</a>
+                .
+            
+            </li>
+            <li>
+                Follow steps 2-4 from <a href='https://github.com/isislab/CTFd/wiki/Deployment#docker'>here</a>
+                to download the source code, create containers and start them.
+            
+            </li>
+            <li>
+                Setup a <a href='https://docs.docker.com/compose/install/'>docker host and docker compose</a>
+                .
+            
+            </li>
+            <li>
+                After running "docker-compose up" from previous step, you should be able to browse to your CTFd instance UI (
+                <span class="codeFrag">&lt;&lt;docker host IP &gt;&gt;:8000</span>
+                by default) and create an admin user and CTF name.
+            
+            </li>
+            <li>
+                Once you have done this, run <span class="codeFrag">docker-compose down</span>
+                or use <span class="codeFrag">Ctrl-C</span>
+                to shut down CTFd. Note: unlike a usual docker container, data will persist even afterwards.
+            
+            </li>
+            <li>
+                Add the following section to the <span class="codeFrag">docker-compose.yml</span>
+                file and then run <span class="codeFrag">docker-compose up</span>
+                again.
+    <br/>
+                <span class="codeFrag">
+                    ports:
+    <br/>&nbsp;&nbsp;&nbsp;&nbsp;- "3306:3306"
+		
+                </span>
+                <br/>
+            </li>
+            <li>You can then use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and run the INSERT statement you created.</li>
+            <li>When that is done, browse back to your CTFd instance UI and check everything has worked correctly.</li>
+            <li>
+                If everything has worked, do another <span class="codeFrag">docker-compose down</span>
+                , remove the ports section you added to <span class="codeFrag">docker-compose.yml</span>
+                and then do <span class="codeFrag">docker-compose up</span>
+                again and you are ready to go!
+            </li>
+        </ol>
+    </body>
+    <script type="text/javascript" src="https://cdn.rawgit.com/Caligatio/jsSHA/master/src/sha1.js"></script>
+    <script>
+        // Function to create the HMAC based on the code used in Juice Shop
+        function toHmac(text, theSecretKey) {
+            var shaObj = new jsSHA('SHA-1','TEXT')
+            shaObj.setHMACKey(theSecretKey, 'TEXT')
+            shaObj.update(text)
+            return shaObj.getHMAC('HEX')
+        }
+        var myInit;
+        function GenerateInsertsInner(SecretKey) {
+            var InsertString = "";
+            // Add a DELETE string at the start if selected by the user
+            if (document.getElementById('chkDELETE').checked) {
+                InsertString = InsertString + "DELETE FROM challenges;\n\r"
+            }
+            var ChallengeURL = document.getElementById("ChallengeURL").value + "/api/Challenges"
+            fetch(ChallengeURL, myInit).then(function(response) {
+                if (!response.ok) {
+                    throw Error(response.statusText);
+                }
+                return response.json();
+            }).then(function(j) {
+                /* This is a default multiplier whereby the score will be = (difficulty x multiplier)
+					   i.e. using these multipliers will create challenges with the following scores:
+					   *     =  100
+					   **    =  250
+					   ***   =  450
+					   ****  =  700
+					   ***** = 1000 
+					
+					   I think it is fair to assume that completing a 5* task will be 10 times harder than a 1* task.
+					
+					*/
+                var multiplier = [100, 125, 150, 175, 200];
+                // For each challenge returned by the Challeges API, 
+                for (var key in j.data) {
+                    InsertString = InsertString + "insert into challenges (id, name, description, value, category, flags, hidden) values ("
+                    InsertString = InsertString + "" + j.data[key].id + ", "
+                    InsertString = InsertString + "\"" + j.data[key].name + "\", "
+                    InsertString = InsertString + "\"" + j.data[key].description.replace(/\"/g, "\"\"") + " (Difficulty Level: " + j.data[key].difficulty + ")\", "
+                    InsertString = InsertString + "\"" + j.data[key].difficulty * multiplier[j.data[key].difficulty - 1] + "\", "
+                    InsertString = InsertString + "\"" + j.data[key].category + "\", "
+                    InsertString = InsertString + "\"[{\"\"flag\"\": \"\"" + toHmac(j.data[key].name, SecretKey) + "\"\", \"\"type\"\": 0}]\", "
+                    InsertString = InsertString + "0);\n\r"
+                }
+                if (document.getElementById('chkSELECT').checked) {
+                    InsertString = InsertString + "SELECT * FROM challenges;\n\r"
+                }
+                document.getElementById("result").value = InsertString
+            }).catch(function(error) {
+                document.getElementById("result").value = "Error Fetching Challenges:\n\r" + error;
+                console.log(error);
+            });
+        }
+        // Function to create the insert statements
+        function GenerateInserts() {
+            document.getElementById("result").value = "Calculating...";
+            myInit = {
+                method: 'GET',
+                mode: 'cors'
+            };
+            var KeyURL = document.getElementById("KeyURL").value
+            var SecretKey = document.getElementById("SecretKey").value;
+            // If no key was provided, this request reads the secret key from the URL provided (by default, the master JuiceShop github repository)
+            if (SecretKey == "") {
+                fetch(KeyURL, myInit).then(function(response) {
+                    if (!response.ok) {
+                        throw Error(response.statusText);
+                    }
+                    return response.text();
+                }).then(function(t) {
+                    SecretKey = t;
+                    GenerateInsertsInner(SecretKey);
+                }).catch(function(error) {
+                    document.getElementById("result").value = "Error Fetching Key:\n\r" + error;
+                    console.log(error);
+                });
+            } else {
+                GenerateInsertsInner(SecretKey);
+            }
+            console.log("ok");
+        }
+    </script>
+</html>
