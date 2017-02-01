@@ -5,7 +5,7 @@ OWASP Juice Shop CTF is a repository containing resources to run a CTF using OWA
 ## Current resources:
 
 ### [CTFd](https://ctfd.io) CTF platform
-Download and open [this file](CTFd/GenerateCTFdInserts.html) to create insert statements to setup the [CTFd](https://ctfd.io) CTF platform for use with JuiceShop.
+[Tool](CTFd/) which can be used  to create insert statements to setup the [CTFd](https://ctfd.io) CTF platform for use with JuiceShop.
 
 
 ## Description
