@@ -1,15 +1,21 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo_50px.png) OWASP Juice Shop CTF [![OWASP Labs](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Incubator_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 
-OWASP Juice Shop CTF is a repository containing resources to host a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using OWASP Juice Shop.
+OWASP Juice Shop CTF is a repository containing resources to host a
+[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
+event using OWASP Juice Shop.
 
 ## Setup
 
 ### [CTFd](https://ctfd.io)
 
-Follow these instructions to create a list of `INSERT` statements for the [CTFd](https://ctfd.io) database that will set the platform up for OWASP Juice Shop:
+Follow these instructions to create a list of `INSERT` statements for
+the [CTFd](https://ctfd.io) database that will set the platform up for
+OWASP Juice Shop:
 
-1. Download the [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
-2. Open that file in your local browser and follow the instructions inside.
+1. Download the
+   [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
+2. Open that file in your local browser and follow the instructions
+   inside.
 
 ### [FBCTF](https://github.com/facebook/fbctf)
 
@@ -21,6 +27,12 @@ _Coming soon..._
 > Troubleshooting section below or post your specific problem or
 > question in the
 > [official Gitter Chat](https://gitter.im/bkimminich/juice-shop).
+
+- If using Docker Toolbox on Windows make sure that you also enable port
+  forwarding for all required ports from Host `127.0.0.1:XXXX` to
+  `0.0.0.0:XXXX` for TCP in the `default` VM's network adapter in
+  VirtualBox. For CTFd you need ports `8000` permanantly and `3306`
+  during setup.
 
 ## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![HuBoard](http://img.shields.io/badge/Hu-Board-blue.svg)](https://huboard.com/bkimminich/juice-shop-ctf)
 
@@ -51,7 +63,9 @@ project.
 
 ## Contributors
 
-Ordered by date of first contribution. [Auto-generated](https://github.com/dtrejo/node-authors) on Wed, 01 Feb 2017 20:01:35 GMT.
+Ordered by date of first contribution.
+[Auto-generated](https://github.com/dtrejo/node-authors) on Wed, 01 Feb
+2017 20:01:35 GMT.
 
 - [Björn Kimminich](https://github.com/bkimminich) aka `bkimminich`
 - [Josh Grossman](https://github.com/tghosth) aka `tghosth`
