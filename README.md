@@ -4,12 +4,16 @@ OWASP Juice Shop CTF is a repository containing resources to host a [Capture the
 
 ## Setup
 
-### [CTFd](https://ctfd.io) Platform
+### [CTFd](https://ctfd.io)
 
 Follow these instructions to create a list of `INSERT` statements for the [CTFd](https://ctfd.io) database that will set the platform up for OWASP Juice Shop:
 
 1. Download the [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
 2. Open that file in your local browser and follow the instructions inside.
+
+### [FBCTF](https://github.com/facebook/fbctf)
+
+_Coming soon..._
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
