@@ -1,20 +1,15 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo_50px.png) OWASP Juice Shop CTF [![OWASP Labs](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Incubator_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 
-OWASP Juice Shop CTF is a repository containing resources to run a CTF using OWASP Juice Shop.
-
-## Current resources:
-
-### [CTFd](https://ctfd.io) CTF platform
-[Tool](CTFd/) which can be used  to create insert statements to setup the [CTFd](https://ctfd.io) CTF platform for use with JuiceShop.
-
-
-## Description
-
-_TODO_
+OWASP Juice Shop CTF is a repository containing resources to host a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using OWASP Juice Shop.
 
 ## Setup
 
-_TODO_
+### [CTFd](https://ctfd.io) Platform
+
+Follow these instructions to create a list of `INSERT` statements for the [CTFd](https://ctfd.io) database that will set the platform up for OWASP Juice Shop:
+
+1. Download the [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
+2. Open that file in your local browser and follow the instructions inside.
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
@@ -47,12 +42,20 @@ project.
 
 [![Flattr](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/3856930/bkimminichjuice-shop-on-GitHub)
 [![Gratipay](http://img.shields.io/gratipay/team/juice-shop.svg)](https://gratipay.com/juice-shop)
-[![Bitcoin](https://img.shields.io/badge/bitcoin-1FXJq5yVANLzR6ZWfqPKhJU3zWT3apnxmN-orange.svg)](https://blockchain.info/address/1FXJq5yVANLzR6ZWfqPKhJU3zWT3apnxmN)
+[![Bitcoin](https://img.shields.io/badge/bitcoin-1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm-orange.svg)](https://blockchain.info/address/1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm)
+[![Dash](https://img.shields.io/badge/dash-Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW-blue.svg)](https://explorer.dash.org/address/Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW)
+
+## Contributors
+
+Ordered by date of first contribution. [Auto-generated](https://github.com/dtrejo/node-authors) on Wed, 01 Feb 2017 20:01:35 GMT.
+
+- [Björn Kimminich](https://github.com/bkimminich) aka `bkimminich`
+- [Josh Grossman](https://github.com/tghosth) aka `tghosth`
 
 ## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf-server.svg)](LICENSE)
 
 This program is free software: you can redistribute it and/or modify it
-under the terms of the [MIT license](LICENSE). OWASP Juice Shop CTF and
-any contributions are Copyright © by Bjoern Kimminich 2016.
+under the terms of the [MIT license](LICENSE). OWASP Juice Shop and any
+contributions are Copyright © by Bjoern Kimminich 2016-2017.
 
 ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo.png)
