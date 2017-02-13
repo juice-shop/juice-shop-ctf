@@ -1,99 +1,123 @@
 <html>
     <head>
-        <style>
-            .codeFrag {
-                font-family: courier;
-                font-size: 10pt
-            }
-        </style>
-        <h2>
-            Produce INSERT statements for the <a href='https://ctfd.io/' target="_blank">CTFd</a>
-            system for use with <a href='https://bkimminich.github.io/juice-shop/' target="_blank">OWASP Juice Shop</a>
-        </h2>
-    </head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">    </head>
     <body>
-        <b>Step 1 of 5:</b>
-        Enter the URL of a version of Juice Shop with the set of challenges that you want to use for the CTF. The default is the latest official release hosted on Heroku.
-		<br/>
-        <input type=text style="width:600px" id="ChallengeURL" value="https://juice-shop.herokuapp.com"/>
-        <br/>
-        <br/>
-        <b>Step 2 of 5:</b>
-        Enter <b>either</b>
-        a secret key to use for generating the flag <b>or</b>
-        an http link to the <code>ctf.key</code> file. The default is the latest official release from the GitHub repository <code>master</code> branch.
-        <br/>
-        Key:<br/>
-        <input type=text style="width:600px" id="SecretKey" value=""/>
-        <br/>
-        URL:<br/>
-        <input type=text style="width:600px" id="KeyURL" value="https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key"/>
-        <br/>
-        <br/>
-        <b>Step 3 of 5:</b>
-        Use the checkboxes below to decide whether you want to add:<br/>
-        <input type="checkbox" id="chkDELETE" checked/>
-        <label for="chkDELETE">A <code>DELETE</code> statement before the <code>INSERT</code> statements to clear the Challenges table.</label>
-        <br/>
-        <input type="checkbox" id="chkSELECT" checked/>
-        <label for="chkSELECT">A <code>SELECT</code> statement after the <code>INSERT</code> statements to show the contents of the Challenges table at the end.</label>
-        <br/>
-        <br/>
-        <b>Step 4 of 5:</b>
-        Press the button below to generate the <code>INSERT</code> statements and use these to setup the database. (Further guidance in step 5.)<br/>
-        <br/>
-        <input type=button onclick="GenerateInserts();" value="Generate INSERT statements"/>
-        <br/>
-        <br/>
-        <textarea cols="160" rows="20" id="result" value="" readonly></textarea>
-        <br/>
-        <br/>
-        <b>Step 5 of 5:</b>
-        If you don't already have a CTFd installation, the easiest way to set one up and configure it for Juice Shop is as follows:<br/>
-        <ol type="a">
-            <li>
-                Setup a <a href='https://docs.docker.com/compose/install/'>Docker host and Docker compose</a>.
-            
-            </li>
-            <li>
-                Follow steps 2-4 from <a href='https://github.com/isislab/CTFd/wiki/Deployment#docker'>the CTFd Docker setup</a>
-                to download the source code, create containers and start them.
-            
-            </li>
-            <li>
-                After running <code>docker-compose up</code> from previous step, you should be able to browse to your CTFd instance UI (
-                <span class="codeFrag">&lt;&lt;docker host IP &gt;&gt;:8000</span>
-                by default) and create an admin user and CTF name.
-            
-            </li>
-            <li>
-                Once you have done this, run <span class="codeFrag">docker-compose down</span>
-                or use <span class="codeFrag">Ctrl-C</span>
-                to shut down CTFd. Note: Unlike a usual Docker container, data will persist even afterwards.
-            
-            </li>
-            <li>
-                Add the following section to the <span class="codeFrag">docker-compose.yml</span>
-                file and then run <span class="codeFrag">docker-compose up</span>
-                again.
-    <br/>
-                <span class="codeFrag">
-                    ports:
-    <br/>&nbsp;&nbsp;&nbsp;&nbsp;- "3306:3306"
-		
-                </span>
-                <br/>
-            </li>
-            <li>You can then use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and run the <code>INSERT</code> statement you created.</li>
-            <li>When that is done, browse back to your CTFd instance UI and check everything has worked correctly.</li>
-            <li>
-                If everything has worked, do another <span class="codeFrag">docker-compose down</span>
-                , remove the ports section you added to <span class="codeFrag">docker-compose.yml</span>
-                and then do <span class="codeFrag">docker-compose up</span>
-                again and you are ready to go!
-            </li>
-        </ol>
+        <div class="container-fluid">
+
+            <h2 class="page-header page-header-sm">
+                Produce <code>INSERT</code> statements for the <a href='https://ctfd.io/' target="_blank">CTFd</a>
+                system for use with <a href='https://bkimminich.github.io/juice-shop/' target="_blank">OWASP Juice Shop</a>
+            </h2>
+
+            <div class="container-fluid well">
+                <legend>Step 1 of 5: <small>Enter the URL of a version of Juice Shop with the set of challenges that you want to use for the CTF. The default is the latest official release hosted on Heroku.</small></legend>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="ChallengeURL">URL</label>
+                        <input type="text" class="form-control input-sm" id="ChallengeURL" name="ChallengeURL" value="https://juice-shop.herokuapp.com"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid well">
+                <legend>Step 2 of 5: <small>Enter <em>either</em> a secret key to use for generating the flag <em>or</em> an URL to the <code>ctf.key</code> file. The default is the latest official release from the GitHub repository <code>master</code> branch.</small></legend>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="SecretKey">Key</label>
+                        <input type="text" class="form-control input-sm" id="SecretKey" name="SecretKey" value=""/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="KeyURL">URL</label>
+                        <input type="text" class="form-control input-sm" id="KeyURL" name="KeyURL" value="https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key"/>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid well">
+                <legend>Step 3 of 5: <small>Use the checkboxes below to decide whether you want to add:</small></legend>
+                <div class="row">
+                    <div class="form-group">
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="chkDELETE" name="chkDELETE" checked/> A <code>DELETE</code> statement before the <code>INSERT</code> statements to clear the Challenges table.
+                            </label>
+                        </div>
+                        <div class="checkbox">
+                            <label>
+                                <input type="checkbox" id="chkSELECT" name="chkSELECT" checked/> A <code>SELECT</code> statement after the <code>INSERT</code> statements to show the contents of the Challenges table at the end.
+                            </label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid well">
+                <legend>Step 4 of 5: <small>Press the button below to generate the <code>INSERT</code> statements and use these to setup the database. (Further guidance in step 5)</small></legend>
+                <div class="row">
+                    <div class="form-group">
+                        <input type=button class="btn btn-success" onclick="GenerateInserts();" value="Generate INSERT statements"/>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="form-group">
+                        <label for="result">Output</label>
+                        <textarea class="form-control input-sm" cols="160" rows="20" id="result" value="" readonly></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="container-fluid well">
+                <legend>Step 5 of 5: <small>If you don't already have a CTFd installation, the easiest way to set one up and configure it for Juice Shop is as follows:</small></legend>
+                <div class="row">
+                    <ol type="a">
+                        <li>
+                            Setup <a href='https://docs.docker.com/compose/install/'>Docker host and Docker compose</a>.
+                        </li>
+                        <li>
+                            Follow steps 2-4 from <a href='https://github.com/isislab/CTFd/wiki/Deployment#docker'>the CTFd Docker setup</a>
+                            to download the source code, create containers and start them.
+                        </li>
+                        <li>
+                            After running <code>docker-compose up</code> from previous step, you should be able to
+                            browse to your CTFd instance UI (<code>&lt;&lt;docker host IP&gt;&gt;:8000</code>
+                            by default) and create an admin user and CTF name.
+                        </li>
+                        <li>
+                            Once you have done this, run <code>docker-compose down</code>
+                            or use <code>Ctrl-C</code>
+                            to shut down CTFd. Note: Unlike a usual Docker container, data will persist even afterwards.
+
+                        </li>
+                        <li>
+                            Add the following section to the <code>docker-compose.yml</code>
+                            file and then run <code>docker-compose up</code>
+                            again:<br><br>
+<pre>ports:
+  - "3306:3306"</pre>
+                        </li>
+                        <li>You can then use your favourite MySQL client to connect to the CTFd database (default
+                            credentials are root with no password) and run the <code>INSERT</code> statement you created.
+                        </li>
+                        <li>When that is done, browse back to your CTFd instance UI and check everything has worked correctly.
+                        </li>
+                        <li>
+                            If everything has worked, do another <code>docker-compose down</code>,
+                            remove the ports section you added to <code>docker-compose.yml</code>
+                            and then do <code>docker-compose up</code> again and you are ready to go!
+                        </li>
+                    </ol>
+                </div>
+            </div>
+
+        </div>
     </body>
+
     <script type="text/javascript" src="https://cdn.rawgit.com/Caligatio/jsSHA/master/src/sha1.js"></script>
     <script>
         // Function to create the HMAC based on the code used in Juice Shop
