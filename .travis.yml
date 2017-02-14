@@ -1,6 +1,10 @@
 language: node_js
 node_js:
-  - 7
-  - 6
-  - 4
+- 4
+- 6  # recommended version
+- 7
+before_install:
+- rm -rf node_modules
+script:
+- npm test
 sudo: false
