@@ -1,0 +1,30 @@
+{
+  "name": "juice-shop-ctf",
+  "version": "0.2.0",
+  "description": "Generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
+  "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
+  },
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
+  },
+  "homepage": "https://github.com/bkimminich/juice-shop-ctf",
+  "main": "index.js",
+  "scripts": {
+    "test": "standard"
+  },
+  "dependencies": {
+    "inquirer": "^3.0.1"
+  },
+  "devDependencies": {
+    "standard": "^8.6.0"
+  },
+  "standard": {
+    "env": [
+      "node"
+    ]
+  }
+}
