@@ -8,20 +8,22 @@ event using OWASP Juice Shop.
 
 ## Setup
 
-### [CTFd](https://ctfd.io)
-
 Follow these instructions to create a list of `INSERT` statements for
 the [CTFd](https://ctfd.io) database that will set the platform up for
 OWASP Juice Shop:
+
+1. Run `npm install juice-shop-ctf-cli --global`
+2. Run `juice-shop-ctf`
+3. Follow the instructions of the command line tool
+4. Use the generated `insert-ctfd-challenges.sql` file to populate the
+   CTFd database
+
+### Alternative approach without node.js
 
 1. Download the
    [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
 2. Open that file in your local browser and follow the instructions
    inside.
-
-### [FBCTF](https://github.com/facebook/fbctf)
-
-_Coming soon..._
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
