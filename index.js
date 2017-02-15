@@ -5,7 +5,7 @@ var jsSHA = require('jssha')
 var ProgressBar = require('progress')
 var fs = require('fs')
 var path = require('path')
-var colors = require('colors')
+var colors = require('colors') // eslint-disable-line no-unused-vars
 
 console.log()
 console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
