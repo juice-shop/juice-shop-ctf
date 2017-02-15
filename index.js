@@ -7,50 +7,52 @@ var fs = require('fs')
 var path = require('path')
 var colors = require('colors') // eslint-disable-line no-unused-vars
 
-console.log()
-console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
-
-var questions = [
-  {
-    type: 'input',
-    name: 'juiceShopUrl',
-    message: 'Juice Shop URL to retrieve challenges?',
-    default: 'https://juice-shop.herokuapp.com'
-  },
-  {
-    type: 'input',
-    name: 'ctfKey',
-    message: 'HMAC key <or> URL to ctf.key file?',
-    default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
-  },
-  {
-    type: 'confirm',
-    name: 'deleteBeforeInsert',
-    message: 'DELETE all CTFd Challenges before INSERT statements?',
-    default: true
-  },
-  {
-    type: 'confirm',
-    name: 'selectAfterInsert',
-    message: 'SELECT all CTFd Challenges after INSERT statements?',
-    default: true
-  }
-]
-
-inquirer.prompt(questions).then(function (answers) {
+var juiceShopCtfCli = function () {
   console.log()
-  if (answers.ctfKey && answers.ctfKey.match(/.*:\/\//)) {
-    request(answers.ctfKey)
+  console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+
+  var questions = [
+    {
+      type: 'input',
+      name: 'juiceShopUrl',
+      message: 'Juice Shop URL to retrieve challenges?',
+      default: 'https://juice-shop.herokuapp.com'
+    },
+    {
+      type: 'input',
+      name: 'ctfKey',
+      message: 'HMAC key <or> URL to ctf.key file?',
+      default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
+    },
+    {
+      type: 'confirm',
+      name: 'deleteBeforeInsert',
+      message: 'DELETE all CTFd Challenges before INSERT statements?',
+      default: true
+    },
+    {
+      type: 'confirm',
+      name: 'selectAfterInsert',
+      message: 'SELECT all CTFd Challenges after INSERT statements?',
+      default: true
+    }
+  ]
+
+  inquirer.prompt(questions).then(function (answers) {
+    console.log()
+    if (answers.ctfKey && answers.ctfKey.match(/.*:\/\//)) {
+      request(answers.ctfKey)
       .then(function (body) {
         answers.ctfKey = body
         generateSql(answers)
       }).catch(function (error) {
         console.log('Failed'.red + ' to fetch HMAC key from URL! ' + error)
       })
-  } else {
-    generateSql(answers)
-  }
-})
+    } else {
+      generateSql(answers)
+    }
+  })
+}
 
 function generateSql (answers) {
   request({ url: answers.juiceShopUrl + '/api/Challenges', json: true })
@@ -109,3 +111,4 @@ function toHmac (text, theSecretKey) {
   return shaObj.getHMAC('HEX')
 }
 
+exports.juiceShopCtfCli = juiceShopCtfCli

@@ -1,18 +1,21 @@
 {
-  "name": "juice-shop-ctf",
+  "name": "juice-shop-ctf-cli",
   "version": "0.2.0",
-  "description": "Generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
+  "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
   },
-  "license": "MIT",
   "bugs": {
     "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
   },
-  "homepage": "https://github.com/bkimminich/juice-shop-ctf",
+  "homepage": "https://www.owasp.org/index.php/OWASP_Juice_Shop_Project",
+  "license": "MIT",
   "main": "index.js",
+  "bin": {
+    "juice-shop-ctf": "bin/juice-shop-ctf.js"
+  },
   "scripts": {
     "test": "standard"
   },
