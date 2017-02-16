@@ -3,6 +3,25 @@
   "version": "0.2.0",
   "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
+  "contributors": [
+    "Bjoern Kimminich", "Josh Grossman"
+  ],
+  "keywords": [
+    "web security",
+    "web application security",
+    "webappsec",
+    "owasp",
+    "pentest",
+    "pentesting",
+    "security",
+    "vulnerable",
+    "vulnerability",
+    "broken",
+    "capture the flag",
+    "ctf",
+    "ctfd",
+    "cli"
+  ],
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
@@ -18,6 +37,9 @@
   },
   "scripts": {
     "test": "standard"
+  },
+  "engines": {
+    "node": "~4 ~6 ~7"
   },
   "dependencies": {
     "colors": "^1.1.2",
