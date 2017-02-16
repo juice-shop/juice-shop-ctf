@@ -4,7 +4,8 @@
   "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
-    "Bjoern Kimminich", "Josh Grossman"
+    "Bjoern Kimminich",
+    "Josh Grossman"
   ],
   "keywords": [
     "web security",
@@ -42,6 +43,7 @@
     "node": "~4 ~6 ~7"
   },
   "dependencies": {
+    "bluebird": "^3.4.7",
     "colors": "^1.1.2",
     "inquirer": "^3.0.1",
     "jssha": "^2.2.0",
