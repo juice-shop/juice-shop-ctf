@@ -54,7 +54,10 @@
     "request-promise": "^4.1.1"
   },
   "devDependencies": {
+    "chai": "^3.5.0",
+    "chai-as-promised": "^6.0.0",
     "mocha": "^3.2.0",
+    "rewire": "^2.5.2",
     "standard": "^8.6.0",
     "stryker": "^0.5.8",
     "stryker-api": "^0.4.2",
