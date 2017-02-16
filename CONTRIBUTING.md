@@ -24,3 +24,17 @@ accepted and merged when you open them on the ```develop``` branch of
 your fork. That allows for some post-merge changes by the team without
 directly compromising the ```master``` branch, which is supposed to hold
 always be in a release-ready state.
+
+### JavaScript Standard Style Guide
+
+Since v2.7.0 the `npm test` script verifies code complicance with the
+`standard` style before running the tests. If PRs deviate from this
+coding style, they will now immediately fail their build and will not be
+merged until compliant.
+
+[![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
+
+> In case your PR is failing from style guide issues try running
+> `standard --fix` over your code - this will fix all syntax or code
+> style issues automatically without breaking your code. You might need
+> to `npm install -g standard` first.

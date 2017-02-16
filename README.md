@@ -1,22 +1,30 @@
 # ![Juice Shop Logo](https://raw.githubusercontent.com/bkimminich/juice-shop/master/app/public/images/JuiceShop_Logo_50px.png) OWASP Juice Shop CTF [![OWASP Labs](https://img.shields.io/badge/owasp-incubator-blue.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Incubator_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)
 
 [![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf)
+[![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
+[![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
-OWASP Juice Shop CTF is a repository containing resources to host a
-[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
-event using OWASP Juice Shop.
+The [NPM package `juice-shop-ctf-cli` published from this repository](https://www.npmjs.com/package/juice-shop-ctf-cli) lets you create a list of `INSERT` statements for
+the [CTFd](https://ctfd.io) database that will populate the platform for a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using
+OWASP Juice Shop.
 
-## Setup
+## Installation
 
-Follow these instructions to create a list of `INSERT` statements for
-the [CTFd](https://ctfd.io) database that will set the platform up for
-OWASP Juice Shop:
+```
+npm i -g juice-shop-ctf-cli
+```
 
-1. Run `npm install juice-shop-ctf-cli --global`
-2. Run `juice-shop-ctf`
-3. Follow the instructions of the command line tool
-4. Use the generated `insert-ctfd-challenges.sql` file to populate the
-   CTFd database
+## Usage
+
+Open a command line and run:
+
+```
+juice-shop-ctf
+```
+
+Then simply follow the instructions of the command line tool. Finally, use the generated `insert-ctfd-challenges.sql` file to populate the CTFd database:
+
+![Example of CLI usage](cli_usage_screenshot.png)
 
 ### Alternative approach without node.js
 
