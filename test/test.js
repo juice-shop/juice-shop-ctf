@@ -44,7 +44,7 @@ describe('#toHmac()', function () {
 describe('#fetchHmacKey()', function () {
   var fetchHmacKey = juiceShopCtfCli.__get__('fetchHmacKey')
 
-  it('should return input as key if it is not a URL', function () {
-    expect(fetchHmacKey('ZJnHOTckstBeJP!QC2T')).to.become('ZJnHOTckstBeJP!QC2T')
+  it('should return input as key if it is not a URL', function (done) {
+    expect(fetchHmacKey('ZJnHOTckstBeJP!QC2T')).to.eventually.equal('ZJnHOTckstBeJP!QC2T').and.notify(done)
   })
 })
