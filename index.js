@@ -40,7 +40,7 @@ var juiceShopCtfCli = function () {
   console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
   inquirer.prompt(questions).then(function (answers) {
     console.log()
-    fetchHmacKey(answers.ctfKey).then(function (hmacKey) {
+    this.fetchHmacKey(answers.ctfKey).then(function (hmacKey) {
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
         generateSql(challenges, answers.deleteBeforeInsert, answers.selectAfterInsert, hmacKey).then(function (sql) {
           writeOutput(sql)
@@ -50,7 +50,7 @@ var juiceShopCtfCli = function () {
   })
 }
 
-function fetchHmacKey (ctfKey) {
+exports.fetchHmacKey = function fetchHmacKey (ctfKey) {
   return new Promise(function (resolve) {
     if (ctfKey && this.isUrl(ctfKey)) {
       request(ctfKey)
@@ -104,7 +104,7 @@ function generateSql (challenges, prependDelete, appendSelect, hmacKey) {
         sql = sql + '"' + challenge.description.replace(/"/g, '""') + ' (Difficulty Level: ' + challenge.difficulty + ')", '
         sql = sql + '"' + challenge.difficulty * multiplier[ challenge.difficulty - 1 ] + '", '
         sql = sql + '"' + challenge.category + '", '
-        sql = sql + '"[{""flag"": ""' + toHmac(challenge.name, hmacKey) + '"", ""type"": 0}]", '
+        sql = sql + '"[{""flag"": ""' + this.toHmac(challenge.name, hmacKey) + '"", ""type"": 0}]", '
         sql = sql + '0);\n\r'
       }
     }
@@ -128,7 +128,7 @@ function writeOutput (sql) {
   })
 }
 
-function toHmac (text, theSecretKey) {
+exports.toHmac = function toHmac (text, theSecretKey) {
   var shaObj = new jsSHA('SHA-1', 'TEXT') // eslint-disable-line new-cap
   shaObj.setHMACKey(theSecretKey, 'TEXT')
   shaObj.update(text)
