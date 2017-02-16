@@ -15,4 +15,5 @@ node_modules/
 npm-debug.log.*
 
 # App
+reports/
 insert-ctfd-challenges.sql

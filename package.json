@@ -37,7 +37,8 @@
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
-    "test": "standard"
+    "test": "standard && mocha",
+    "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
     "node": "~4 ~6 ~7"
@@ -53,11 +54,18 @@
     "request-promise": "^4.1.1"
   },
   "devDependencies": {
-    "standard": "^8.6.0"
+    "mocha": "^3.2.0",
+    "standard": "^8.6.0",
+    "stryker": "^0.5.8",
+    "stryker-api": "^0.4.2",
+    "stryker-html-reporter": "^0.3.0",
+    "stryker-mocha-runner": "^0.2.0"
   },
   "standard": {
     "env": [
-      "node"
+      "node",
+      "mocha",
+      "chai"
     ]
   }
 }

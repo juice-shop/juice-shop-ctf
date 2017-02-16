@@ -52,7 +52,7 @@ var juiceShopCtfCli = function () {
 
 function fetchHmacKey (ctfKey) {
   return new Promise(function (resolve) {
-    if (ctfKey && isUrl(ctfKey)) {
+    if (ctfKey && this.isUrl(ctfKey)) {
       request(ctfKey)
         .then(function (body) {
           resolve(body)
@@ -135,8 +135,8 @@ function toHmac (text, theSecretKey) {
   return shaObj.getHMAC('HEX')
 }
 
-function isUrl (text) {
-  return text.match(/.*:\/\//)
+exports.isUrl = function isUrl (text) {
+  return text.match(/^(http|localhost|[0-9][0-9]?[0-9]?\.)/) !== null
 }
 
 exports.juiceShopCtfCli = juiceShopCtfCli
