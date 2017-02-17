@@ -10,8 +10,8 @@ const juiceShopCtfCli = path.join(__dirname, '../bin/juice-shop-ctf.js')
 
 describe('juiceShopCtfCli()', function () {
   it('should accept defaults for all input questions', function (done) {
-    this.timeout(10000)
-    expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 500)).to.eventually.match(/SQL written to/).and.notify(done)
+    this.timeout(20000)
+    expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1000)).to.eventually.match(/SQL written to/).and.notify(done)
   })
 })
 
