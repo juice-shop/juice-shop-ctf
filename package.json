@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "0.2.0",
+  "version": "0.3.0",
   "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
