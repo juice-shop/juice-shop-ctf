@@ -37,7 +37,8 @@
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
-    "test": "standard && mocha",
+    "test": "standard && nyc --reporter=html --reporter=text mocha",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
@@ -56,7 +57,10 @@
   "devDependencies": {
     "chai": "^3.5.0",
     "chai-as-promised": "^6.0.0",
+    "chai-spies": "^0.7.1",
+    "coveralls": "^2.11.16",
     "mocha": "^3.2.0",
+    "nyc": "^10.1.2",
     "rewire": "^2.5.2",
     "standard": "^8.6.0",
     "stryker": "^0.5.8",
@@ -70,5 +74,8 @@
       "mocha",
       "chai"
     ]
+  },
+  "nyc": {
+    "report-dir": "./reports/coverage"
   }
 }

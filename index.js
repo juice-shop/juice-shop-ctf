@@ -75,23 +75,13 @@ function fetchChallenges (juiceShopUrl) {
   })
 }
 
-function generateSql (challenges, prependDelete, appendSelect, hmacKey) {
+function generateSql (challenges, prependDelete, appendSelect, hmacKey, progressBar) {
   return new Promise(function (resolve) {
     var sql = ''
     if (prependDelete) {
       sql = sql + 'DELETE FROM challenges;\n\r'
     }
-    /* This is a default multiplier whereby the score will be = (difficulty x multiplier)
-     i.e. using these multipliers will create challenges with the following scores:
-     *     =  100
-     **    =  250
-     ***   =  450
-     ****  =  700
-     ***** = 1000
-     I think it is fair to assume that completing a 5* task will be 10 times harder than a 1* task.
-     */
-    var multiplier = [ 100, 125, 150, 175, 200 ]
-    var bar = new ProgressBar('Generating INSERT statements [:bar] :percent', { total: Object.keys(challenges).length })
+    var bar = progressBar || new ProgressBar('Generating INSERT statements [:bar] :percent', { total: Object.keys(challenges).length })
     for (var key in challenges) {
       bar.tick()
       if (challenges.hasOwnProperty(key)) {
@@ -100,7 +90,7 @@ function generateSql (challenges, prependDelete, appendSelect, hmacKey) {
         sql = sql + '' + challenge.id + ', '
         sql = sql + '"' + challenge.name + '", '
         sql = sql + '"' + challenge.description.replace(/"/g, '""') + ' (Difficulty Level: ' + challenge.difficulty + ')", '
-        sql = sql + '"' + challenge.difficulty * multiplier[ challenge.difficulty - 1 ] + '", '
+        sql = sql + '"' + calculateScore(challenge.difficulty) + '", '
         sql = sql + '"' + challenge.category + '", '
         sql = sql + '"[{""flag"": ""' + toHmac(challenge.name, hmacKey) + '"", ""type"": 0}]", '
         sql = sql + '0);\n\r'
@@ -135,6 +125,20 @@ function toHmac (text, theSecretKey) {
 
 function isUrl (text) {
   return text.match(/^(http|localhost|[0-9][0-9]?[0-9]?\.)/) !== null
+}
+
+/* This is a default multiplier whereby the score will be = (difficulty x multiplier)
+ i.e. using these multipliers will create challenges with the following scores:
+ *     =  100
+ **    =  250
+ ***   =  450
+ ****  =  700
+ ***** = 1000
+ I think it is fair to assume that completing a 5* task will be 10 times harder than a 1* task.
+ */
+var multiplier = [ 100, 125, 150, 175, 200 ]
+function calculateScore (difficulty) {
+  return difficulty * multiplier[ difficulty - 1 ]
 }
 
 exports.juiceShopCtfCli = juiceShopCtfCli

@@ -2,6 +2,8 @@
 *.out
 build/
 .stryker-tmp/
+.nyc_output/
+reports/
 
 # Intellij
 .idea/
@@ -15,5 +17,4 @@ node_modules/
 npm-debug.log.*
 
 # App
-reports/
 insert-ctfd-challenges.sql

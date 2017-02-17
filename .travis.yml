@@ -7,4 +7,5 @@ before_install:
 - rm -rf node_modules
 script:
 - npm test
+after_success: npm run coverage
 sudo: false
