@@ -48,4 +48,4 @@ var juiceShopCtfCli = function () {
   })
 }
 
-exports.juiceShopCtfCli = juiceShopCtfCli
+module.exports = juiceShopCtfCli

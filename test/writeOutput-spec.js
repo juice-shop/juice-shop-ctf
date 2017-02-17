@@ -10,10 +10,10 @@ describe('writeOutput()', function () {
         log: function () {}
       },
       fs: {
-        writeFile: function (path, data, cb) {
+        writeFileAsync: function (path, data) {
           expect(data).to.equal('SQL')
           expect(path).to.equal('insert-ctfd-challenges.sql')
-          cb(null, 'Done')
+          return new Promise(function (resolve) { resolve() })
         }}
     })
     writeOutput('SQL')

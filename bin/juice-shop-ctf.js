@@ -1,10 +1,10 @@
 #!/usr/bin/env node
 'use strict'
 
-var lib = require('../index')
+var juiceShopCtfCli = require('../index')
 
 try {
-  lib.juiceShopCtfCli()
+  juiceShopCtfCli()
 } catch (error) {
   console.error(error.message)
 }
