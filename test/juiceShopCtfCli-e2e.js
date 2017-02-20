@@ -5,7 +5,6 @@ var inquirer = require('inquirer-test')
 var run = inquirer
 var ENTER = inquirer.ENTER
 var fs = require('fs')
-var lockFile = require('lockfile')
 var path = require('path')
 
 const juiceShopCtfCli = path.join(__dirname, '../bin/juice-shop-ctf.js')
@@ -46,10 +45,9 @@ describe('juiceShopCtfCli()', function () {
     expect(run(juiceShopCtfCli, [ENTER, 'http://i.n.v.a.l.i.d/ctf-key', ENTER, ENTER, ENTER], 1000)).to.eventually.match(/Failed to fetch secret key from URL!/i).and.notify(done)
   })
 
-  xit('should fail when output file cannot be written', function (done) {
+  it('should fail when output file cannot be written', function (done) {
     this.timeout(20000)
-    lockFile.lockSync('insert-ctfd-challenges.sql')
+    fs.openSync('insert-ctfd-challenges.sql', 'w', 0)
     expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1000)).to.eventually.match(/Failed to write output to file!/i).and.notify(done)
-    lockFile.unlockSync('insert-ctfd-challenges.sql')
   })
 })
