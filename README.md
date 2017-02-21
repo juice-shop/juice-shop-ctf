@@ -10,6 +10,8 @@ The [NPM package `juice-shop-ctf-cli` published from this repository](https://ww
 the [CTFd](https://ctfd.io) database that will populate the platform for a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using
 OWASP Juice Shop.
 
+![Example of CLI usage](cli_usage_screenshot.png)
+
 ## Installation
 
 ```
@@ -24,9 +26,23 @@ Open a command line and run:
 juice-shop-ctf
 ```
 
-Then simply follow the instructions of the command line tool. Finally, use the generated `insert-ctfd-challenges.sql` file to populate the CTFd database:
+Then simply follow the instructions of the command line tool. Finally, apply the generated `insert-ctfd-challenges.sql` following the steps described in the next section.
 
-![Example of CLI usage](cli_usage_screenshot.png)
+#### Setting up [CTFd](https://ctfd.io) and populating its database
+
+1. Setup [Docker host and Docker compose](https://docs.docker.com/compose/install/).
+2. Follow steps 2-4 from [the CTFd Docker setup](https://github.com/isislab/CTFd/wiki/Deployment#docker) to download the source code, create containers and start them.
+3. After running `docker-compose up` from previous step, you should be able to browse to your CTFd instance UI (`<<docker host IP>>:8000` by default) and create an admin user and CTF name.
+4. Once you have done this, run `docker-compose down` or use `Ctrl-C` to shut down CTFd. Note: Unlike a usual Docker container, data will persist even afterwards.
+5. Add the following section to the `docker-compose.yml` file and then run `docker-compose up` again:
+
+   ```
+   ports:
+     - "3306:3306"
+   ```
+6. You can then use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and run the `INSERT` statement you created.
+7. When that is done, browse back to your CTFd instance UI and check everything has worked correctly.
+8. If everything has worked, do another `docker-compose down`, remove the ports section you added to `docker-compose.yml` and then do `docker-compose up` again and you are ready to go!
 
 ### Alternative approach without node.js
 
