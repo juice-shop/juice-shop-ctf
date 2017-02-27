@@ -49,6 +49,8 @@ var juiceShopCtfCli = function () {
           }, function (error) {
             console.log(error)
           })
+        }, function (error) {
+          console.log(error)
         })
       }, function (error) {
         console.log(error)
