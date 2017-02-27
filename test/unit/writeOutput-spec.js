@@ -1,4 +1,5 @@
 var chai = require('chai')
+chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var rewire = require('rewire')
 var writeOutput = rewire('../../lib/writeOutput')
@@ -16,21 +17,16 @@ describe('Output', function () {
           return new Promise(function (resolve) { resolve() })
         }}
     })
-    writeOutput('SQL')
+    expect(writeOutput('SQL')).to.be.fulfilled
   })
 
   it('should log file system error to console', function () {
     writeOutput.__set__({
-      console: {
-        log: function (message) {
-          expect(message).to.match(/Argh!/)
-        }
-      },
       fs: {
         writeFileAsync: function (path, data) {
           return new Promise(function () { throw new Error('Argh!') })
         }}
     })
-    writeOutput('SQL')
+    expect(writeOutput('SQL')).to.be.rejectedWith('Argh!')
   })
 })

@@ -1,5 +1,6 @@
 var Promise = require('bluebird')
 var chai = require('chai')
+chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var rewire = require('rewire')
 var secretKey = rewire('../../lib/secretKey')
@@ -20,16 +21,11 @@ describe('Secret key', function () {
 
   it('should log retrieval error to console', function () {
     secretKey.__set__({
-      console: {
-        log: function (message) {
-          expect(message).to.match(/Argh!/)
-        }
-      },
       request: function () {
-        return new Promise(function () { throw new Error('Argh!') })
+        return new Promise(function (resolve, reject) { reject('Argh!') })
       }
     })
-    expect(secretKey('http://localh_%&$§rst:3000')).to.be.fulfilled
+    expect(secretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Argh!')
   })
 })
 

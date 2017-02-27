@@ -41,9 +41,20 @@ var juiceShopCtfCli = function () {
     secretKey(answers.ctfKey).then(function (secretKey) {
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
         generateSql(challenges, answers.deleteBeforeInsert, answers.selectAfterInsert, secretKey).then(function (sql) {
-          writeOutput(sql)
+          writeOutput(sql).then(function (file) {
+            console.log('SQL written to ' + file)
+            console.log()
+            console.log('For a step-by-step guide to apply the INSERT statements to ' + 'CTFd'.bold + ', please refer to')
+            console.log('https://github.com/bkimminich/juice-shop-ctf#setting-up-ctfd-and-populating-its-database'.gray)
+          }, function (error) {
+            console.log(error)
+          })
         })
+      }, function (error) {
+        console.log(error)
       })
+    }, function (error) {
+      console.log(error)
     })
   })
 }

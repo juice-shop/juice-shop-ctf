@@ -27,15 +27,10 @@ describe('Challenges', function () {
 
   it('should log retrieval error to console', function () {
     fetchChallenges.__set__({
-      console: {
-        log: function (message) {
-          expect(message).to.match(/Argh!/)
-        }
-      },
       request: function () {
-        return new Promise(function () { throw new Error('Argh!') })
+        return new Promise(function (resolve, reject) { reject('Argh!') })
       }
     })
-    expect(fetchChallenges('http://localh_%&$§rst:3000')).to.be.fulfilled
+    expect(fetchChallenges('http://localh_%&$§rst:3000')).to.be.rejectedWith('Argh!')
   })
 })
