@@ -5,7 +5,7 @@ module.exports = function (config) {
       // Add your files here, this is just an example:
       { pattern: 'index.js', mutated: true, included: false },
       { pattern: 'lib/**/*.js', mutated: true, included: false },
-      'test/**/*-spec.js'
+      'test/unit/*-spec.js'
     ],
     testRunner: 'mocha',
     testFramework: 'mocha',

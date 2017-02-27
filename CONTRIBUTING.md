@@ -36,23 +36,19 @@ always be in a release-ready state.
 There is a full suite containing
 
 * independent unit tests for each module
-* an e2e test simulating real input to the CLI
-
 ```
 npm test
 ```
+* an e2e test simulating real input to the CLI
+```
+npm run e2e
+```
 
-> The test suite currently runs unit and e2e tests in the same step.
-> This is not best practice when it comes to software testing as it
-> slows down the execution of the suite in total considerably and
-> requires a working internet connection. On the plus side you can be
-> _really sure_ that the program works as intended when `npm test`
-> passes and still reports 100% code coverage.
 
 ### JavaScript Standard Style Guide
 
 The `npm test` script verifies code complicance with the `standard`
-style before running the tests. If PRs deviate from this coding style,
+style before running the unit tests. If PRs deviate from this coding style,
 they will now immediately fail their build and will not be merged until
 compliant.
 

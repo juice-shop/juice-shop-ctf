@@ -7,9 +7,9 @@ var ENTER = inquirer.ENTER
 var fs = require('fs')
 var path = require('path')
 
-const juiceShopCtfCli = path.join(__dirname, '../bin/juice-shop-ctf.js')
+const juiceShopCtfCli = path.join(__dirname, '../../bin/juice-shop-ctf.js')
 
-describe('juiceShopCtfCli()', function () {
+describe('juice-shop-ctf', function () {
   beforeEach(function () {
     if (fs.existsSync('insert-ctfd-challenges.sql')) {
       fs.unlinkSync('insert-ctfd-challenges.sql')

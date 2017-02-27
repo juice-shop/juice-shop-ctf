@@ -1,10 +1,10 @@
 var chai = require('chai')
 var expect = chai.expect
 var rewire = require('rewire')
-var fetchChallenges = rewire('../lib/fetchChallenges')
+var fetchChallenges = rewire('../../lib/fetchChallenges')
 
-describe('challenges()', function () {
-  it('should request JSON from the path /api/Challenges under the given URL', function (done) {
+describe('Challenges', function () {
+  it('should be requested as JSON from the path /api/Challenges under the given URL', function (done) {
     fetchChallenges.__set__({
       request: function (options) {
         expect(options).to.deep.equal({ url: 'http://localhost:3000/api/Challenges', json: true })
@@ -14,7 +14,7 @@ describe('challenges()', function () {
     expect(fetchChallenges('http://localhost:3000')).to.notify(done)
   })
 
-  it('should fetch challenges from the given URL', function (done) {
+  it('should be fetched from the given URL', function (done) {
     fetchChallenges.__set__({
       request: function (options) {
         expect(options).to.deep.equal({ url: 'http://localhost:3000/api/Challenges', json: true })

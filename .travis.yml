@@ -6,6 +6,6 @@ node_js:
 before_install:
 - rm -rf node_modules
 script:
-- npm test
+- npm test && npm run e2e
 after_success: npm run coverage
 sudo: false

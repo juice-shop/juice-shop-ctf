@@ -1,10 +1,10 @@
 var chai = require('chai')
 var expect = chai.expect
 var rewire = require('rewire')
-var writeOutput = rewire('../lib/writeOutput')
+var writeOutput = rewire('../../lib/writeOutput')
 
-describe('writeOutput()', function () {
-  it('should write SQL statements to insert-ctfd-challenges.sql', function () {
+describe('Output', function () {
+  it('should be written to insert-ctfd-challenges.sql', function () {
     writeOutput.__set__({
       console: {
         log: function () {}

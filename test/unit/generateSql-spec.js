@@ -2,9 +2,9 @@ var Promise = require('bluebird')
 var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
-var generateSql = require('../lib/generateSql')
+var generateSql = require('../../lib/generateSql')
 
-describe('generateSql()', function () {
+describe('Generated SQL', function () {
   var progressBarMock = { tick: function () {} }
 
   var challenges
@@ -18,23 +18,23 @@ describe('generateSql()', function () {
     }
   })
 
-  it('should prepend DELETE statement when option is chosen', function (done) {
+  it('should have DELETE statement prepended when option is chosen', function (done) {
     expect(generateSql(challenges, true, false, '', progressBarMock)).to.eventually.match(/^delete from challenges;/i).and.notify(done)
   })
 
-  it('should not prepend DELETE statement when option is not chosen', function (done) {
+  it('should not have DELETE statement prepended when option is not chosen', function (done) {
     expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/^delete from challenges;/i).and.notify(done)
   })
 
-  it('should append SELECT statement when option is chosen', function (done) {
+  it('should have SELECT statement appended when option is chosen', function (done) {
     expect(generateSql(challenges, false, true, '', progressBarMock)).to.eventually.match(/select \* from challenges;\s*$/i).and.notify(done)
   })
 
-  it('should not append SELECT statement when option not is chosen', function (done) {
+  it('should not have SELECT statement appended when option not is chosen', function (done) {
     expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/select \* from challenges;\s*$/i).and.notify(done)
   })
 
-  it('should generate one INSERT statement per challenge', function () {
+  it('should consist of one INSERT statement per challenge', function () {
     return Promise.all([
       expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(1.*;/i),
       expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(2.*;/i),
