@@ -18,4 +18,19 @@ describe('Output', function () {
     })
     writeOutput('SQL')
   })
+
+  it('should log file system error to console', function () {
+    writeOutput.__set__({
+      console: {
+        log: function (message) {
+          expect(message).to.match(/Argh!/)
+        }
+      },
+      fs: {
+        writeFileAsync: function (path, data) {
+          return new Promise(function () { throw new Error('Argh!') })
+        }}
+    })
+    writeOutput('SQL')
+  })
 })
