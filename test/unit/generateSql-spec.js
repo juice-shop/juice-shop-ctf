@@ -19,19 +19,19 @@ describe('Generated SQL', function () {
   })
 
   it('should have DELETE statement prepended when option is chosen', function () {
-    expect(generateSql(challenges, true, false, '', progressBarMock)).to.eventually.match(/^delete from challenges;/i)
+    return expect(generateSql(challenges, true, false, '', progressBarMock)).to.eventually.match(/^delete from challenges;/i)
   })
 
   it('should not have DELETE statement prepended when option is not chosen', function () {
-    expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/^delete from challenges;/i)
+    return expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/^delete from challenges;/i)
   })
 
   it('should have SELECT statement appended when option is chosen', function () {
-    expect(generateSql(challenges, false, true, '', progressBarMock)).to.eventually.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, true, '', progressBarMock)).to.eventually.match(/select \* from challenges;\s*$/i)
   })
 
   it('should not have SELECT statement appended when option not is chosen', function () {
-    expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/select \* from challenges;\s*$/i)
   })
 
   it('should consist of one INSERT statement per challenge', function () {
@@ -45,6 +45,6 @@ describe('Generated SQL', function () {
   })
 
   it('should log generator error to console', function () {
-    expect(generateSql({c1: undefined}, false, false, '', progressBarMock)).to.be.rejectedWith('of undefined')
+    return expect(generateSql({c1: undefined}, false, false, '', progressBarMock)).to.be.rejectedWith('of undefined')
   })
 })

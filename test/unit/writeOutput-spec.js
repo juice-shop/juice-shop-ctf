@@ -1,3 +1,4 @@
+var Promise = require('bluebird')
 var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
@@ -17,7 +18,7 @@ describe('Output', function () {
           return new Promise(function (resolve) { resolve() })
         }}
     })
-    expect(writeOutput('SQL')).to.be.fulfilled
+    return expect(writeOutput('SQL')).to.be.fulfilled
   })
 
   it('should log file system error to console', function () {
@@ -27,6 +28,6 @@ describe('Output', function () {
           return new Promise(function () { throw new Error('Argh!') })
         }}
     })
-    expect(writeOutput('SQL')).to.be.rejectedWith('Argh!')
+    return expect(writeOutput('SQL')).to.be.rejectedWith('Argh!')
   })
 })
