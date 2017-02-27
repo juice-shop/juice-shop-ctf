@@ -22,6 +22,6 @@ describe('Challenges', function () {
         return new Promise(function (resolve, reject) { reject('Argh!') })
       }
     })
-    return expect(fetchChallenges('http://localh_%&$§rst:3000')).to.be.rejectedWith('Argh!')
+    return expect(fetchChallenges('http://localh_%&$§rst:3000')).to.be.rejectedWith('fetch challenges from API! Argh!')
   })
 })

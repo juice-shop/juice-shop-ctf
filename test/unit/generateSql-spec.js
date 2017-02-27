@@ -45,6 +45,10 @@ describe('Generated SQL', function () {
   })
 
   it('should log generator error to console', function () {
-    return expect(generateSql({c1: undefined}, false, false, '', progressBarMock)).to.be.rejectedWith('of undefined')
+    return expect(generateSql({c1: undefined}, false, false, '', progressBarMock)).to.be.rejectedWith('generate SQL statements! TypeError')
+  })
+
+  it('should fail when injecting invalid progress bar', function () {
+    return expect(generateSql({c1: undefined}, false, false, '', {})).to.be.rejectedWith('bar.tick is not a function')
   })
 })

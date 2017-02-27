@@ -25,7 +25,7 @@ describe('Secret key', function () {
         return new Promise(function (resolve, reject) { reject('Argh!') })
       }
     })
-    return expect(secretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Argh!')
+    return expect(secretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('fetch secret key from URL! Argh!')
   })
 })
 
