@@ -42,6 +42,10 @@ describe('Generated SQL', function () {
     ])
   })
 
+  it('should be empty when given no challenges', function () {
+    return expect(generateSql({}, false, false, '')).to.eventually.equal('')
+  })
+
   it('should log generator error to console', function () {
     return expect(generateSql({c1: undefined}, false, false, '')).to.be.rejectedWith('Failed to generate SQL statements! TypeError')
   })
