@@ -6,9 +6,9 @@
 [![bitHound Overall Score](https://www.bithound.io/github/bkimminich/juice-shop-ctf/badges/score.svg)](https://www.bithound.io/github/bkimminich/juice-shop-ctf)
 [![Dependency Status](https://gemnasium.com/badges/github.com/bkimminich/juice-shop-ctf.svg)](https://gemnasium.com/github.com/bkimminich/juice-shop-ctf)
 
-The [NPM package `juice-shop-ctf-cli` published from this repository](https://www.npmjs.com/package/juice-shop-ctf-cli) lets you create a list of `INSERT` statements for
+The NPM package [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli) lets you create a list of `INSERT` statements for
 the [CTFd](https://ctfd.io) database that will populate the platform for a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using
-OWASP Juice Shop.
+[OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
 ![Example of CLI usage](cli_usage_screenshot.png)
 
@@ -26,9 +26,13 @@ Open a command line and run:
 juice-shop-ctf
 ```
 
-Then simply follow the instructions of the command line tool. Finally, apply the generated `insert-ctfd-challenges.sql` following the steps described in the next section.
+Then simply follow the instructions of the command line tool.
 
-#### Setting up [CTFd](https://ctfd.io) and populating its database
+### Populating the [CTFd](https://ctfd.io) database
+
+Apply the generated `insert-ctfd-challenges.sql` following the steps describing your own CTFd setup.
+
+#### `docker-compose` setup (including MySQL container)
 
 1. Setup [Docker host and Docker compose](https://docs.docker.com/compose/install/).
 2. Follow steps 2-4 from [the CTFd Docker setup](https://github.com/isislab/CTFd/wiki/Deployment#docker) to download the source code, create containers and start them.
@@ -40,11 +44,16 @@ Then simply follow the instructions of the command line tool. Finally, apply the
    ports:
      - "3306:3306"
    ```
-6. You can then use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and run the `INSERT` statement you created.
+6. You can then use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and execute the `INSERT` statement you created.
 7. When that is done, browse back to your CTFd instance UI and check everything has worked correctly.
 8. If everything has worked, do another `docker-compose down`, remove the ports section you added to `docker-compose.yml` and then do `docker-compose up` again and you are ready to go!
 
-### Alternative approach without node.js
+#### Other setups (SQLite, PostgreSQL or MySQL)
+
+1. Perform any of [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
+2. Connect to your database and execute the `INSERT` statement you created.
+
+### _Deprecated_ setup without the `juice-shop-ctf-cli` module
 
 1. Download the
    [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
