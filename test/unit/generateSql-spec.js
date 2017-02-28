@@ -5,8 +5,6 @@ var expect = chai.expect
 var generateSql = require('../../lib/generateSql')
 
 describe('Generated SQL', function () {
-  var progressBarMock = { tick: function () {} }
-
   var challenges
   beforeEach(function () {
     challenges = {
@@ -19,36 +17,32 @@ describe('Generated SQL', function () {
   })
 
   it('should have DELETE statement prepended when option is chosen', function () {
-    return expect(generateSql(challenges, true, false, '', progressBarMock)).to.eventually.match(/^delete from challenges;/i)
+    return expect(generateSql(challenges, true, false, '')).to.eventually.match(/^delete from challenges;/i)
   })
 
   it('should not have DELETE statement prepended when option is not chosen', function () {
-    return expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/^delete from challenges;/i)
+    return expect(generateSql(challenges, false, false, '')).to.eventually.not.match(/^delete from challenges;/i)
   })
 
   it('should have SELECT statement appended when option is chosen', function () {
-    return expect(generateSql(challenges, false, true, '', progressBarMock)).to.eventually.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, true, '')).to.eventually.match(/select \* from challenges;\s*$/i)
   })
 
   it('should not have SELECT statement appended when option not is chosen', function () {
-    return expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.not.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, false, '')).to.eventually.not.match(/select \* from challenges;\s*$/i)
   })
 
   it('should consist of one INSERT statement per challenge', function () {
     return Promise.all([
-      expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(1.*;/i),
-      expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(2.*;/i),
-      expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(3.*;/i),
-      expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(4.*;/i),
-      expect(generateSql(challenges, false, false, '', progressBarMock)).to.eventually.match(/insert into challenges.*values \(5.*;/i)
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(1.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(2.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(3.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(4.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(5.*;/i)
     ])
   })
 
   it('should log generator error to console', function () {
-    return expect(generateSql({c1: undefined}, false, false, '', progressBarMock)).to.be.rejectedWith('Failed to generate SQL statements! TypeError')
-  })
-
-  it('should fail when injecting invalid progress bar', function () {
-    return expect(generateSql({c1: undefined}, false, false, '', {})).to.be.rejectedWith('bar.tick is not a function')
+    return expect(generateSql({c1: undefined}, false, false, '')).to.be.rejectedWith('Failed to generate SQL statements! TypeError')
   })
 })
