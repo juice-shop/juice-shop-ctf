@@ -3,11 +3,11 @@ var chai = require('chai')
 chai.use(require('chai-as-promised'))
 var expect = chai.expect
 var rewire = require('rewire')
-var writeOutput = rewire('../../lib/writeOutput')
+var writeToFile = rewire('../../lib/writeToFile')
 
-describe('Output', function () {
+describe('Output to file', function () {
   it('should be written to insert-ctfd-challenges.sql', function () {
-    writeOutput.__set__({
+    writeToFile.__set__({
       console: {
         log: function () {}
       },
@@ -18,16 +18,16 @@ describe('Output', function () {
           return new Promise(function (resolve) { resolve() })
         }}
     })
-    return expect(writeOutput('SQL')).to.be.fulfilled
+    return expect(writeToFile('SQL')).to.be.fulfilled
   })
 
   it('should log file system error to console', function () {
-    writeOutput.__set__({
+    writeToFile.__set__({
       fs: {
         writeFileAsync: function (path, data) {
           return new Promise(function () { throw new Error('Argh!') })
         }}
     })
-    return expect(writeOutput('SQL')).to.be.rejectedWith('Failed to write output to file! Error: Argh!')
+    return expect(writeToFile('SQL')).to.be.rejectedWith('Failed to write output to file! Error: Argh!')
   })
 })

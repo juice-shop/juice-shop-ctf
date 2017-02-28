@@ -5,7 +5,7 @@ var ProgressBar = require('progress')
 var secretKey = require('./lib/secretKey')
 var fetchChallenges = require('./lib/fetchChallenges')
 var generateSql = require('./lib/generateSql')
-var writeOutput = require('./lib/writeOutput')
+var writeToFile = require('./lib/writeToFile')
 
 var bar = new ProgressBar('Executing scripts [:bar] :percent', { total: 4 })
 
@@ -47,7 +47,7 @@ var juiceShopCtfCli = function () {
         bar.tick()
         generateSql(challenges, answers.deleteBeforeInsert, answers.selectAfterInsert, secretKey).then(function (sql) {
           bar.tick()
-          writeOutput(sql).then(function (file) {
+          writeToFile(sql).then(function (file) {
             bar.tick()
             console.log('SQL written to ' + file)
             console.log()
