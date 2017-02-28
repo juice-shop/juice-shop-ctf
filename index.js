@@ -1,13 +1,10 @@
 'use strict'
 var inquirer = require('inquirer')
 var colors = require('colors') // eslint-disable-line no-unused-vars
-var ProgressBar = require('progress')
 var secretKey = require('./lib/secretKey')
 var fetchChallenges = require('./lib/fetchChallenges')
 var generateSql = require('./lib/generateSql')
 var writeToFile = require('./lib/writeToFile')
-
-var bar = new ProgressBar('Executing scripts [:bar] :percent', { total: 4 })
 
 var juiceShopCtfCli = function () {
   var questions = [
@@ -42,13 +39,9 @@ var juiceShopCtfCli = function () {
   inquirer.prompt(questions).then(function (answers) {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {
-      bar.tick()
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
-        bar.tick()
         generateSql(challenges, answers.deleteBeforeInsert, answers.selectAfterInsert, secretKey).then(function (sql) {
-          bar.tick()
           writeToFile(sql).then(function (file) {
-            bar.tick()
             console.log('SQL written to ' + file)
             console.log()
             console.log('For a step-by-step guide to apply the INSERT statements to ' + 'CTFd'.bold + ', please refer to')

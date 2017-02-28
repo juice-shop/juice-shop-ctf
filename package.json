@@ -51,7 +51,6 @@
     "inquirer": "^3.0.1",
     "jssha": "^2.2.0",
     "path": "^0.12.7",
-    "progress": "^1.1.8",
     "request": "^2.79.0",
     "request-promise": "^4.1.1"
   },
