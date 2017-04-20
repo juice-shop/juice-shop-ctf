@@ -53,13 +53,6 @@ Apply the generated `insert-ctfd-challenges.sql` following the steps describing 
 1. Perform any of [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
 2. Connect to your database and execute the `INSERT` statement you created.
 
-### _Deprecated_ setup without the `juice-shop-ctf-cli` module
-
-1. Download the
-   [GenerateCTFdInserts.html](CTFd/GenerateCTFdInserts.html) file.
-2. Open that file in your local browser and follow the instructions
-   inside.
-
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
 > If you need help with the application setup please check the
