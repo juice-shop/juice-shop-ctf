@@ -65,7 +65,7 @@
     "mocha": "^3.2.0",
     "nyc": "^10.1.2",
     "rewire": "^2.5.2",
-    "standard": "^8.6.0",
+    "standard": "^10.0.2",
     "stryker": "^0.5.8",
     "stryker-api": "^0.4.2",
     "stryker-html-reporter": "^0.3.0",
