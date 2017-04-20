@@ -32,13 +32,23 @@ describe('Generated SQL', function () {
     return expect(generateSql(challenges, false, false, '')).to.eventually.not.match(/select \* from challenges;\s*$/i)
   })
 
-  it('should consist of one INSERT statement per challenge', function () {
+  it('should consist of one INSERT statement into "challenges" per challenge', function () {
     return Promise.all([
       expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(1.*;/i),
       expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(2.*;/i),
       expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(3.*;/i),
       expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(4.*;/i),
       expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into challenges.*values \(5.*;/i)
+    ])
+  })
+
+  it('should consist of one INSERT statement into "keys" per challenge', function () {
+    return Promise.all([
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into keys.*values \(1, 1.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into keys.*values \(2, 2.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into keys.*values \(3, 3.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into keys.*values \(4, 4.*;/i),
+      expect(generateSql(challenges, false, false, '')).to.eventually.match(/insert into keys.*values \(5, 5.*;/i)
     ])
   })
 
