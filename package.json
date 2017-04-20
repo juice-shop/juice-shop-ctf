@@ -76,6 +76,11 @@
       "node",
       "mocha",
       "chai"
+    ],
+    "globals": [
+      "it",
+      "describe",
+      "beforeEach"
     ]
   },
   "nyc": {
