@@ -44,7 +44,7 @@ describe('juice-shop-ctf', function () {
 
   it('should fail on invalid ctf.key URL', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, 'http://i.n.v.a.l.i.d/ctf-key', ENTER, ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 

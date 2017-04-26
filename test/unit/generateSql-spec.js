@@ -25,11 +25,11 @@ describe('Generated SQL', function () {
   })
 
   it('should have SELECT statement appended when option is chosen', function () {
-    return expect(generateSql(challenges, false, true, '')).to.eventually.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, true, '')).to.eventually.match(/select .* from challenges .* join keys .*;\s*$/i)
   })
 
   it('should not have SELECT statement appended when option not is chosen', function () {
-    return expect(generateSql(challenges, false, false, '')).to.eventually.not.match(/select \* from challenges;\s*$/i)
+    return expect(generateSql(challenges, false, false, '')).to.eventually.not.match(/select .*;\s*$/i)
   })
 
   it('should consist of one INSERT statement into "challenges" per challenge', function () {
