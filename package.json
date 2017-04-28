@@ -23,6 +23,7 @@
     "ctfd",
     "cli"
   ],
+  "preferGlobal": true,
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
