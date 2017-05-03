@@ -6,8 +6,12 @@
 [![bitHound Overall Score](https://www.bithound.io/github/bkimminich/juice-shop-ctf/badges/score.svg)](https://www.bithound.io/github/bkimminich/juice-shop-ctf)
 [![Dependency Status](https://gemnasium.com/badges/github.com/bkimminich/juice-shop-ctf.svg)](https://gemnasium.com/github.com/bkimminich/juice-shop-ctf)
 
-The NPM package [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli) lets you create a list of `INSERT` statements for
-the [CTFd](https://ctfd.io) database that will populate the platform for a [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) event using
+The NPM package
+[`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
+lets you create a list of `INSERT` statements for the
+[CTFd](https://ctfd.io) database that will populate the platform for a
+[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
+event using
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
 ![Example of CLI usage](cli_usage_screenshot.png)
@@ -30,35 +34,55 @@ Then simply follow the instructions of the command line tool.
 
 ### Populating the [CTFd](https://ctfd.io) database
 
-Apply the generated `insert-ctfd-challenges.sql` following the steps describing your own CTFd setup.
+Apply the generated `insert-ctfd-challenges.sql` following the steps
+describing your own CTFd setup.
 
 #### Default setup (including SQLite database)
 
 1. Get CTFd with `git clone https://github.com/CTFd/CTFd.git`.
-2. Perform steps 1 and 3 from [the CTFd installation instructions](https://github.com/CTFd/CTFd#install).
-3. Use your favourite SQLite client to connect to the CTFd database and execute the `INSERT` statements you created.
-4. Browse to your CTFd instance UI (by default <http://127.0.0.1:4000>) and create an admin user and CTF name
+2. Perform steps 1 and 3 from
+   [the CTFd installation instructions](https://github.com/CTFd/CTFd#install).
+3. Use your favourite SQLite client to connect to the CTFd database and
+   execute the `INSERT` statements you created.
+4. Browse to your CTFd instance UI (by default <http://127.0.0.1:4000>)
+   and create an admin user and CTF name
 
 #### `docker-compose` setup (including MySQL container)
 
-5. Setup [Docker host and Docker compose](https://docs.docker.com/compose/install/).
-6. Follow steps 2-4 from [the CTFd Docker setup](https://github.com/isislab/CTFd/wiki/Deployment#docker) to download the source code, create containers and start them.
-7. After running `docker-compose up` from previous step, you should be able to browse to your CTFd instance UI (`<<docker host IP>>:8000` by default) and create an admin user and CTF name.
-8. Once you have done this, run `docker-compose down` or use `Ctrl-C` to shut down CTFd. Note: Unlike a usual Docker container, data will persist even afterwards.
-9. Add the following section to the `docker-compose.yml` file and then run `docker-compose up` again:
+1. Setup
+   [Docker host and Docker compose](https://docs.docker.com/compose/install/).
+2. Follow steps 2-4 from
+   [the CTFd Docker setup](https://github.com/isislab/CTFd/wiki/Deployment#docker)
+   to download the source code, create containers and start them.
+3. After running `docker-compose up` from previous step, you should be
+   able to browse to your CTFd instance UI (`<<docker host IP>>:8000` by
+   default) and create an admin user and CTF name.
+4. Once you have done this, run `docker-compose down` or use `Ctrl-C` to
+   shut down CTFd. Note: Unlike a usual Docker container, data will
+   persist even afterwards.
+5. Add the following section to the `docker-compose.yml` file and then
+   run `docker-compose up` again:
 
    ```
    ports:
      - "3306:3306"
    ```
-10. Use your favourite MySQL client to connect to the CTFd database (default credentials are root with no password) and execute the `INSERT` statements you created.
-11. Browse back to your CTFd instance UI and check everything has worked correctly.
-12. If everything has worked, do another `docker-compose down`, remove the ports section you added to `docker-compose.yml` and then do `docker-compose up` again and you are ready to go!
+
+6. Use your favourite MySQL client to connect to the CTFd database
+   (default credentials are root with no password) and execute the
+   `INSERT` statements you created.
+7. Browse back to your CTFd instance UI and check everything has worked
+   correctly.
+8. If everything has worked, do another `docker-compose down`, remove
+   the ports section you added to `docker-compose.yml` and then do
+   `docker-compose up` again and you are ready to go!
 
 #### Other setups (PostgreSQL or MySQL)
 
-1. Perform any of [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
-2. Launch your CTFd instance and perform the remaining setup similar to [the SQLite default setup](#default-setup-including-sqlite-database).
+1. Perform any of
+   [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
+2. Launch your CTFd instance and perform the remaining setup similar to
+   [the SQLite default setup](#default-setup-including-sqlite-database).
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 

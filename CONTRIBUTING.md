@@ -36,10 +36,13 @@ always be in a release-ready state.
 There is a full suite containing
 
 * independent unit tests for each module
+
 ```
 npm test
 ```
+
 * an e2e test simulating real input to the CLI
+
 ```
 npm run e2e
 ```
@@ -48,9 +51,9 @@ npm run e2e
 ### JavaScript Standard Style Guide
 
 The `npm test` script verifies code complicance with the `standard`
-style before running the unit tests. If PRs deviate from this coding style,
-they will now immediately fail their build and will not be merged until
-compliant.
+style before running the unit tests. If PRs deviate from this coding
+style, they will now immediately fail their build and will not be merged
+until compliant.
 
 [![JavaScript Style Guide](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
 
