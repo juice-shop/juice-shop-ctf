@@ -18,7 +18,7 @@ describe('juice-shop-ctf', function () {
 
   it('should accept defaults for all input questions', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/SQL written to/i).and
       .eventually.match(/DELETE all CTFd Challenges before INSERT statements\? Yes/i).and
       .eventually.match(/SELECT all CTFd Challenges after INSERT statements\? Yes/i)
@@ -26,32 +26,32 @@ describe('juice-shop-ctf', function () {
 
   it('should not insert DELETE statement when not chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'n', ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'n', ENTER, ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/DELETE all CTFd Challenges before INSERT statements\? No/i)
   })
 
   it('should not insert SELECT statement when not chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, 'n', ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, 'n', ENTER], 1000)).to
       .eventually.match(/SELECT all CTFd Challenges after INSERT statements\? No/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, ['localhorst', ENTER, ENTER, ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, ['localhorst', ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/Failed to fetch challenges from API!/i)
   })
 
   it('should fail on invalid ctf.key URL', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
   it('should fail when output file cannot be written', function () {
     this.timeout(20000)
     fs.openSync('insert-ctfd-challenges.sql', 'w', 0)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1000)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1000)).to
       .eventually.match(/Failed to write output to file!/i)
   })
 })

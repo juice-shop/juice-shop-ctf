@@ -27,6 +27,20 @@ var juiceShopCtfCli = function () {
       default: true
     },
     {
+      type: 'list',
+      name: 'insertHints',
+      message: 'INSERT a text hint along with each CTFd Challenge?',
+      choices: ['No text hints', 'Free text hints', 'Paid text hints'],
+      default: 0
+    },
+    {
+      type: 'list',
+      name: 'insertHintUrls',
+      message: 'INSERT a hint URL along with each CTFd Challenge?',
+      choices: ['No hint URLs', 'Free hint URLs', 'Paid hint URLs'],
+      default: 0
+    },
+    {
       type: 'confirm',
       name: 'selectAfterInsert',
       message: 'SELECT all CTFd Challenges after INSERT statements?',
@@ -40,7 +54,7 @@ var juiceShopCtfCli = function () {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
-        generateSql(challenges, answers.deleteBeforeInsert, answers.selectAfterInsert, secretKey).then(function (sql) {
+        generateSql(challenges, answers.deleteBeforeInsert, answers.insertHints, answers.insertHintUrls, answers.selectAfterInsert, secretKey).then(function (sql) {
           writeToFile(sql).then(function (file) {
             console.log('SQL written to ' + file)
             console.log()
