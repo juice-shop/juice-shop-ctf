@@ -14,8 +14,6 @@ lets you create a list of `INSERT` statements for the
 event using
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
-![Example of CLI usage](cli_usage_screenshot.png)
-
 ## Installation [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
 ```
@@ -30,7 +28,9 @@ Open a command line and run:
 juice-shop-ctf
 ```
 
-Then simply follow the instructions of the command line tool.
+Then simply follow the instructions of the command line tool:
+
+![Example of CLI usage](screenshots/cli_usage_screenshot.png)
 
 ### Populating the [CTFd](https://ctfd.io) database
 
@@ -83,6 +83,12 @@ describing your own CTFd setup.
    [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
 2. Launch your CTFd instance and perform the remaining setup similar to
    [the SQLite default setup](#default-setup-including-sqlite-database).
+
+## Screenshots
+
+![CTFd challenge overview](screenshots/ctfd_1.png)
+
+![CTFd challenge details](screenshots/ctfd_2.png)
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
