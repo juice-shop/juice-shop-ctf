@@ -5,7 +5,7 @@ var secretKey = require('./lib/secretKey')
 var fetchChallenges = require('./lib/fetchChallenges')
 var generateSql = require('./lib/generateSql')
 var writeToFile = require('./lib/writeToFile')
-var answers = require('./lib/answers')
+var options = require('./lib/options')
 
 var juiceShopCtfCli = function () {
   var questions = [
@@ -31,14 +31,14 @@ var juiceShopCtfCli = function () {
       type: 'list',
       name: 'insertHints',
       message: 'INSERT a text hint along with each CTFd Challenge?',
-      choices: [answers.noTextHints, answers.freeTextHints, answers.paidTextHints],
+      choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
       default: 0
     },
     {
       type: 'list',
       name: 'insertHintUrls',
       message: 'INSERT a hint URL along with each CTFd Challenge?',
-      choices: [answers.noHintUrls, answers.freeHintUrls, answers.paidHintUrls],
+      choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
       default: 0
     },
     {
