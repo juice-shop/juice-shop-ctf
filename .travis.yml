@@ -1,11 +1,18 @@
 language: node_js
 node_js:
 - 4
-- 6  # recommended version
+- 6
 - 7
 before_install:
 - rm -rf node_modules
 script:
 - npm test && npm run e2e
 after_success: npm run coverage
+deploy:
+  provider: npm
+  email: npmjs.org@kimminich.de
+  api_key:
+    secure: m0nMDVCDa3N4fKGH5K96dAS/xN4qCWPODD2dL/ykyiG4NY4gfeRFP/704YXOEZepo71lJo/eADfqN09bwINeAvrITctX+NxWWFVmZmUB2cl/44Uiju/LSGp6iCpAmAGbsvP2mgrpkFdJ7QMvEVYLgYyExO27W/gdwQqVNT3ahPFfk4+xrjPfwg7H297RHG7Ovq/g6mBfOyucX3EfZHLUDzAxGcHaxqFOTp6zur9Y5oSDtCEn1ndfGoKBwwC9v5/8bGrBFzmyFRMSCgupa4ouajCQmzCZ1Egudik1y+VwLwBiVEZrP2RtJz5RBXQfiouwBm00nKpLgbEM6aPbGOhIBloR0EU7GdKQmw4zwGKaLDbxjGE6Obuc0vfTVbJxBbCSQ9ofEc5GUGtYj7auzDYccc3GutC2WzjPrtJ6dryM74zRAavAGFe2D4YUXBcHYSl687rPEUGD/JZHsUqrlTXEuSfPMc0bedzb1Ik/Aeip4DHGEUMOjDoRn/IkRYIvH9GYr1ki/XRRmkHTodQI5Pyp1wYUpCLRoz7bd9qkPkFGI4aw0oE9xnCHgy5ltdJrV/2t07Afc2ZbXYQFqtntfwWTQAVgl+qXmVkQXHq2rsjRZbrXhEHGA/LxZL0g+ikxVPV5wmfqNYdw14HuPDsaEGjiJvo2FctCehBj6GSmpcqNYBo=
+  on:
+    tags: true
 sudo: false
