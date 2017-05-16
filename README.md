@@ -30,7 +30,7 @@ juice-shop-ctf
 
 Then simply follow the instructions of the command line tool:
 
-![Example of CLI usage](screenshots/cli_usage_screenshot.png)
+[![asciicast](https://asciinema.org/a/10i99ciofsl16j442rkn2iunb.png)](https://asciinema.org/a/10i99ciofsl16j442rkn2iunb)
 
 ### Populating the [CTFd](https://ctfd.io) database
 
