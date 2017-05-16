@@ -17,7 +17,7 @@ event using
 ## Installation [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
 ```
-npm i -g juice-shop-ctf-cli
+npm install -g juice-shop-ctf-cli
 ```
 
 ## Usage
