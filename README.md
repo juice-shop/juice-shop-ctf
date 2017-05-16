@@ -77,13 +77,6 @@ describing your own CTFd setup.
    the ports section you added to `docker-compose.yml` and then do
    `docker-compose up` again and you are ready to go!
 
-#### Other setups (PostgreSQL or MySQL)
-
-1. Perform any of
-   [the CTFd database setups](https://github.com/isislab/CTFd/wiki/SQL-Server-Setup)
-2. Launch your CTFd instance and perform the remaining setup similar to
-   [the SQLite default setup](#default-setup-including-sqlite-database).
-
 ## Screenshots
 
 ![CTFd challenge overview](screenshots/ctfd_1.png)
