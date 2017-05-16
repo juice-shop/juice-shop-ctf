@@ -28,4 +28,3 @@ describe('Secret key', function () {
     return expect(secretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch secret key from URL! Argh!')
   })
 })
-
