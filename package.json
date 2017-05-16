@@ -67,10 +67,10 @@
     "nyc": "^10.1.2",
     "rewire": "^2.5.2",
     "standard": "~8.6",
-    "stryker": "^0.5.8",
-    "stryker-api": "^0.4.2",
-    "stryker-html-reporter": "^0.3.0",
-    "stryker-mocha-runner": "^0.2.0"
+    "stryker": "^0.6.1",
+    "stryker-api": "^0.5.0",
+    "stryker-html-reporter": "^0.4.1",
+    "stryker-mocha-runner": "^0.3.1"
   },
   "standard": {
     "env": [
