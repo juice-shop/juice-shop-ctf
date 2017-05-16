@@ -60,7 +60,7 @@ var juiceShopCtfCli = function () {
             console.log('SQL written to ' + file)
             console.log()
             console.log('For a step-by-step guide to apply the INSERT statements to ' + 'CTFd'.bold + ', please refer to')
-            console.log('https://github.com/bkimminich/juice-shop-ctf#populating-the-ctfd-database'.gray)
+            console.log('https://github.com/bkimminich/juice-shop-ctf#populating-the-ctfd-database'.bold)
           }, function (error) {
             console.log(error.red)
           })
