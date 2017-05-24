@@ -50,7 +50,7 @@ var juiceShopCtfCli = function () {
   ]
 
   console.log()
-  console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' (>=1.0.1) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' (>=1.0.2) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
   inquirer.prompt(questions).then(function (answers) {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {
