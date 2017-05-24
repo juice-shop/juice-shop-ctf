@@ -96,7 +96,7 @@ describing your own CTFd setup.
   VirtualBox. For CTFd you need ports `8000` permanantly and `3306`
   during setup.
 
-## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![HuBoard](http://img.shields.io/badge/Hu-Board-blue.svg)](https://huboard.com/bkimminich/juice-shop-ctf)
+## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Stories in Ready](https://badge.waffle.io/bkimminich/juice-shop-ctf.svg?label=ready&title=Ready)](http://waffle.io/bkimminich/juice-shop-ctf)
 
 Found a bug? Got an idea for enhancement? Improvement for cheating
 prevention?
