@@ -14,7 +14,7 @@ lets you create a list of `INSERT` statements for the
 event using
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
-## Installation [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
+## Setup [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
 ```
 npm install -g juice-shop-ctf-cli
