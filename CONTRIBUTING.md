@@ -31,24 +31,7 @@ your fork. That allows for some post-merge changes by the team without
 directly compromising the ```master``` branch, which is supposed to hold
 always be in a release-ready state.
 
-## Unit & end-to-end Tests
-
-There is a full suite containing
-
-* independent unit tests for each module
-
-```
-npm test
-```
-
-* an e2e test simulating real input to the CLI
-
-```
-npm run e2e
-```
-
-
-### JavaScript Standard Style Guide
+## JavaScript Standard Style Guide
 
 The `npm test` script verifies code complicance with the `standard`
 style before running the unit tests. If PRs deviate from this coding
@@ -62,7 +45,34 @@ until compliant.
 > style issues automatically without breaking your code. You might need
 > to `npm i -g standard` first.
 
-## Mutation Tests
+## Testing
+
+Pull Requests are verified to pass all of the following test stages
+during the
+[continuous integration build](https://travis-ci.org/bkimminich/juice-shop-ctf).
+It is recommended that you run these tests on your local computer to
+verify they pass before submitting a PR. New features should be
+accompanied by an appropriate number of corresponding tests to verify
+they behave as intended.
+
+### Unit Tests
+
+There is a full suite containing independent unit tests for each module.
+
+```
+npm test
+```
+
+### End-to-end Tests
+
+Thean e2e tests simulate real input to the CLI and verify the printed
+output to the console.
+
+```
+npm run e2e
+```
+
+### Mutation Tests
 
 The [mutation tests](https://en.wikipedia.org/wiki/Mutation_testing)
 ensure the quality of the unit test suite by making small changes to the
@@ -75,5 +85,6 @@ npm run stryker
 
 > Only the unit tests are covered by mutation tests. For the end-to-end
 > tests this would not be suitable for performance and concurrency
-> reasons.
+> reasons. The mutation tests are intentionally not executed on
+> Travis-CI due to their significant execution time.
 
