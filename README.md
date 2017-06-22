@@ -30,11 +30,11 @@ Open a command line and run:
 juice-shop-ctf
 ```
 
-Then just follow the instructions of the interactive command line tool.
+Then follow the instructions of the interactive command line tool.
 
-For detailed step-by-step instructions and examples please refer to
+**For detailed step-by-step instructions and examples please refer to
 [the _Setting up CTFd for Juice Shop_ in the _Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#setting-up-ctfd-for-juice-shop)
-of our (free) companion guide ebook.
+of our (free) companion guide ebook.**
 
 ## Screenshots
 
