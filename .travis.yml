@@ -6,9 +6,15 @@ node_js:
 before_install:
 - rm -rf node_modules
 script:
-- npm test && npm run e2e
+- npm test
 jobs:
   include:
+    - stage: e2e test
+      script: npm run e2e
+      node_js:
+      - 4
+      - 6
+      - 7
     - stage: coverage
       script: npm run coverage
       node_js: 6
