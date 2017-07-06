@@ -7,14 +7,19 @@ before_install:
 - rm -rf node_modules
 script:
 - npm test && npm run e2e
-after_success: npm run coverage
+jobs:
+  include:
+    - stage: coverage
+      script: npm run coverage
+      node_js: 6
+    - stage: deploy
+      script: skip
+      node_js: 6
+      provider: npm
+      email: npmjs.org@kimminich.de
+      api_key:
+        secure: kQth2GUlaoASUG/gE4hc3l3FJrwjfhNhIvirx3aGbw/DB0ljw0jA9U5P1vt+sdlOMoQffHhmbE6Gb4jvQmw1+xIfQqL6BdJTa07qefkrKN8oeDHuXNnz5zKkpiCj76sPblIFVpwTGWrAqCcro+hJUsEBlWCr4TwOeWZOJNBvkxxAUwVn44fVcshWIXQo5rchF4ywPPcJSRY3P4rFkxyvfmgdq5g7ka7Gyr8t99Ahg7iI7co0sKgH7aZdz8lxJwfUAnULatcsU+cVCIv91xkFMhw4avCSC1hO9KBNlZpd8Db4l9Wa4Kgd5+FdevPenDoDEUlCrYCUEb82oWDeZrNYf2oATmBbRIMm8NBnW0kAvBdXuSFopA/1IIvinllwj2gdnj7WX1xkA4G2A+PwbTyMqmkqYWDcGRUJYtJf2jJOsH1SdSNJ3H3CqWfChDq73YpEwG6cdYvhgBIIeRAt3i7r70bbT9FfDRevcBoumO21hsrpa4XIPblTSubk+sbraoca71KCbi2hMcNAseFGL6hn6g9JsPZMTvMuMz2uGpLGv6xwC4G0tmKJF+6QHVJkAFnHMePVhJ8oP9M/ZKo4iSrKuILH50RGI12+kLLr4SqqWUNY7XQwwVJr9zmG/Is982MWiUMvrsEgBS3jPoZ3YnXOvdthmLqBkhZiD0P0VmiGj38=
+      on:
+        tags: true
+        repo: bkimminich/juice-shop-ctf
 sudo: false
-deploy:
-  provider: npm
-  email: npmjs.org@kimminich.de
-  api_key:
-    secure: kQth2GUlaoASUG/gE4hc3l3FJrwjfhNhIvirx3aGbw/DB0ljw0jA9U5P1vt+sdlOMoQffHhmbE6Gb4jvQmw1+xIfQqL6BdJTa07qefkrKN8oeDHuXNnz5zKkpiCj76sPblIFVpwTGWrAqCcro+hJUsEBlWCr4TwOeWZOJNBvkxxAUwVn44fVcshWIXQo5rchF4ywPPcJSRY3P4rFkxyvfmgdq5g7ka7Gyr8t99Ahg7iI7co0sKgH7aZdz8lxJwfUAnULatcsU+cVCIv91xkFMhw4avCSC1hO9KBNlZpd8Db4l9Wa4Kgd5+FdevPenDoDEUlCrYCUEb82oWDeZrNYf2oATmBbRIMm8NBnW0kAvBdXuSFopA/1IIvinllwj2gdnj7WX1xkA4G2A+PwbTyMqmkqYWDcGRUJYtJf2jJOsH1SdSNJ3H3CqWfChDq73YpEwG6cdYvhgBIIeRAt3i7r70bbT9FfDRevcBoumO21hsrpa4XIPblTSubk+sbraoca71KCbi2hMcNAseFGL6hn6g9JsPZMTvMuMz2uGpLGv6xwC4G0tmKJF+6QHVJkAFnHMePVhJ8oP9M/ZKo4iSrKuILH50RGI12+kLLr4SqqWUNY7XQwwVJr9zmG/Is982MWiUMvrsEgBS3jPoZ3YnXOvdthmLqBkhZiD0P0VmiGj38=
-  on:
-    tags: true
-    repo: bkimminich/juice-shop-ctf
-    node: 6
