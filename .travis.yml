@@ -9,12 +9,15 @@ script:
 - npm test
 jobs:
   include:
-    - stage: e2e test
+    - stage: test e2e
       script: npm run e2e
-      node_js:
-      - 4
-      - 6
-      - 7
+      node_js: 4
+    - stage: test e2e
+      script: npm run e2e
+      node_js: 6
+    - stage: test e2e
+      script: npm run e2e
+      node_js: 7
     - stage: coverage
       script: npm run coverage
       node_js: 6
