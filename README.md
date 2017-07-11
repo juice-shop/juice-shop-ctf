@@ -40,7 +40,7 @@ of our (free) companion guide ebook.**
 
 ![CTFd challenge overview](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/img/ctfd_1.png)
 
-![CTFd challenge details](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctfd_2.png)
+![CTFd challenge details](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/img/ctfd_2.png)
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
