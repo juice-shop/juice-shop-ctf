@@ -47,7 +47,7 @@
     "node": ">=4 <9"
   },
   "dependencies": {
-    "bluebird": "~3.4",
+    "bluebird": "~3.5",
     "colors": "~1.1",
     "inquirer": "~3.2",
     "jssha": "~2.3",
