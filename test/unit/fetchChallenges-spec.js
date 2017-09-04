@@ -19,7 +19,7 @@ describe('Challenges', function () {
   it('should log retrieval error to console', function () {
     fetchChallenges.__set__({
       request: function () {
-        return new Promise(function (resolve, reject) { reject('Argh!') })
+        return new Promise(function (resolve, reject) { reject(new Error('Argh!')) })
       }
     })
     return expect(fetchChallenges('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch challenges from API! Argh!')

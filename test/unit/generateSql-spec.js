@@ -58,7 +58,7 @@ describe('Generated SQL', function () {
   })
 
   it('should log generator error to console', function () {
-    return expect(generateSql({c1: undefined}, false, options.noTextHints, options.noHintUrls, false, '')).to.be.rejectedWith('Failed to generate SQL statements! TypeError')
+    return expect(generateSql({c1: undefined}, false, options.noTextHints, options.noHintUrls, false, '')).to.be.rejectedWith('Failed to generate SQL statements! Cannot read property \'difficulty\' of undefined')
   })
 
   it('should INSERT a text hint for a challenge that has a hint defined', function () {

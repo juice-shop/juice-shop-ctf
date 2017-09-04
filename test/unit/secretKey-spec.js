@@ -22,7 +22,7 @@ describe('Secret key', function () {
   it('should log retrieval error to console', function () {
     secretKey.__set__({
       request: function () {
-        return new Promise(function (resolve, reject) { reject('Argh!') })
+        return new Promise(function (resolve, reject) { reject(new Error('Argh!')) })
       }
     })
     return expect(secretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch secret key from URL! Argh!')

@@ -44,33 +44,33 @@
     "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
-    "node": "~4 ~6 ~7"
+    "node": ">=4 <9"
   },
   "dependencies": {
-    "bluebird": "^3.4.7",
-    "colors": "^1.1.2",
-    "inquirer": "^3.0.1",
-    "jssha": "^2.2.0",
-    "path": "^0.12.7",
-    "request": "^2.79.0",
-    "request-promise": "^4.1.1"
+    "bluebird": "~3.4",
+    "colors": "~1.1",
+    "inquirer": "~3.2",
+    "jssha": "~2.3",
+    "path": "~0.12",
+    "request": "~2.81",
+    "request-promise": "~4.2"
   },
   "devDependencies": {
-    "ava": "^0.19.1",
-    "chai": "^3.5.0",
-    "chai-as-promised": "^6.0.0",
-    "chai-spies": "^0.7.1",
-    "coveralls": "^2.11.16",
-    "inquirer-test": "^1.0.5",
-    "lockfile": "^1.0.3",
-    "mocha": "^3.2.0",
-    "nyc": "^10.1.2",
-    "rewire": "^2.5.2",
-    "standard": "~8.6",
-    "stryker": "^0.6.1",
-    "stryker-api": "^0.5.0",
-    "stryker-html-reporter": "^0.4.1",
-    "stryker-mocha-runner": "^0.3.1"
+    "ava": "~0",
+    "chai": "~4",
+    "chai-as-promised": "~7",
+    "chai-spies": "~0",
+    "coveralls": "~2",
+    "inquirer-test": "~1",
+    "lockfile": "~1",
+    "mocha": "~3",
+    "nyc": "~11",
+    "rewire": "~2",
+    "standard": "~10",
+    "stryker": "~0",
+    "stryker-api": "~0",
+    "stryker-html-reporter": "~0",
+    "stryker-mocha-runner": "~0"
   },
   "standard": {
     "env": [

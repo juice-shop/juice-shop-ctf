@@ -28,6 +28,6 @@ describe('Output to file', function () {
           return new Promise(function () { throw new Error('Argh!') })
         }}
     })
-    return expect(writeToFile('SQL')).to.be.rejectedWith('Failed to write output to file! Error: Argh!')
+    return expect(writeToFile('SQL')).to.be.rejectedWith('Failed to write output to file! Argh!')
   })
 })
