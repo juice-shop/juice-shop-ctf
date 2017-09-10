@@ -8,13 +8,14 @@ var DOWN = inquirer.DOWN
 var fs = require('fs')
 var path = require('path')
 var dateFormat = require('dateformat')
+var outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
 
 const juiceShopCtfCli = path.join(__dirname, '../../bin/juice-shop-ctf.js')
 
 describe('juice-shop-ctf', function () {
   beforeEach(function () {
-    if (fs.existsSync('insert-ctfd-challenges.sql')) {
-      fs.unlinkSync('insert-ctfd-challenges.sql')
+    if (fs.existsSync(outputFile)) {
+      fs.unlinkSync(outputFile)
     }
   })
 
@@ -23,7 +24,7 @@ describe('juice-shop-ctf', function () {
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/ZIP-archive written to /i).and
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
-      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i).and
+      .eventually.match(/Insert a hint URL along with eac CTFd Challenge\? No hint URLs/i).and
   })
 
   it('should insert free hints when chosen', function () {
@@ -64,8 +65,7 @@ describe('juice-shop-ctf', function () {
 
   it('should fail when output file cannot be written', function () {
     this.timeout(20000)
-    var fileName = 'OWASP Juice Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
-    fs.openSync(fileName, 'w', 0)
+    fs.openSync(outputFile, 'w', 0)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to write output to file!/i)
   })

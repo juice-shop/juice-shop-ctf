@@ -17,4 +17,4 @@ node_modules/
 npm-debug.log.*
 
 # App
-insert-ctfd-challenges.sql
+OWASP_Juice_Shop.*.zip
