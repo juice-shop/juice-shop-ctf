@@ -14,7 +14,7 @@ lets you create a ZIP-archive compatible with
 event against
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
-[![asciicast](https://asciinema.org/a/120833.png)](https://asciinema.org/a/120833)
+[![asciicast](https://asciinema.org/a/XXXXXXX.png)](https://asciinema.org/a/XXXXXXX)
 
 ## Setup [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
@@ -52,8 +52,7 @@ of our (free) companion guide ebook.**
 - If using Docker Toolbox on Windows make sure that you also enable port
   forwarding for all required ports from Host `127.0.0.1:XXXX` to
   `0.0.0.0:XXXX` for TCP in the `default` VM's network adapter in
-  VirtualBox. For CTFd you need ports `8000` permanantly and `3306`
-  during setup.
+  VirtualBox. For CTFd you need to forward port `8000`.
 
 ## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Stories in Ready](https://badge.waffle.io/bkimminich/juice-shop-ctf.svg?label=ready&title=Ready)](http://waffle.io/bkimminich/juice-shop-ctf)
 
