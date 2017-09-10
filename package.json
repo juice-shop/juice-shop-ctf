@@ -48,9 +48,12 @@
   },
   "dependencies": {
     "bluebird": "~3.5",
+    "chai-things": "^0.2.0",
     "colors": "~1.1",
+    "dateformat": "~2.0",
     "inquirer": "~3.2",
     "jssha": "~2.3",
+    "node-zip": "~1.1",
     "path": "~0.12",
     "request": "~2.81",
     "request-promise": "~4.2"

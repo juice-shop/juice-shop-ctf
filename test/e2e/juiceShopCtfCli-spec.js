@@ -7,6 +7,7 @@ var ENTER = inquirer.ENTER
 var DOWN = inquirer.DOWN
 var fs = require('fs')
 var path = require('path')
+var dateFormat = require('dateformat')
 
 const juiceShopCtfCli = path.join(__dirname, '../../bin/juice-shop-ctf.js')
 
@@ -21,32 +22,32 @@ describe('juice-shop-ctf', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/ZIP-archive written to /i).and
-      .eventually.match(/INSERT a text hint along with each CTFd Challenge\? No text hints/i).and
-      .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? No hint URLs/i).and
+      .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
+      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i).and
   })
 
   it('should insert free hints when chosen', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
-      .eventually.match(/INSERT a text hint along with each CTFd Challenge\? Free text hints/i)
+      .eventually.match(/Insert a text hint along with each CTFd Challenge\? Free text hints/i)
   })
 
   it('should insert paid hints when chosen', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
-      .eventually.match(/INSERT a text hint along with each CTFd Challenge\? Paid text hints/i)
+      .eventually.match(/Insert a text hint along with each CTFd Challenge\? Paid text hints/i)
   })
 
   it('should insert free hint URLs when chosen', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
-      .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? Free hint URLs/i)
+      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Free hint URLs/i)
   })
 
   it('should insert paid hint URLs when chosen', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
-      .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? Paid hint URLs/i)
+      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Paid hint URLs/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
@@ -63,7 +64,8 @@ describe('juice-shop-ctf', function () {
 
   it('should fail when output file cannot be written', function () {
     this.timeout(20000)
-    fs.openSync('insert-ctfd-challenges.sql', 'w', 0)
+    var fileName = 'OWASP Juice Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
+    fs.openSync(fileName, 'w', 0)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to write output to file!/i)
   })

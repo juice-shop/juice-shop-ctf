@@ -3,8 +3,8 @@ var inquirer = require('inquirer')
 var colors = require('colors') // eslint-disable-line no-unused-vars
 var secretKey = require('./lib/secretKey')
 var fetchChallenges = require('./lib/fetchChallenges')
-var generateSql = require('./lib/generateSql')
-var writeToFile = require('./lib/writeToFile')
+var generateData = require('./lib/generateData')
+var writeToZipFile = require('./lib/writeToZipFile')
 var options = require('./lib/options')
 
 var juiceShopCtfCli = function () {
@@ -24,14 +24,14 @@ var juiceShopCtfCli = function () {
     {
       type: 'list',
       name: 'insertHints',
-      message: 'INSERT a text hint along with each CTFd Challenge?',
+      message: 'Insert a text hint along with each CTFd Challenge?',
       choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
       default: 0
     },
     {
       type: 'list',
       name: 'insertHintUrls',
-      message: 'INSERT a hint URL along with each CTFd Challenge?',
+      message: 'Insert a hint URL along with each CTFd Challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
       default: 0
     }
@@ -43,8 +43,8 @@ var juiceShopCtfCli = function () {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
-        generateSql(challenges, answers.insertHints, answers.insertHintUrls, secretKey).then(function (sql) {
-          writeToFile(sql).then(function (file) {
+        generateData(challenges, answers.insertHints, answers.insertHintUrls, secretKey).then(function (data) {
+          writeToZipFile(data).then(function (file) {
             console.log('ZIP-archive written to ' + file)
             console.log()
             console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
