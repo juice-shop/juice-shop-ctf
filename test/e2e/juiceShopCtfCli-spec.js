@@ -19,66 +19,52 @@ describe('juice-shop-ctf', function () {
 
   it('should accept defaults for all input questions', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
-      .eventually.match(/SQL written to/i).and
-      .eventually.match(/DELETE all CTFd Challenges before INSERT statements\? Yes/i).and
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
+      .eventually.match(/ZIP-archive written to /i).and
       .eventually.match(/INSERT a text hint along with each CTFd Challenge\? No text hints/i).and
       .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? No hint URLs/i).and
-      .eventually.match(/SELECT all CTFd Challenges after INSERT statements\? Yes/i)
-  })
-
-  it('should not insert DELETE statement when not chosen', function () {
-    this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'n', ENTER, ENTER, ENTER, ENTER], 1500)).to
-      .eventually.match(/DELETE all CTFd Challenges before INSERT statements\? No/i)
   })
 
   it('should insert free hints when chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
       .eventually.match(/INSERT a text hint along with each CTFd Challenge\? Free text hints/i)
   })
 
   it('should insert paid hints when chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
       .eventually.match(/INSERT a text hint along with each CTFd Challenge\? Paid text hints/i)
   })
 
   it('should insert free hint URLs when chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
       .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? Free hint URLs/i)
   })
 
   it('should insert paid hint URLs when chosen', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
       .eventually.match(/INSERT a hint URL along with each CTFd Challenge\? Paid hint URLs/i)
-  })
-
-  it('should not insert SELECT statement when not chosen', function () {
-    this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, 'n', ENTER], 1500)).to
-      .eventually.match(/SELECT all CTFd Challenges after INSERT statements\? No/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, ['localhorst', ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, ['localhorst', ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to fetch challenges from API!/i)
   })
 
   it('should fail on invalid ctf.key URL', function () {
     this.timeout(20000)
-    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
   it('should fail when output file cannot be written', function () {
     this.timeout(20000)
     fs.openSync('insert-ctfd-challenges.sql', 'w', 0)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to write output to file!/i)
   })
 })

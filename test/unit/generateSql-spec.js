@@ -17,63 +17,47 @@ describe('Generated SQL', function () {
     }
   })
 
-  it('should have DELETE statement prepended when option is chosen', function () {
-    return expect(generateSql(challenges, true, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/^delete from challenges;/i)
-  })
-
-  it('should not have DELETE statement prepended when option is not chosen', function () {
-    return expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/^delete from challenges;/i)
-  })
-
-  it('should have SELECT statement appended when option is chosen', function () {
-    return expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, true, '')).to.eventually.match(/select .* from challenges .* join keys .*;\s*$/i)
-  })
-
-  it('should not have SELECT statement appended when option not is chosen', function () {
-    return expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/select .*;\s*$/i)
-  })
-
   it('should consist of one INSERT statement into "challenges" per challenge', function () {
     return Promise.all([
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into challenges.*values \(1.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into challenges.*values \(2.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into challenges.*values \(3.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into challenges.*values \(4.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into challenges.*values \(5.*;/i)
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into challenges.*values \(1.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into challenges.*values \(2.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into challenges.*values \(3.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into challenges.*values \(4.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into challenges.*values \(5.*;/i)
     ])
   })
 
   it('should consist of one INSERT statement into "keys" per challenge', function () {
     return Promise.all([
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into keys.*values \(1, 1.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into keys.*values \(2, 2.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into keys.*values \(3, 3.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into keys.*values \(4, 4.*;/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into keys.*values \(5, 5.*;/i)
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into keys.*values \(1, 1.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into keys.*values \(2, 2.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into keys.*values \(3, 3.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into keys.*values \(4, 4.*;/i),
+      expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.match(/insert into keys.*values \(5, 5.*;/i)
     ])
   })
 
   it('should be empty when given no challenges', function () {
-    return expect(generateSql({}, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.equal('')
+    return expect(generateSql({}, options.noTextHints, options.noHintUrls, '')).to.eventually.equal('')
   })
 
   it('should log generator error to console', function () {
-    return expect(generateSql({c1: undefined}, false, options.noTextHints, options.noHintUrls, false, '')).to.be.rejectedWith('Failed to generate SQL statements! Cannot read property \'difficulty\' of undefined')
+    return expect(generateSql({c1: undefined}, options.noTextHints, options.noHintUrls, '')).to.be.rejectedWith('Failed to generate SQL statements! Cannot read property \'difficulty\' of undefined')
   })
 
   it('should INSERT a text hint for a challenge that has a hint defined', function () {
     challenges.c3.hint = 'hint'
     return Promise.all([
-      expect(generateSql(challenges, false, options.freeTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i),
-      expect(generateSql(challenges, false, options.paidTextHints, options.noHintUrls, false, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i)
+      expect(generateSql(challenges, options.freeTextHints, options.noHintUrls, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i),
+      expect(generateSql(challenges, options.paidTextHints, options.noHintUrls, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i)
     ])
   })
 
   it('should INSERT a hint URL for a challenge that has a hint URL defined', function () {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateSql(challenges, false, options.noTextHints, options.freeHintUrls, false, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.paidHintUrls, false, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i)
+      expect(generateSql(challenges, options.noTextHints, options.freeHintUrls, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i),
+      expect(generateSql(challenges, options.noTextHints, options.paidHintUrls, '')).to.eventually.match(/insert into hints.*values \([0-9]*, 3,/i)
     ])
   })
 
@@ -81,23 +65,23 @@ describe('Generated SQL', function () {
     challenges.c3.hint = 'hint'
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateSql(challenges, false, options.freeTextHints, options.freeTextHints, false, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
-      expect(generateSql(challenges, false, options.paidTextHints, options.freeHintUrls, false, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
-      expect(generateSql(challenges, false, options.freeHintUrls, options.paidTextHints, false, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
-      expect(generateSql(challenges, false, options.paidTextHints, options.paidTextHints, false, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i)
+      expect(generateSql(challenges, options.freeTextHints, options.freeTextHints, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
+      expect(generateSql(challenges, options.paidTextHints, options.freeHintUrls, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
+      expect(generateSql(challenges, options.freeHintUrls, options.paidTextHints, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i),
+      expect(generateSql(challenges, options.paidTextHints, options.paidTextHints, '')).to.eventually.match(/insert into hints.*values \(.*"hint",.*/i).and.match(/insert into hints.*values \(.*"hintUrl",.*/i)
     ])
   })
 
   it('should not INSERT a text hint when corresponding hint option is not chosen', function () {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
-    return expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/insert into hints/i)
+    return expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.not.match(/insert into hints/i)
   })
 
   it('should not INSERT a hint URL when corresponding hint option is not chosen', function () {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
-    return expect(generateSql(challenges, false, options.noTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/insert into hints/i)
+    return expect(generateSql(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.not.match(/insert into hints/i)
   })
 
   it('should not INSERT a text hint for challenges that do not have a hint defined', function () {
@@ -107,8 +91,8 @@ describe('Generated SQL', function () {
     challenges.c4.hint = 'hint'
     challenges.c5.hint = 'hint'
     return Promise.all([
-      expect(generateSql(challenges, false, options.freeTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i),
-      expect(generateSql(challenges, false, options.paidTextHints, options.noHintUrls, false, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i)
+      expect(generateSql(challenges, options.freeTextHints, options.noHintUrls, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i),
+      expect(generateSql(challenges, options.paidTextHints, options.noHintUrls, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i)
     ])
   })
 
@@ -119,8 +103,8 @@ describe('Generated SQL', function () {
     challenges.c4.hintUrl = 'hintUrl'
     challenges.c5.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateSql(challenges, false, options.noTextHints, options.freeHintUrls, false, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i),
-      expect(generateSql(challenges, false, options.noTextHints, options.paidHintUrls, false, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i)
+      expect(generateSql(challenges, options.noTextHints, options.freeHintUrls, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i),
+      expect(generateSql(challenges, options.noTextHints, options.paidHintUrls, '')).to.eventually.not.match(/insert into hints.*values \([0-9]*, 3,/i)
     ])
   })
 })

@@ -22,12 +22,6 @@ var juiceShopCtfCli = function () {
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
     },
     {
-      type: 'confirm',
-      name: 'deleteBeforeInsert',
-      message: 'DELETE all CTFd Challenges before INSERT statements?',
-      default: true
-    },
-    {
       type: 'list',
       name: 'insertHints',
       message: 'INSERT a text hint along with each CTFd Challenge?',
@@ -40,26 +34,20 @@ var juiceShopCtfCli = function () {
       message: 'INSERT a hint URL along with each CTFd Challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
       default: 0
-    },
-    {
-      type: 'confirm',
-      name: 'selectAfterInsert',
-      message: 'SELECT all CTFd Challenges after INSERT statements?',
-      default: true
     }
   ]
 
   console.log()
-  console.log('Generate INSERT statements for ' + 'CTFd'.bold + ' (>=1.0.2) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.2) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
   inquirer.prompt(questions).then(function (answers) {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {
       fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
-        generateSql(challenges, answers.deleteBeforeInsert, answers.insertHints, answers.insertHintUrls, answers.selectAfterInsert, secretKey).then(function (sql) {
+        generateSql(challenges, answers.insertHints, answers.insertHintUrls, secretKey).then(function (sql) {
           writeToFile(sql).then(function (file) {
-            console.log('SQL written to ' + file)
+            console.log('ZIP-archive written to ' + file)
             console.log()
-            console.log('For a step-by-step guide to apply the INSERT statements to ' + 'CTFd'.bold + ', please refer to')
+            console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
             console.log('https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#running-ctfd'.bold)
           }, function (error) {
             console.log(error.message.red)
