@@ -24,7 +24,7 @@ describe('juice-shop-ctf', function () {
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/ZIP-archive written to /i).and
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
-      .eventually.match(/Insert a hint URL along with eac CTFd Challenge\? No hint URLs/i).and
+      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i)
   })
 
   it('should insert free hints when chosen', function () {
