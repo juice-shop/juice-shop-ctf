@@ -8,10 +8,10 @@
 
 The NPM package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
-lets you create a list of `INSERT` statements for the
-[CTFd](https://ctfd.io) database that will populate the platform for a
+lets you create a ZIP-archive compatible with
+[CTFd](https://ctfd.io)'s data backup format to conveniently populate the platform for a
 [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
-event using
+event against
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
 [![asciicast](https://asciinema.org/a/120833.png)](https://asciinema.org/a/120833)
