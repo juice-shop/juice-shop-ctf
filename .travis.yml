@@ -1,8 +1,6 @@
 language: node_js
 node_js:
-- 4 # TODO remove support for Node4 with v2.0 release
 - 6
-- 7 # TODO remove support for Node7 with v2.0 release
 - 8
 before_install:
 - rm -rf node_modules

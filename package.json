@@ -44,7 +44,7 @@
     "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
-    "node": ">=4 <9"
+    "node": ">=6 <9"
   },
   "dependencies": {
     "bluebird": "~3.5",
