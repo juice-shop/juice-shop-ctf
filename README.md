@@ -14,7 +14,7 @@ lets you create a ZIP-archive compatible with
 event against
 [OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
 
-[![asciicast](https://asciinema.org/a/XXXXXXX.png)](https://asciinema.org/a/XXXXXXX)
+[![asciicast](https://asciinema.org/a/120833.png)](https://asciinema.org/a/120833)
 
 ## Setup [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
 
