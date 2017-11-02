@@ -2,6 +2,7 @@ language: node_js
 node_js:
 - 6
 - 8
+- 9
 before_install:
 - rm -rf node_modules
 script:
@@ -16,4 +17,4 @@ deploy:
   on:
     tags: true
     repo: bkimminich/juice-shop-ctf
-    node: 6
+    node: 8
