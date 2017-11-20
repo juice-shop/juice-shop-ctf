@@ -31,7 +31,7 @@
   "bugs": {
     "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
   },
-  "homepage": "https://www.owasp.org/index.php/OWASP_Juice_Shop_Project",
+  "homepage": "http://owasp-juice.shop",
   "license": "MIT",
   "main": "index.js",
   "bin": {

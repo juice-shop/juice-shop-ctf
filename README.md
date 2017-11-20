@@ -12,7 +12,7 @@ lets you create a ZIP-archive compatible with [CTFd](https://ctfd.io)'s
 data backup format to conveniently populate the platform for a
 [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
 event against
-[OWASP Juice Shop](https://www.owasp.org/index.php/OWASP_Juice_Shop_Project).
+[OWASP Juice Shop](http://owasp-juice.shop).
 
 ![CLI in action](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/master/images/juice-shop-ctf-cli.animated.gif)
 
