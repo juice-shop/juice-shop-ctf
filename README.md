@@ -58,7 +58,7 @@ of our (free) companion guide ebook.**
   `0.0.0.0:XXXX` for TCP in the `default` VM's network adapter in
   VirtualBox. For CTFd you need to forward port `8000`.
 
-## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Stories in Ready](https://badge.waffle.io/bkimminich/juice-shop-ctf.svg?label=ready&title=Ready)](http://waffle.io/bkimminich/juice-shop-ctf)
+## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Stories in Ready](https://badge.waffle.io/bkimminich/juice-shop.svg?label=ready&title=Ready)](http://waffle.io/bkimminich/juice-shop)
 
 Found a bug? Got an idea for enhancement? Improvement for cheating
 prevention?
@@ -89,11 +89,18 @@ project.
 
 ## Contributors
 
-Ordered by date of first contribution.
-[Auto-generated](https://github.com/dtrejo/node-authors) on Wed, 01 Feb
-2017 20:01:35 GMT.
+### Collaborators
 
 - [Björn Kimminich](https://github.com/bkimminich) aka `bkimminich`
+  (Project Leader)
+- [Jannik Hollenbach](https://github.com/J12934) aka `J12934`
+- [Timo Pagel](https://github.com/wurstbrot) aka `wurstbrot`
+
+### Code Contributors
+
+Based on [GitHub](https://github.com/bkimminich/juice-shop-ctf) commits.
+Ordered by added lines of code as of Mon, 11 Dec 2017 on `master`.
+
 - [Josh Grossman](https://github.com/tghosth) aka `tghosth`
 
 ## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf-server.svg)](LICENSE) [![FOSSA Status](https://app.fossa.io/api/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fbkimminich%2Fjuice-shop-ctf.svg?type=shield)](https://app.fossa.io/projects/git%2Bhttps%3A%2F%2Fgithub.com%2Fbkimminich%2Fjuice-shop-ctf?ref=badge_shield)
