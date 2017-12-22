@@ -63,6 +63,7 @@
     "chai": "~4",
     "chai-as-promised": "~7",
     "chai-spies": "~0",
+    "chai-subset": "^1.6.0",
     "coveralls": "~2",
     "inquirer-test": "~1",
     "lockfile": "~1",
