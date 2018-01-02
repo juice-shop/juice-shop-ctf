@@ -48,7 +48,6 @@
   },
   "dependencies": {
     "bluebird": "~3.5",
-    "chai-things": "^0.2.0",
     "colors": "~1.1",
     "dateformat": "~2.0",
     "inquirer": "~3.2",
@@ -63,7 +62,8 @@
     "chai": "~4",
     "chai-as-promised": "~7",
     "chai-spies": "~0",
-    "chai-subset": "^1.6.0",
+    "chai-subset": "~1",
+    "chai-things": "~0",
     "coveralls": "~2",
     "inquirer-test": "~1",
     "lockfile": "~1",
