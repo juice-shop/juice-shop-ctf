@@ -107,6 +107,6 @@ Ordered by added lines of code as of Mon, 11 Dec 2017 on `master`.
 
 This program is free software: you can redistribute it and/or modify it
 under the terms of the [MIT license](LICENSE). OWASP Juice Shop and any
-contributions are Copyright © by Bjoern Kimminich 2016-2017.
+contributions are Copyright © by Bjoern Kimminich 2016-2018.
 
 ![Juice Shop CTF Logo](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/develop/images/JuiceShopCTF_Logo.png)
