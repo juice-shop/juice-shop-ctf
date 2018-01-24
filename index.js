@@ -38,7 +38,7 @@ var juiceShopCtfCli = function () {
   ]
 
   console.log()
-  console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.5) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (≥1.0.5) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
   inquirer.prompt(questions).then(function (answers) {
     console.log()
     secretKey(answers.ctfKey).then(function (secretKey) {

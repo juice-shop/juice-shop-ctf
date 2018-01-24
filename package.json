@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "3.0.0",
+  "version": "3.1.0",
   "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
@@ -63,6 +63,7 @@
     "chai": "~4",
     "chai-as-promised": "~7",
     "chai-spies": "~0",
+    "chai-subset": "^1.6.0",
     "coveralls": "~2",
     "inquirer-test": "~1",
     "lockfile": "~1",
