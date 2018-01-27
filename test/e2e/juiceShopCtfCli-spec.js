@@ -10,7 +10,7 @@ var path = require('path')
 var dateFormat = require('dateformat')
 var outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
 
-const juiceShopCtfCli = path.join(__dirname, '../../bin/juice-shop-ctf.js')
+const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
 describe('juice-shop-ctf', function () {
   beforeEach(function () {
