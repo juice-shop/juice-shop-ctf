@@ -39,11 +39,11 @@ describe('Generated data', function () {
       {
         flagKeys: {
           results: [
-            { id: 1, chal: 1, flag: '958c64658383140e7d08d5dee091009cc0eafc1f', type: 'static', key_type: 'static', data: null },
-            { id: 2, chal: 2, flag: '49294e8b829f5b053f748facad22825ccb4bf420', type: 'static', key_type: 'static', data: null },
-            { id: 3, chal: 3, flag: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', key_type: 'static', data: null },
-            { id: 4, chal: 4, flag: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', key_type: 'static', data: null },
-            { id: 5, chal: 5, flag: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', key_type: 'static', data: null }
+            { id: 1, chal: 1, flag: '958c64658383140e7d08d5dee091009cc0eafc1f', type: 'static', data: null },
+            { id: 2, chal: 2, flag: '49294e8b829f5b053f748facad22825ccb4bf420', type: 'static', data: null },
+            { id: 3, chal: 3, flag: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', data: null },
+            { id: 4, chal: 4, flag: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', data: null },
+            { id: 5, chal: 5, flag: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', data: null }
           ]
         }
       })
@@ -59,17 +59,6 @@ describe('Generated data', function () {
             { id: 3, chal: 3, flag: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', data: null },
             { id: 4, chal: 4, flag: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', data: null },
             { id: 5, chal: 5, flag: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', data: null }
-          ]
-        }
-      })
-  })
-
-  xit('should contain the "key_type" property for backward compatibility with CTFd <1.1.0', function () {
-    return expect(generateData(challenges, options.noTextHints, options.noHintUrls, '')).to.eventually.deep.containSubset(
-      {
-        flagKeys: {
-          results: [
-            { key_type: 'static' }
           ]
         }
       })
