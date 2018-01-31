@@ -22,4 +22,8 @@ describe('Score', function () {
   it('should be 1000 points for a ***** challenge', function () {
     expect(calculateScore(5)).to.equal(1000)
   })
+
+  it('should be 1000 points for a ****** challenge', function () {
+    expect(calculateScore(6)).to.equal(1350)
+  })
 })
