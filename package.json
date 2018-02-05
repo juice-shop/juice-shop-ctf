@@ -50,7 +50,7 @@
     "bluebird": "~3.5",
     "colors": "~1.1",
     "dateformat": "~3.0",
-    "inquirer": "~5.0",
+    "inquirer": "~5.1.0",
     "jssha": "~2.3",
     "node-zip": "~1.1",
     "path": "~0.12",
