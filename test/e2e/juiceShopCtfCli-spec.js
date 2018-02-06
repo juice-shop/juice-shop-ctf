@@ -1,19 +1,19 @@
-var chai = require('chai')
+const chai = require('chai')
 chai.use(require('chai-as-promised'))
-var expect = chai.expect
-var inquirer = require('inquirer-test')
-var run = inquirer
-var ENTER = inquirer.ENTER
-var DOWN = inquirer.DOWN
-var fs = require('fs')
-var path = require('path')
-var dateFormat = require('dateformat')
-var outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
+const expect = chai.expect
+const inquirer = require('inquirer-test')
+const run = inquirer
+const ENTER = inquirer.ENTER
+const DOWN = inquirer.DOWN
+const fs = require('fs')
+const path = require('path')
+const dateFormat = require('dateformat')
+const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
 
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
-describe('juice-shop-ctf', function () {
-  beforeEach(function () {
+describe('juice-shop-ctf', () => {
+  beforeEach(() => {
     if (fs.existsSync(outputFile)) {
       fs.unlinkSync(outputFile)
     }

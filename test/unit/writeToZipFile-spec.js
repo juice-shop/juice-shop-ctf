@@ -1,36 +1,36 @@
-var Promise = require('bluebird')
-var chai = require('chai')
+const Promise = require('bluebird')
+const chai = require('chai')
 chai.use(require('chai-as-promised'))
-var expect = chai.expect
-var rewire = require('rewire')
-var writeToZipFile = rewire('../../lib/writeToZipFile')
+const expect = chai.expect
+const rewire = require('rewire')
+const writeToZipFile = rewire('../../lib/writeToZipFile')
 
-describe('Output to file', function () {
-  it('should be written to ZIP file', function () {
+describe('Output to file', () => {
+  it('should be written to ZIP file', () => {
     writeToZipFile.__set__({
       console: {
-        log: function () {}
+        log () {}
       },
       fs: {
-        writeFileAsync: function (path, data) {
+        writeFileAsync (path, data) {
           expect(data).to.match(/challenges.json/)
           expect(data).to.match(/hints.json/)
           expect(data).to.match(/keys.json/)
           expect(data).to.match(/files.json/)
           expect(data).to.match(/tags.json/)
           expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.zip/)
-          return new Promise(function (resolve) { resolve() })
+          return new Promise(resolve => { resolve() })
         }}
     })
     return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}))
       .to.be.fulfilled
   })
 
-  it('should log file system error to console', function () {
+  it('should log file system error to console', () => {
     writeToZipFile.__set__({
       fs: {
-        writeFileAsync: function (path, data) {
-          return new Promise(function () { throw new Error('Argh!') })
+        writeFileAsync (path, data) {
+          return new Promise(() => { throw new Error('Argh!') })
         }}
     })
     return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}))

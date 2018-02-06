@@ -1,6 +1,4 @@
 #!/usr/bin/env node
-'use strict'
-
-var juiceShopCtfCli = require('../index')
+const juiceShopCtfCli = require('../index')
 
 juiceShopCtfCli()

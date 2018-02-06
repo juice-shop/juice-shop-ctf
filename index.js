@@ -1,14 +1,13 @@
-'use strict'
-var inquirer = require('inquirer')
-var colors = require('colors') // eslint-disable-line no-unused-vars
-var secretKey = require('./lib/secretKey')
-var fetchChallenges = require('./lib/fetchChallenges')
-var generateData = require('./lib/generateData')
-var writeToZipFile = require('./lib/writeToZipFile')
-var options = require('./lib/options')
+const inquirer = require('inquirer')
+const colors = require('colors') // eslint-disable-line no-unused-vars
+const secretKey = require('./lib/secretKey')
+const fetchChallenges = require('./lib/fetchChallenges')
+const generateData = require('./lib/generateData')
+const writeToZipFile = require('./lib/writeToZipFile')
+const options = require('./lib/options')
 
-var juiceShopCtfCli = function () {
-  var questions = [
+const juiceShopCtfCli = () => {
+  const questions = [
     {
       type: 'input',
       name: 'juiceShopUrl',
@@ -39,27 +38,27 @@ var juiceShopCtfCli = function () {
 
   console.log()
   console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (≥1.1.0) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
-  inquirer.prompt(questions).then(function (answers) {
+  inquirer.prompt(questions).then(({ctfKey, juiceShopUrl, insertHints, insertHintUrls}) => {
     console.log()
-    secretKey(answers.ctfKey).then(function (secretKey) {
-      fetchChallenges(answers.juiceShopUrl).then(function (challenges) {
-        generateData(challenges, answers.insertHints, answers.insertHintUrls, secretKey).then(function (data) {
-          writeToZipFile(data).then(function (file) {
+    secretKey(ctfKey).then(secretKey => {
+      fetchChallenges(juiceShopUrl).then(challenges => {
+        generateData(challenges, insertHints, insertHintUrls, secretKey).then(data => {
+          writeToZipFile(data).then(file => {
             console.log('ZIP-archive written to ' + file)
             console.log()
             console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
             console.log('https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#running-ctfd'.bold)
-          }, function (error) {
-            console.log(error.message.red)
+          }, ({message}) => {
+            console.log(message.red)
           })
-        }, function (error) {
-          console.log(error.message.red)
+        }, ({message}) => {
+          console.log(message.red)
         })
-      }, function (error) {
-        console.log(error.message.red)
+      }, ({message}) => {
+        console.log(message.red)
       })
-    }, function (error) {
-      console.log(error.message.red)
+    }, ({message}) => {
+      console.log(message.red)
     })
   })
 }
