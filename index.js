@@ -1,12 +1,12 @@
 const inquirer = require('inquirer')
 const colors = require('colors') // eslint-disable-line no-unused-vars
-const secretKey = require('./lib/secretKey')
+const fetchSecretKey = require('./lib/secretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
 const generateData = require('./lib/generateData')
 const writeToZipFile = require('./lib/writeToZipFile')
 const options = require('./lib/options')
 
-const juiceShopCtfCli = () => {
+const juiceShopCtfCli = async () => {
   const questions = [
     {
       type: 'input',
@@ -38,29 +38,24 @@ const juiceShopCtfCli = () => {
 
   console.log()
   console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (≥1.1.0) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
-  inquirer.prompt(questions).then(({ctfKey, juiceShopUrl, insertHints, insertHintUrls}) => {
+
+  try {
+    const {ctfKey, juiceShopUrl, insertHints, insertHintUrls} = await inquirer.prompt(questions)
+    const [secretKey, challenges] = await Promise.all([
+      fetchSecretKey(ctfKey),
+      fetchChallenges(juiceShopUrl)
+    ])
+    const data = await generateData(challenges, insertHints, insertHintUrls, secretKey)
+    const file = await writeToZipFile(data)
+
     console.log()
-    secretKey(ctfKey).then(secretKey => {
-      fetchChallenges(juiceShopUrl).then(challenges => {
-        generateData(challenges, insertHints, insertHintUrls, secretKey).then(data => {
-          writeToZipFile(data).then(file => {
-            console.log('ZIP-archive written to ' + file)
-            console.log()
-            console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
-            console.log('https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#running-ctfd'.bold)
-          }, ({message}) => {
-            console.log(message.red)
-          })
-        }, ({message}) => {
-          console.log(message.red)
-        })
-      }, ({message}) => {
-        console.log(message.red)
-      })
-    }, ({message}) => {
-      console.log(message.red)
-    })
-  })
+    console.log('ZIP-archive written to ' + file)
+    console.log()
+    console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
+    console.log('https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#running-ctfd'.bold)
+  } catch (error) {
+    console.log(error.message.red)
+  }
 }
 
 module.exports = juiceShopCtfCli
