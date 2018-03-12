@@ -54,7 +54,7 @@
     "jssha": "~2.3",
     "node-zip": "~1.1",
     "path": "~0.12",
-    "request": "~2.83",
+    "request": "~2.84.0",
     "request-promise": "~4.2"
   },
   "devDependencies": {
