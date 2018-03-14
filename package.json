@@ -44,7 +44,7 @@
     "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
-    "node": ">=6 <=9"
+    "node": ">=8 <=9"
   },
   "dependencies": {
     "bluebird": "~3.5",
@@ -70,7 +70,7 @@
     "mocha": "~5",
     "nyc": "~11",
     "rewire": "~3",
-    "standard": "~10",
+    "standard": "~11.0.0",
     "stryker": "~0",
     "stryker-api": "~0",
     "stryker-html-reporter": "~0",
