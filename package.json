@@ -48,7 +48,7 @@
   },
   "dependencies": {
     "bluebird": "~3.5",
-    "colors": "~1.1",
+    "colors": "~1.2.0",
     "dateformat": "~3.0",
     "inquirer": "~5.1.0",
     "jssha": "~2.3",
