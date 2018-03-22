@@ -75,13 +75,18 @@ Pull requests are also highly welcome - please refer to
 ### PayPal [![PayPal](https://www.paypalobjects.com/en_US/i/btn/btn_donate_SM.gif)](https://www.paypal.com/cgi-bin/webscr?cmd=_donations&business=paypal%40owasp%2eorg&lc=BM&item_name=OWASP%20Juice%20Shop%20Project&item_number=OWASP%20Foundation&no_note=0&currency_code=USD&bn=PP%2dDonationsBF)
 
 PayPal donations via above button go to the OWASP Foundations and are
-earmarked for "Juice Shop". This is the preferred way to support the
-project.
+earmarked for "Juice Shop". This is the preferred and most convenient
+way to support the project.
 
-### Others
+### Credit Card (through RegOnline)
 
-[![Flattr](https://api.flattr.com/button/flattr-badge-large.png)](https://flattr.com/thing/3856930/bkimminichjuice-shop-on-GitHub)
-[![Gratipay](http://img.shields.io/gratipay/team/juice-shop.svg)](https://gratipay.com/juice-shop)
+OWASP hosts a
+[donation form on RegOnline](https://www.regonline.com/Register/Checkin.aspx?EventID=1044369).
+Refer to the
+[Credit card donation step-by-step](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part3/donations.html#credit-card-donation-step-by-step)
+guide for help with filling out the donation form correctly.
+
+### Crypto Currency
 
 [![Bitcoin](https://img.shields.io/badge/bitcoin-1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm-orange.svg)](https://blockchain.info/address/1AbKfgvw9psQ41NbLi8kufDQTezwG8DRZm)
 [![Dash](https://img.shields.io/badge/dash-Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW-blue.svg)](https://explorer.dash.org/address/Xr556RzuwX6hg5EGpkybbv5RanJoZN17kW)
