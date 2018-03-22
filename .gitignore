@@ -3,7 +3,6 @@
 build/
 .stryker-tmp/
 .nyc_output/
-reports/
 
 # Intellij
 .idea/

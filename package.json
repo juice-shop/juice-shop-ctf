@@ -74,6 +74,8 @@
     "stryker": "~0",
     "stryker-api": "~0",
     "stryker-html-reporter": "~0",
+    "stryker-javascript-mutator": "~0",
+    "stryker-mocha-framework": "~0",
     "stryker-mocha-runner": "~0"
   },
   "standard": {
@@ -89,6 +91,6 @@
     ]
   },
   "nyc": {
-    "report-dir": "./reports/coverage"
+    "report-dir": "./build/reports/coverage"
   }
 }

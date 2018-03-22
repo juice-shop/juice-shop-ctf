@@ -8,6 +8,13 @@ module.exports = function (config) {
     testRunner: 'mocha',
     testFramework: 'mocha',
     coverageAnalysis: 'perTest',
-    reporter: ['html', 'progress']
+    mutator: 'javascript',
+    reporter: ['html', 'progress'],
+    htmlReporter: {
+      baseDir: 'build/reports/mutation'
+    }
   })
+  if (process.env.TRAVIS_BUILD_NUMBER) {
+    config.reporter = ['clear-text', 'progress']
+  }
 }
