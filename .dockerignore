@@ -1,0 +1,11 @@
+.git
+.github
+.gitignore
+.travis.yml
+.dockerignore
+.idea
+node_modules
+Dockerfile
+CONTRIBUTING.md
+LICENSE
+README.md
