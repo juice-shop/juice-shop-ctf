@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "4.0.0",
+  "version": "4.0.1",
   "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
@@ -48,13 +48,13 @@
   },
   "dependencies": {
     "bluebird": "~3.5",
-    "colors": "~1.1",
+    "colors": "~1.2",
     "dateformat": "~3.0",
-    "inquirer": "~5.1.0",
+    "inquirer": "~5.1",
     "jssha": "~2.3",
     "node-zip": "~1.1",
     "path": "~0.12",
-    "request": "~2.83",
+    "request": "~2.85",
     "request-promise": "~4.2"
   },
   "devDependencies": {
@@ -70,7 +70,7 @@
     "mocha": "~5",
     "nyc": "~11",
     "rewire": "~3",
-    "standard": "~11.0.0",
+    "standard": "~11.0",
     "stryker": "~0",
     "stryker-api": "~0",
     "stryker-html-reporter": "~0",
