@@ -4,7 +4,24 @@ const fetchSecretKey = require('./lib/fetchSecretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
 const generateData = require('./lib/generateData')
 const writeToZipFile = require('./lib/writeToZipFile')
+const readConfigStream = require('./lib/readConfigStream')
+const fs = require('fs')
 const options = require('./lib/options')
+
+const argv = require('yargs')
+  .option('config', {
+    alias: 'c',
+    describe: 'provide a configuration file'
+  })
+  .help()
+  .argv
+
+function getConfig (argv, questions) {
+  if (argv.config) {
+    return readConfigStream(fs.createReadStream(argv.config))
+  }
+  return inquirer.prompt(questions)
+}
 
 const juiceShopCtfCli = async () => {
   const questions = [
@@ -40,7 +57,7 @@ const juiceShopCtfCli = async () => {
   console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (≥1.1.0) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
 
   try {
-    const {ctfKey, juiceShopUrl, insertHints, insertHintUrls} = await inquirer.prompt(questions)
+    const {ctfKey, juiceShopUrl, insertHints, insertHintUrls} = await getConfig(argv, questions)
     const [secretKey, challenges] = await Promise.all([
       fetchSecretKey(ctfKey),
       fetchChallenges(juiceShopUrl)

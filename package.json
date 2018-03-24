@@ -49,12 +49,15 @@
   "dependencies": {
     "bluebird": "~3.5",
     "colors": "~1.2",
+    "yargs": "~11.1.0",
     "dateformat": "~3.0",
     "inquirer": "~5.1",
     "jssha": "~2.3",
+    "js-yaml": "3.11.0",
     "node-zip": "~1.1",
     "path": "~0.12",
     "request": "~2.85",
+    "joi": "13.1.2",
     "request-promise": "~4.2"
   },
   "devDependencies": {

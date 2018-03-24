@@ -5,6 +5,7 @@
 .dockerignore
 .idea
 node_modules
+.editorconfig
 Dockerfile
 CONTRIBUTING.md
 LICENSE
