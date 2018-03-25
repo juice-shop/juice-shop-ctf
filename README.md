@@ -40,11 +40,27 @@ Then follow the instructions of the interactive command line tool.
 [the _Setting up CTFd for Juice Shop_ in the _Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#setting-up-ctfd-for-juice-shop)
 of our (free) companion guide ebook.**
 
+You can also provide a your desired configuration in a file respecting the following format:
+```yaml
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
+insertHints: none | free | paid
+insertHintUrls: none | free | paid
+```
+
+and run:
+```
+juice-shop-ctf --config myconfig.yml
+```
+
 ## Usage with docker
 
 Share your current directory with the `/data` volume of your `bkimminich/juice-shop-ctf` docker container:
 ```
 docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf
+
+# You can also provide a config file:
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config config.yml
 ```
 
 ## Screenshots
