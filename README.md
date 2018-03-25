@@ -40,6 +40,13 @@ Then follow the instructions of the interactive command line tool.
 [the _Setting up CTFd for Juice Shop_ in the _Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#setting-up-ctfd-for-juice-shop)
 of our (free) companion guide ebook.**
 
+## Usage with docker
+
+Share your current directory with the `/data` volume of your `bkimminich/juice-shop-ctf` docker container:
+```
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf
+```
+
 ## Screenshots
 
 ![CTFd challenge overview](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/img/ctfd_1.png)

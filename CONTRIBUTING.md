@@ -64,7 +64,7 @@ npm test
 
 ### End-to-end Tests
 
-Thean e2e tests simulate real input to the CLI and verify the printed
+The e2e tests simulate real input to the CLI and verify the printed
 output to the console.
 
 ```
@@ -87,3 +87,15 @@ npm run stryker
 > reasons. The mutation tests are intentionally not executed on
 > Travis-CI due to their significant execution time.
 
+### Docker build
+
+The docker build will run the unit and end-to-end tests.
+
+```
+docker build -t juice-shop-ctf .
+```
+
+To run the mutation tests using docker you can use the following command:
+```
+docker run --workdir /juice-shop-ctf --entrypoint npm juice-shop-ctf run stryker
+```
