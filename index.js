@@ -13,6 +13,10 @@ const argv = require('yargs')
     alias: 'c',
     describe: 'provide a configuration file'
   })
+  .option('output', {
+    alias: 'o',
+    describe: 'change the output file'
+  })
   .help()
   .argv
 
@@ -63,7 +67,7 @@ const juiceShopCtfCli = async () => {
       fetchChallenges(juiceShopUrl)
     ])
     const data = await generateData(challenges, insertHints, insertHintUrls, secretKey)
-    const file = await writeToZipFile(data)
+    const file = await writeToZipFile(data, argv.output)
 
     console.log()
     console.log('ZIP-archive written to ' + file)

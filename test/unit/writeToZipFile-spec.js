@@ -36,4 +36,24 @@ describe('Output to file', () => {
     return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}))
       .to.be.rejectedWith('Failed to write output to file! Argh!')
   })
+
+  it('should be written to the desired ZIP file', () => {
+    writeToZipFile.__set__({
+      console: {
+        log () {}
+      },
+      fs: {
+        writeFileAsync (path, data) {
+          expect(data).to.match(/challenges.json/)
+          expect(data).to.match(/hints.json/)
+          expect(data).to.match(/keys.json/)
+          expect(data).to.match(/files.json/)
+          expect(data).to.match(/tags.json/)
+          expect(path).to.match(/custom\.zip/)
+          return new Promise(resolve => { resolve() })
+        }}
+    })
+    return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}, 'custom.zip'))
+      .to.be.fulfilled
+  })
 })

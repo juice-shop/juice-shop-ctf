@@ -9,6 +9,7 @@ const fs = require('fs')
 const path = require('path')
 const dateFormat = require('dateformat')
 const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
+const desiredOutputFile = './output.zip'
 const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
@@ -21,6 +22,9 @@ function cleanup () {
   }
   if (fs.existsSync(configFile)) {
     fs.unlinkSync(configFile)
+  }
+  if (fs.existsSync(desiredOutputFile)) {
+    fs.unlinkSync(desiredOutputFile)
   }
 }
 
@@ -112,5 +116,18 @@ insertHintUrls: invalidValue`)
     this.timeout(15000)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
       .eventually.match(/"insertHintUrls" must be one of /i)
+  })
+
+  it('should write the output file to the specified location', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredOutputFile])
+      .then(() => fs.existsSync(desiredOutputFile))).to
+      .eventually.equal(true)
   })
 })
