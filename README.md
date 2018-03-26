@@ -51,6 +51,9 @@ insertHintUrls: none | free | paid
 and run:
 ```
 juice-shop-ctf --config myconfig.yml
+
+# you can choose the output file:
+juice-shop-ctf --config myconfig.yml --output challenges.zip
 ```
 
 ## Usage with docker
@@ -60,7 +63,10 @@ Share your current directory with the `/data` volume of your `bkimminich/juice-s
 docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf
 
 # You can also provide a config file:
-docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config config.yml
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml
+
+# you can choose the output file:
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.zip
 ```
 
 ## Screenshots
