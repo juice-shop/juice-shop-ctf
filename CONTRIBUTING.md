@@ -86,16 +86,3 @@ npm run stryker
 > tests this would not be suitable for performance and concurrency
 > reasons. The mutation tests are intentionally not executed on
 > Travis-CI due to their significant execution time.
-
-### Docker build
-
-The docker build will run the unit and end-to-end tests.
-
-```
-docker build -t juice-shop-ctf .
-```
-
-To run the mutation tests using docker you can use the following command:
-```
-docker run --workdir /juice-shop-ctf --entrypoint npm juice-shop-ctf run stryker
-```
