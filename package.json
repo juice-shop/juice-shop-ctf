@@ -1,7 +1,7 @@
 {
   "name": "juice-shop-ctf-cli",
   "version": "4.1.0-SNAPSHOT",
-  "description": "Command line client to generate INSERT statements for CTFd with the OWASP Juice Shop challenges",
+  "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
     "Bjoern Kimminich",
