@@ -64,7 +64,7 @@ npm test
 
 ### End-to-end Tests
 
-Thean e2e tests simulate real input to the CLI and verify the printed
+The e2e tests simulate real input to the CLI and verify the printed
 output to the console.
 
 ```
@@ -86,4 +86,3 @@ npm run stryker
 > tests this would not be suitable for performance and concurrency
 > reasons. The mutation tests are intentionally not executed on
 > Travis-CI due to their significant execution time.
-

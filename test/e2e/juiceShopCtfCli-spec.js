@@ -9,15 +9,28 @@ const fs = require('fs')
 const path = require('path')
 const dateFormat = require('dateformat')
 const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
+const desiredOutputFile = './output.zip'
+const configFile = 'config.yml'
+const util = require('util')
+const execFile = util.promisify(require('child_process').execFile)
 
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
+function cleanup () {
+  if (fs.existsSync(outputFile)) {
+    fs.unlinkSync(outputFile)
+  }
+  if (fs.existsSync(configFile)) {
+    fs.unlinkSync(configFile)
+  }
+  if (fs.existsSync(desiredOutputFile)) {
+    fs.unlinkSync(desiredOutputFile)
+  }
+}
+
 describe('juice-shop-ctf', () => {
-  beforeEach(() => {
-    if (fs.existsSync(outputFile)) {
-      fs.unlinkSync(outputFile)
-    }
-  })
+  beforeEach(cleanup)
+  after(cleanup)
 
   it('should accept defaults for all input questions', function () {
     this.timeout(20000)
@@ -68,5 +81,53 @@ describe('juice-shop-ctf', () => {
     fs.openSync(outputFile, 'w', 0)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to write output to file!/i)
+  })
+
+  it('should accept a config file', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+      .eventually.match(/ZIP-archive written to /i)
+  })
+
+  it('should fail when the config file is unparsable', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+      .eventually.match(/can not read /i)
+  })
+
+  it('should fail when the config file contains invalid values', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: invalidValue`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+      .eventually.match(/"insertHintUrls" must be one of /i)
+  })
+
+  it('should write the output file to the specified location', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredOutputFile])
+      .then(() => fs.existsSync(desiredOutputFile))).to
+      .eventually.equal(true)
   })
 })

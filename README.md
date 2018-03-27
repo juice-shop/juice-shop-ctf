@@ -28,6 +28,8 @@ npm install -g juice-shop-ctf-cli
 
 ## Usage
 
+### Interactive Mode
+
 Open a command line and run:
 
 ```
@@ -35,6 +37,46 @@ juice-shop-ctf
 ```
 
 Then follow the instructions of the interactive command line tool.
+
+### Configuration File
+
+Instead of answering questions in the CLI you can also provide your desired configuration in a file with the following format:
+
+```yaml
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
+insertHints: none | free | paid
+insertHintUrls: none | free | paid
+```
+
+You can then run the generator with:
+```
+juice-shop-ctf --config myconfig.yml
+```
+
+Optionally you can also choose the name of the output file:
+```
+juice-shop-ctf --config myconfig.yml --output challenges.zip
+```
+
+### Docker
+
+Share your current directory with the `/data` volume of your `bkimminich/juice-shop-ctf` Docker container and run the interactive mode with:
+```
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf
+```
+
+Alternatively you can provide a configuration file via:
+```
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml
+```
+
+Choosing the name of the output file is also possible:
+```
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.zip
+```
+
+---
 
 **For detailed step-by-step instructions and examples please refer to
 [the _Setting up CTFd for Juice Shop_ in the _Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#setting-up-ctfd-for-juice-shop)
