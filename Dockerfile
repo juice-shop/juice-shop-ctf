@@ -1,4 +1,9 @@
-FROM node:9
+FROM node:9 as installer
+WORKDIR /juice-shop-ctf
+COPY package*.json .
+RUN npm install --production --unsafe-perm
+
+FROM node:9-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
@@ -15,12 +20,7 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
       org.label-schema.vcs-ref=$VCS_REF \
       org.label-schema.build-date=$BUILD_DATE \
       org.label-schema.schema-version="1.0.0-rc1"
-WORKDIR /juice-shop-ctf
-RUN chown -R node .
-USER node
-COPY package*.json .
-RUN npm install
-COPY . .
+COPY --from=installer . .
 VOLUME /data
 WORKDIR /data
 
