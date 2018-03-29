@@ -1,7 +1,14 @@
 FROM node:9 as installer
+
+
 COPY . /juice-shop-ctf
 WORKDIR /juice-shop-ctf
-RUN npm install --production --unsafe-perm
+
+RUN chown -R node .
+USER node
+
+ARG DEV_BUILD=false
+RUN if [ ${DEV_BUILD} = true ]; then npm i && npm run test && npm run e2e; else npm install --production --unsafe-perm; fi
 
 FROM node:9-alpine
 ARG BUILD_DATE
