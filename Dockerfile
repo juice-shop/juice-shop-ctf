@@ -1,7 +1,10 @@
 FROM node:9 as installer
 COPY . /juice-shop-ctf
 WORKDIR /juice-shop-ctf
-RUN npm install --production --unsafe-perm
+RUN chown -R node .
+USER node
+ARG DEV_BUILD=false
+RUN if [ ${DEV_BUILD} = true ]; then npm i && npm test && npm run e2e; else npm install --production --unsafe-perm; fi
 
 FROM node:9-alpine
 ARG BUILD_DATE
@@ -23,5 +26,4 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
 COPY --from=installer /juice-shop-ctf /juice-shop-ctf
 VOLUME /data
 WORKDIR /data
-
 ENTRYPOINT ["npx", "/juice-shop-ctf/bin/juice-shop-ctf.js"]

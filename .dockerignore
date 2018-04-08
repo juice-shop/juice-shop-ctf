@@ -4,6 +4,7 @@
 .travis.yml
 .dockerignore
 .idea
+build
 node_modules
 .editorconfig
 Dockerfile
