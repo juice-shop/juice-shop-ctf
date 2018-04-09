@@ -77,7 +77,7 @@ const juiceShopCtfCli = async () => {
       fetchChallenges(answers.juiceShopUrl)
     ])
 
-    await generateCTFExport(answers.ctfFramework, challenges, {
+    await generateCTFExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
       ctfKey: fetchedSecretKey,
