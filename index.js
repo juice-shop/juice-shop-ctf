@@ -80,7 +80,8 @@ const juiceShopCtfCli = async () => {
     await generateCTFExport(answers.ctfFramework, challenges, {
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
-      ctfKey: fetchedSecretKey
+      ctfKey: fetchedSecretKey,
+      outputLocation: argv.output
     })
   } catch (error) {
     console.log(error.message.red)
