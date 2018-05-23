@@ -80,7 +80,7 @@ const juiceShopCtfCli = async () => {
 
     console.log()
 
-    const [fetchedSecretKey, challenges] = await Promise.all([
+    const [fetchedSecretKey, challenges, countryMapping] = await Promise.all([
       fetchSecretKey(answers.ctfKey),
       fetchChallenges(answers.juiceShopUrl),
       fetchCountryMapping(answers.countryMapping)
@@ -90,7 +90,7 @@ const juiceShopCtfCli = async () => {
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
       ctfKey: fetchedSecretKey,
-      countryMapping: answers.countryMapping,
+      countryMapping,
       outputLocation: argv.output
     })
   } catch (error) {
