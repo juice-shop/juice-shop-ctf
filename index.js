@@ -2,6 +2,7 @@ const inquirer = require('inquirer')
 const colors = require('colors') // eslint-disable-line no-unused-vars
 const fetchSecretKey = require('./lib/fetchSecretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
+const fetchCountryMapping = require('./lib/fetchCountryMapping')
 const readConfigStream = require('./lib/readConfigStream')
 const fs = require('fs')
 const options = require('./lib/options')
@@ -49,6 +50,13 @@ const juiceShopCtfCli = async () => {
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
     },
     {
+      type: 'input',
+      name: 'countryMapping',
+      message: 'URL to counry-mapping.yml file?',
+      default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
+      when: ({ctfFramework}) => ctfFramework === options.fbctfFramework
+    },
+    {
       type: 'list',
       name: 'insertHints',
       message: 'Insert a text hint along with each CTFd Challenge?',
@@ -74,13 +82,15 @@ const juiceShopCtfCli = async () => {
 
     const [fetchedSecretKey, challenges] = await Promise.all([
       fetchSecretKey(answers.ctfKey),
-      fetchChallenges(answers.juiceShopUrl)
+      fetchChallenges(answers.juiceShopUrl),
+      fetchCountryMapping(answers.countryMapping)
     ])
 
     await generateCTFExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
       ctfKey: fetchedSecretKey,
+      countryMapping: answers.countryMapping,
       outputLocation: argv.output
     })
   } catch (error) {
