@@ -47,18 +47,19 @@
     "node": ">=8 <=10"
   },
   "dependencies": {
+    "bcryptjs": "^2.4.3",
     "bluebird": "~3.5",
     "colors": "~1.2",
-    "yargs": "~11.1.0",
     "dateformat": "~3.0",
     "inquirer": "~5.2.0",
-    "jssha": "~2.3",
+    "joi": "~13.1",
     "js-yaml": "~3.11",
+    "jssha": "~2.3",
     "node-zip": "~1.1",
     "path": "~0.12",
     "request": "~2.85",
-    "joi": "~13.1",
-    "request-promise": "~4.2"
+    "request-promise": "~4.2",
+    "yargs": "~11.1.0"
   },
   "devDependencies": {
     "ava": "~0",
