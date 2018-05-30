@@ -79,7 +79,7 @@ describe('juice-shop-ctf', () => {
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
-  
+
   it('should generate a fbctf export when choosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
