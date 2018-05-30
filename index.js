@@ -74,7 +74,7 @@ const juiceShopCtfCli = async () => {
   ]
 
   console.log()
-  console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.5) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate a ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.5) or a JSON file for ' + 'FBCTF'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
 
   try {
     const answers = await getConfig(argv, questions)
