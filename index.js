@@ -68,7 +68,8 @@ const juiceShopCtfCli = async () => {
       name: 'insertHintUrls',
       message: 'Insert a hint URL along with each CTFd Challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
-      default: 0
+      default: 0,
+      when: ({ ctfFramework }) => ctfFramework === options.ctfdFramework
     }
   ]
 
