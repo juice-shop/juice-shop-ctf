@@ -7,7 +7,7 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/ctfd')
 const options = require('../../lib/options')
 
-describe('Generated data', () => {
+describe('Generated CTFd data', () => {
   let challenges
   beforeEach(() => {
     challenges = {
