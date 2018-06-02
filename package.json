@@ -51,7 +51,7 @@
     "colors": "~1.2",
     "yargs": "~11.1.0",
     "dateformat": "~3.0",
-    "inquirer": "~5.2.0",
+    "inquirer": "~6.0.0",
     "jssha": "~2.3",
     "js-yaml": "~3.11",
     "node-zip": "~1.1",
