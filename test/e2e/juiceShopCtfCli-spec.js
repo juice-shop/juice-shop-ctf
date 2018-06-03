@@ -141,7 +141,7 @@ insertHintUrls: paid`)
       .eventually.equal(true)
   })
 
-  it.only('should be possible to create a fbctf export with a config file', function () {
+  it('should be possible to create a fbctf export with a config file', function () {
     fs.writeFileSync(configFile, `
 ctfFramework: FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
