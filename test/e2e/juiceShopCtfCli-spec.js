@@ -9,7 +9,8 @@ const fs = require('fs')
 const path = require('path')
 const dateFormat = require('dateformat')
 const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
-const desiredOutputFile = './output.zip'
+const desiredCTFdOutputFile = './output.zip'
+const desiredFBCTFOutputFile = './output.json'
 const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
@@ -23,8 +24,11 @@ function cleanup () {
   if (fs.existsSync(configFile)) {
     fs.unlinkSync(configFile)
   }
-  if (fs.existsSync(desiredOutputFile)) {
-    fs.unlinkSync(desiredOutputFile)
+  if (fs.existsSync(desiredCTFdOutputFile)) {
+    fs.unlinkSync(desiredCTFdOutputFile)
+  }
+  if (fs.existsSync(desiredFBCTFOutputFile)) {
+    fs.unlinkSync(desiredFBCTFOutputFile)
   }
 }
 
@@ -33,8 +37,8 @@ describe('juice-shop-ctf', () => {
   after(cleanup)
 
   it('should accept defaults for all input questions', function () {
-    this.timeout(25000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 2500)).to
+    this.timeout(20000)
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/ZIP-archive written to /i).and
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
       .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i)
@@ -42,44 +46,50 @@ describe('juice-shop-ctf', () => {
 
   it('should insert free hints when chosen', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? Free text hints/i)
   })
 
   it('should insert paid hints when chosen', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? Paid text hints/i)
   })
 
   it('should insert free hint URLs when chosen', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
       .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Free hint URLs/i)
   })
 
   it('should insert paid hint URLs when chosen', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
       .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Paid hint URLs/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, ['localhorst', ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, 'localhorst', ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to fetch challenges from API!/i)
   })
 
   it('should fail on invalid ctf.key URL', function () {
     this.timeout(15000)
-    return expect(run(juiceShopCtfCli, [ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
+  })
+
+  it('should generate a fbctf export when choosen', function () {
+    this.timeout(15000)
+    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+      .eventually.match(/CTF Framework the generated files should be for\? FBCTF/i)
   })
 
   it('should fail when output file cannot be written', function () {
     this.timeout(15000)
     fs.openSync(outputFile, 'w', 0)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/Failed to write output to file!/i)
   })
 
@@ -126,8 +136,22 @@ insertHints: paid
 insertHintUrls: paid`)
 
     this.timeout(15000)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredOutputFile])
-      .then(() => fs.existsSync(desiredOutputFile))).to
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCTFdOutputFile])
+      .then(() => fs.existsSync(desiredCTFdOutputFile))).to
+      .eventually.equal(true)
+  })
+
+  it('should be possible to create a fbctf export with a config file', function () {
+    fs.writeFileSync(configFile, `
+ctfFramework: FBCTF
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+insertHints: paid`)
+
+    this.timeout(15000)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFBCTFOutputFile])
+      .then(() => fs.existsSync(desiredFBCTFOutputFile))).to
       .eventually.equal(true)
   })
 })
