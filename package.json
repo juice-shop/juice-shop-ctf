@@ -57,7 +57,7 @@
     "node-zip": "~1.1",
     "path": "~0.12",
     "request": "~2.85",
-    "joi": "~13.1",
+    "joi": "~13.4.0",
     "request-promise": "~4.2"
   },
   "devDependencies": {
