@@ -40,32 +40,32 @@ describe('juice-shop-ctf', () => {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/Backup archive written to /i).and
-      .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
-      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i)
+      .eventually.match(/Insert a text hint along with each Challenge\? No text hints/i).and
+      .eventually.match(/Insert a hint URL along with each Challenge\? No hint URLs/i)
   })
 
   it('should insert free hints when chosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
-      .eventually.match(/Insert a text hint along with each CTFd Challenge\? Free text hints/i)
+      .eventually.match(/Insert a text hint along with each Challenge\? Free text hints/i)
   })
 
   it('should insert paid hints when chosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
-      .eventually.match(/Insert a text hint along with each CTFd Challenge\? Paid text hints/i)
+      .eventually.match(/Insert a text hint along with each Challenge\? Paid text hints/i)
   })
 
   it('should insert free hint URLs when chosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
-      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Free hint URLs/i)
+      .eventually.match(/Insert a hint URL along with each Challenge\? Free hint URLs/i)
   })
 
   it('should insert paid hint URLs when chosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
-      .eventually.match(/Insert a hint URL along with each CTFd Challenge\? Paid hint URLs/i)
+      .eventually.match(/Insert a hint URL along with each Challenge\? Paid hint URLs/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
