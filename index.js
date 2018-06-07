@@ -9,6 +9,8 @@ const options = require('./lib/options')
 
 const generateCTFExport = require('./lib/generators/')
 
+const ctfdCompatibleVersion = '>=1.1.0'
+
 const argv = require('yargs')
   .option('config', {
     alias: 'c',
@@ -73,7 +75,7 @@ const juiceShopCtfCli = async () => {
   ]
 
   console.log()
-  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
+  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' (' + ctfdCompatibleVersion + ') or ' + options.fbctfFramework.bold + ' score server')
 
   try {
     const answers = await getConfig(argv, questions)

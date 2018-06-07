@@ -48,8 +48,10 @@ Instead of answering questions in the CLI you can also provide your
 desired configuration in a file with the following format:
 
 ```yaml
+ctfFramework: CTFd | FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
+countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
 insertHints: none | free | paid
 insertHintUrls: none | free | paid
 ```
@@ -63,7 +65,7 @@ juice-shop-ctf --config myconfig.yml
 Optionally you can also choose the name of the output file:
 
 ```
-juice-shop-ctf --config myconfig.yml --output challenges.zip
+juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
 ### Docker Container [![Docker Automated build](https://img.shields.io/docker/automated/bkimminich/juice-shop-ctf.svg)](https://registry.hub.docker.com/u/bkimminich/juice-shop-ctf/) [![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop-ctf.svg)](https://registry.hub.docker.com/u/bkimminich/juice-shop-ctf/) [![](https://images.microbadger.com/badges/image/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own version badge on microbadger.com") [![](https://images.microbadger.com/badges/commit/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own commit badge on microbadger.com")
@@ -85,7 +87,7 @@ docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.
 Choosing the name of the output file is also possible:
 
 ```
-docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.zip
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
 ---

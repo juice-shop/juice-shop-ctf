@@ -8,7 +8,7 @@ const DOWN = inquirer.DOWN
 const fs = require('fs')
 const path = require('path')
 const dateFormat = require('dateformat')
-const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.zip'
+const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd.zip'
 const desiredCTFdOutputFile = './output.zip'
 const desiredFBCTFOutputFile = './output.json'
 const configFile = 'config.yml'
@@ -80,7 +80,7 @@ describe('juice-shop-ctf', () => {
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
-  it('should generate a fbctf export when choosen', function () {
+  it('should generate a FBCTF export when choosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
@@ -105,7 +105,7 @@ insertHintUrls: paid`)
       .eventually.match(/Backup archive written to /i)
   })
 
-  it('should fail when the config file is unparsable', function () {
+  it('should fail when the config file cannot be parsed', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
@@ -141,7 +141,7 @@ insertHintUrls: paid`)
       .eventually.equal(true)
   })
 
-  it('should be possible to create a fbctf export with a config file', function () {
+  it('should be possible to create a FBCTF export with a config file', function () {
     fs.writeFileSync(configFile, `
 ctfFramework: FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
