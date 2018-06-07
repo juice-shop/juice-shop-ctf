@@ -2,11 +2,12 @@ const inquirer = require('inquirer')
 const colors = require('colors') // eslint-disable-line no-unused-vars
 const fetchSecretKey = require('./lib/fetchSecretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
-const generateData = require('./lib/generateData')
-const writeToZipFile = require('./lib/writeToZipFile')
+const fetchCountryMapping = require('./lib/fetchCountryMapping')
 const readConfigStream = require('./lib/readConfigStream')
 const fs = require('fs')
 const options = require('./lib/options')
+
+const generateCTFExport = require('./lib/generators/')
 
 const argv = require('yargs')
   .option('config', {
@@ -30,6 +31,13 @@ function getConfig (argv, questions) {
 const juiceShopCtfCli = async () => {
   const questions = [
     {
+      type: 'list',
+      name: 'ctfFramework',
+      message: 'CTF Framework the generated files should be for?',
+      choices: [options.ctfdFramework, options.fbctfFramework],
+      default: 0
+    },
+    {
       type: 'input',
       name: 'juiceShopUrl',
       message: 'Juice Shop URL to retrieve challenges?',
@@ -40,6 +48,13 @@ const juiceShopCtfCli = async () => {
       name: 'ctfKey',
       message: 'Secret key <or> URL to ctf.key file?',
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
+    },
+    {
+      type: 'input',
+      name: 'countryMapping',
+      message: 'URL to counry-mapping.yml file?',
+      default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
+      when: ({ctfFramework}) => ctfFramework === options.fbctfFramework
     },
     {
       type: 'list',
@@ -53,27 +68,32 @@ const juiceShopCtfCli = async () => {
       name: 'insertHintUrls',
       message: 'Insert a hint URL along with each CTFd Challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
-      default: 0
+      default: 0,
+      when: ({ ctfFramework }) => ctfFramework === options.ctfdFramework
     }
   ]
 
   console.log()
-  console.log('Generate ZIP-archive to import into ' + 'CTFd'.bold + ' (≥1.1.0) with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate a ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.5) or a JSON file for ' + 'FBCTF'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
 
   try {
-    const {ctfKey, juiceShopUrl, insertHints, insertHintUrls} = await getConfig(argv, questions)
-    const [secretKey, challenges] = await Promise.all([
-      fetchSecretKey(ctfKey),
-      fetchChallenges(juiceShopUrl)
-    ])
-    const data = await generateData(challenges, insertHints, insertHintUrls, secretKey)
-    const file = await writeToZipFile(data, argv.output)
+    const answers = await getConfig(argv, questions)
 
     console.log()
-    console.log('ZIP-archive written to ' + file)
-    console.log()
-    console.log('For a step-by-step guide to import the ZIP-archive into ' + 'CTFd'.bold + ', please refer to')
-    console.log('https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html#running-ctfd'.bold)
+
+    const [fetchedSecretKey, challenges, countryMapping] = await Promise.all([
+      fetchSecretKey(answers.ctfKey),
+      fetchChallenges(answers.juiceShopUrl),
+      fetchCountryMapping(answers.countryMapping)
+    ])
+
+    await generateCTFExport(answers.ctfFramework || options.ctfdFramework, challenges, {
+      insertHints: answers.insertHints,
+      insertHintUrls: answers.insertHintUrls,
+      ctfKey: fetchedSecretKey,
+      countryMapping,
+      outputLocation: argv.output
+    })
   } catch (error) {
     console.log(error.message.red)
   }
