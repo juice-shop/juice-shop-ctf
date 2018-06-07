@@ -17,7 +17,7 @@ const execFile = util.promisify(require('child_process').execFile)
 
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
-function cleanup() {
+function cleanup () {
   if (fs.existsSync(outputFile)) {
     fs.unlinkSync(outputFile)
   }
