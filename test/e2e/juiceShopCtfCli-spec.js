@@ -39,7 +39,7 @@ describe('juice-shop-ctf', () => {
   it('should accept defaults for all input questions', function () {
     this.timeout(20000)
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
-      .eventually.match(/ZIP-archive written to /i).and
+      .eventually.match(/Backup archive written to /i).and
       .eventually.match(/Insert a text hint along with each CTFd Challenge\? No text hints/i).and
       .eventually.match(/Insert a hint URL along with each CTFd Challenge\? No hint URLs/i)
   })
@@ -83,7 +83,7 @@ describe('juice-shop-ctf', () => {
   it('should generate a fbctf export when choosen', function () {
     this.timeout(15000)
     return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
-      .eventually.match(/CTF Framework the generated files should be for\? FBCTF/i)
+      .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 
   it('should fail when output file cannot be written', function () {

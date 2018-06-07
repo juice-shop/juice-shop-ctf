@@ -33,7 +33,7 @@ const juiceShopCtfCli = async () => {
     {
       type: 'list',
       name: 'ctfFramework',
-      message: 'CTF Framework the generated files should be for?',
+      message: 'CTF framework to generate data for?',
       choices: [options.ctfdFramework, options.fbctfFramework],
       default: 0
     },
@@ -74,7 +74,7 @@ const juiceShopCtfCli = async () => {
   ]
 
   console.log()
-  console.log('Generate a ZIP-archive to import into ' + 'CTFd'.bold + ' (>=1.0.5) or a JSON file for ' + 'FBCTF'.bold + ' with the ' + 'OWASP Juice Shop'.bold + ' challenges')
+  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
 
   try {
     const answers = await getConfig(argv, questions)
