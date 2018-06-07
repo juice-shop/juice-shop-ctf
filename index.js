@@ -54,21 +54,21 @@ const juiceShopCtfCli = async () => {
     {
       type: 'input',
       name: 'countryMapping',
-      message: 'URL to counry-mapping.yml file?',
+      message: 'URL to country-mapping.yml file?',
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
       when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
     },
     {
       type: 'list',
       name: 'insertHints',
-      message: 'Insert a text hint along with each Challenge?',
+      message: 'Insert a text hint along with each challenge?',
       choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
       default: 0
     },
     {
       type: 'list',
       name: 'insertHintUrls',
-      message: 'Insert a hint URL along with each Challenge?',
+      message: 'Insert a hint URL along with each challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
       default: 0
     }
