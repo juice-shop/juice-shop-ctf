@@ -21,7 +21,7 @@ const argv = require('yargs')
   .help()
   .argv
 
-function getConfig(argv, questions) {
+function getConfig (argv, questions) {
   if (argv.config) {
     return readConfigStream(fs.createReadStream(argv.config))
   }
