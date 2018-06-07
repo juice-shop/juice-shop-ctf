@@ -102,7 +102,7 @@ insertHintUrls: paid`)
 
     this.timeout(15000)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
-      .eventually.match(/ZIP-archive written to /i)
+      .eventually.match(/Backup archive written to /i)
   })
 
   it('should fail when the config file is unparsable', function () {
