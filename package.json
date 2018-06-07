@@ -44,7 +44,7 @@
     "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
-    "node": ">=8 <=10"
+    "node": "8 - 10"
   },
   "dependencies": {
     "bcryptjs": "~2.4",
@@ -53,7 +53,7 @@
     "yargs": "~11.1",
     "dateformat": "~3.0",
     "inquirer": "~6.0",
-    "joi": "~13.1",
+    "joi": "~13.4",
     "jssha": "~2.3",
     "js-yaml": "~3.12",
     "node-zip": "~1.1",
