@@ -58,9 +58,9 @@
     "joi": "~13.1",
     "node-zip": "~1.1",
     "path": "~0.12",
-    "request": "~2.85",
+    "request": "~2.86",
     "request-promise": "~4.2",
-    "yargs": "~11.1.0"
+    "yargs": "~11.1"
   },
   "devDependencies": {
     "ava": "~0",
