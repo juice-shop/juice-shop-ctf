@@ -21,7 +21,7 @@ const argv = require('yargs')
   .help()
   .argv
 
-function getConfig (argv, questions) {
+function getConfig(argv, questions) {
   if (argv.config) {
     return readConfigStream(fs.createReadStream(argv.config))
   }
@@ -68,8 +68,7 @@ const juiceShopCtfCli = async () => {
       name: 'insertHintUrls',
       message: 'Insert a hint URL along with each Challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
-      default: 0,
-      when: ({ ctfFramework }) => ctfFramework === options.ctfdFramework
+      default: 0
     }
   ]
 
