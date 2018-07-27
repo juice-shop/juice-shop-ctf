@@ -93,7 +93,7 @@ docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.
 ---
 
 **For detailed step-by-step instructions and examples please refer to
-[the __Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html)
+[the _Hosting a CTF event_ chapter](https://bkimminich.gitbooks.io/pwning-owasp-juice-shop/content/part1/ctf.html)
 in our (free) companion guide ebook.**
 
 ## Screenshots
