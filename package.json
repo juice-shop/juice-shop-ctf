@@ -75,12 +75,12 @@
     "nyc": "~12.0",
     "rewire": "~4.0",
     "standard": "~11.0",
-    "stryker": "~0",
-    "stryker-api": "~0",
-    "stryker-html-reporter": "~0",
-    "stryker-javascript-mutator": "~0",
-    "stryker-mocha-framework": "~0",
-    "stryker-mocha-runner": "~0"
+    "stryker": "~0.28",
+    "stryker-api": "~0.20",
+    "stryker-html-reporter": "~0.16",
+    "stryker-javascript-mutator": "~0.9",
+    "stryker-mocha-framework": "~0.12",
+    "stryker-mocha-runner": "~0.14"
   },
   "standard": {
     "env": [
