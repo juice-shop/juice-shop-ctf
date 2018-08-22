@@ -13,7 +13,7 @@ lets you create a archive files for conveniently import
 frameworks. This allows you to populate a CTF game server in a matter of
 minutes.
 
-[![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662)
+[![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662?size=medium&rows=28&speed=1.25)
 
 ## Supported CTF Frameworks
 
