@@ -13,7 +13,7 @@ lets you create a archive files for conveniently import
 frameworks. This allows you to populate a CTF game server in a matter of
 minutes.
 
-![CLI in action](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/master/images/juice-shop-ctf-cli.animated.gif)
+[![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662)
 
 ## Supported CTF Frameworks
 
