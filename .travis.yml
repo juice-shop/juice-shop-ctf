@@ -17,4 +17,4 @@ deploy:
   on:
     tags: true
     repo: bkimminich/juice-shop-ctf
-    node: 8
+    node: 10

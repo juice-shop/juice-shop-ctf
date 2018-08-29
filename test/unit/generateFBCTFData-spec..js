@@ -6,12 +6,12 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/fbctf')
 const options = require('../../lib/options')
 
-const challenge1 = { key: 'key1', name: 'c1', description: 'C1', difficulty: 1, category: '1', hint: 'hint1' }
-const challenge2 = { key: 'key2', name: 'c2', description: 'C2', difficulty: 3, category: '1', hint: 'hint2' }
+const challenge1 = { key: 'key1', name: 'c1', description: 'C1', difficulty: 1, category: '1', hint: 'hint1', hintUrl: 'https://hint1.com' }
+const challenge2 = { key: 'key2', name: 'c2', description: 'C2', difficulty: 3, category: '1', hint: 'hint2', hintUrl: 'https://hint2.com' }
 
 const countryMapping = { key1: { code: 'CA' }, key2: { code: 'FR' } }
 
-const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', countryMapping, saltRounds: 1 }
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', countryMapping }
 
 const defaultChallenge1Mapping = {
   'type': 'flag',
@@ -99,6 +99,38 @@ describe('Generated FBCTF data', () => {
               ...defaultChallenge1Mapping,
               hint: 'hint1',
               penalty: 10
+            }
+          ]
+        }
+      }
+    )
+  })
+
+  it('should respect hint penalty costs insertion options', function () {
+    return expect(generateData([challenge1], { ...defaultOptions, insertHintUrls: options.paidHintUrls })).to.eventually.deep.include(
+      {
+        'levels': {
+          'levels': [
+            {
+              ...defaultChallenge1Mapping,
+              hint: 'https://hint1.com',
+              penalty: 20
+            }
+          ]
+        }
+      }
+    )
+  })
+
+  it('should merge hint & hintUrl together (considering hint text and penalty)', function () {
+    return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls })).to.eventually.deep.include(
+      {
+        'levels': {
+          'levels': [
+            {
+              ...defaultChallenge1Mapping,
+              hint: 'hint1\nhttps://hint1.com',
+              penalty: 30
             }
           ]
         }

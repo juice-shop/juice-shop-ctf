@@ -5,7 +5,7 @@ const expect = chai.expect
 const rewire = require('rewire')
 const writeToZipFile = rewire('../../lib/writeToZipFile')
 
-describe('Output to file', () => {
+describe('Output for CTFd', () => {
   it('should be written to ZIP file', () => {
     writeToZipFile.__set__({
       console: {
@@ -18,7 +18,7 @@ describe('Output to file', () => {
           expect(data).to.match(/keys.json/)
           expect(data).to.match(/files.json/)
           expect(data).to.match(/tags.json/)
-          expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.zip/)
+          expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.CTFd\.zip/)
           return new Promise(resolve => { resolve() })
         } }
     })

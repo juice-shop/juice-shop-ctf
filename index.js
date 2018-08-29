@@ -9,6 +9,8 @@ const options = require('./lib/options')
 
 const generateCTFExport = require('./lib/generators/')
 
+const ctfdCompatibleVersion = '>=1.1.0'
+
 const argv = require('yargs')
   .option('config', {
     alias: 'c',
@@ -52,29 +54,28 @@ const juiceShopCtfCli = async () => {
     {
       type: 'input',
       name: 'countryMapping',
-      message: 'URL to counry-mapping.yml file?',
+      message: 'URL to country-mapping.yml file?',
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
       when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
     },
     {
       type: 'list',
       name: 'insertHints',
-      message: 'Insert a text hint along with each CTFd Challenge?',
+      message: 'Insert a text hint along with each challenge?',
       choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
       default: 0
     },
     {
       type: 'list',
       name: 'insertHintUrls',
-      message: 'Insert a hint URL along with each CTFd Challenge?',
+      message: 'Insert a hint URL along with each challenge?',
       choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
-      default: 0,
-      when: ({ ctfFramework }) => ctfFramework === options.ctfdFramework
+      default: 0
     }
   ]
 
   console.log()
-  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
+  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' (' + ctfdCompatibleVersion + ') or ' + options.fbctfFramework.bold + ' score server')
 
   try {
     const answers = await getConfig(argv, questions)
