@@ -114,7 +114,7 @@ in our (free) companion guide ebook.**
   `0.0.0.0:XXXX` for TCP in the `default` VM's network adapter in
   VirtualBox. For CTFd you need to forward port `8000`.
 
-## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Stories in Ready](https://badge.waffle.io/bkimminich/juice-shop.svg?label=ready&title=Ready)](http://waffle.io/bkimminich/juice-shop)
+## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![Waffle.io - Columns and their card count](https://badge.waffle.io/bkimminich/juice-shop.svg?columns=all)](https://waffle.io/bkimminich/juice-shop)
 
 Found a bug? Got an idea for enhancement? Improvement for cheating
 prevention?
