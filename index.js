@@ -54,7 +54,7 @@ const juiceShopCtfCli = async () => {
       name: 'countryMapping',
       message: 'URL to counry-mapping.yml file?',
       default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
-      when: ({ctfFramework}) => ctfFramework === options.fbctfFramework
+      when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
     },
     {
       type: 'list',

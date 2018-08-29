@@ -20,9 +20,9 @@ describe('Output to file', () => {
           expect(data).to.match(/tags.json/)
           expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.zip/)
           return new Promise(resolve => { resolve() })
-        }}
+        } }
     })
-    return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}))
+    return expect(writeToZipFile({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.fulfilled
   })
 
@@ -31,9 +31,9 @@ describe('Output to file', () => {
       fs: {
         writeFileAsync (path, data) {
           return new Promise(() => { throw new Error('Argh!') })
-        }}
+        } }
     })
-    return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}))
+    return expect(writeToZipFile({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.rejectedWith('Failed to write output to file! Argh!')
   })
 
@@ -51,9 +51,9 @@ describe('Output to file', () => {
           expect(data).to.match(/tags.json/)
           expect(path).to.match(/custom\.zip/)
           return new Promise(resolve => { resolve() })
-        }}
+        } }
     })
-    return expect(writeToZipFile({challenges: {results: []}, flagKeys: {results: []}, hints: {results: []}}, 'custom.zip'))
+    return expect(writeToZipFile({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.zip'))
       .to.be.fulfilled
   })
 })

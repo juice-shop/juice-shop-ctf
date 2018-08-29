@@ -64,7 +64,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should not add challenges without a country mapping', function () {
-    return expect(generateData([challenge1, {...challenge2, key: 'doentHaveAMappingForThisKey'}], defaultOptions)).to.eventually.deep.include(
+    return expect(generateData([challenge1, { ...challenge2, key: 'doentHaveAMappingForThisKey' }], defaultOptions)).to.eventually.deep.include(
       {
         'levels': {
           'levels': [
@@ -76,7 +76,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hint insertion options', function () {
-    return expect(generateData([challenge1], {...defaultOptions, insertHints: options.freeTextHints})).to.eventually.deep.include(
+    return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.freeTextHints })).to.eventually.deep.include(
       {
         'levels': {
           'levels': [
@@ -91,7 +91,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hint penalty costs insertion options', function () {
-    return expect(generateData([challenge1], {...defaultOptions, insertHints: options.paidTextHints})).to.eventually.deep.include(
+    return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints })).to.eventually.deep.include(
       {
         'levels': {
           'levels': [
