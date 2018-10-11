@@ -1,5 +1,5 @@
 const inquirer = require('inquirer')
-const colors = require('colors') // eslint-disable-line no-unused-vars | lgtm [js/unused-local-variable]
+const colors = require('colors') // eslint-disable-line no-unused-vars
 const fetchSecretKey = require('./lib/fetchSecretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
 const fetchCountryMapping = require('./lib/fetchCountryMapping')
