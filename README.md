@@ -3,9 +3,9 @@
 [![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf)
 [![Coverage Status](https://coveralls.io/repos/github/bkimminich/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/bkimminich/juice-shop-ctf?branch=master)
 [![Code Climate](https://codeclimate.com/github/bkimminich/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/bkimminich/juice-shop-ctf)
-[![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
-[![Total alerts](https://img.shields.io/lgtm/alerts/g/bkimminich/juice-shop-ctf.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bkimminich/juice-shop-ctf/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bkimminich/juice-shop-ctf.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bkimminich/juice-shop-ctf/context:javascript)
+[![Total alerts](https://img.shields.io/lgtm/alerts/g/bkimminich/juice-shop-ctf.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bkimminich/juice-shop-ctf/alerts/)
+[![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
 
 The NPM package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
