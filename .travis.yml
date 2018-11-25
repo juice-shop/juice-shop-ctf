@@ -7,7 +7,9 @@ before_install:
 - rm -rf node_modules
 script:
 - npm test && npm run e2e
-after_success: npm run coverage
+after_success:
+- npm run coverage
+- bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
 sudo: false
 deploy:
   provider: npm
@@ -18,3 +20,11 @@ deploy:
     tags: true
     repo: bkimminich/juice-shop-ctf
     node: 10
+notifications:
+  slack:
+    rooms:
+      secure: CkJv/srViebermSM6E9dNFGDGaY5bwHhUqUfv02Mj2qUPOfpAILOoTbwoSmUnCOUeezXITPu5c6ImeNmmeKIDmoSqVuETS/jREvc6m4OvzBPHfWtcJ+myU6+avGXgMDOuq9+M+zj/5YjquUZ610qI3h8QARMXCccqAfaTzK1KMz2iU/mJ/08hxQc1Vx2avpC+Z9DZY9jUXL3Q/O0RTdYechWYrXUnPzBTQOC7vpLUyG7fscEOleub+Aw1XSO5qrOkw/dRX37dt3Cj5djIKzP9zPvJcG+XQ16nfiwk2yhUWYjZ7VaUS8ngADzgsGC9wi/4mltN3D1OKKbuhdApfby73vVJrCWnI42WESUsQqq80OV9ZFzt3fk5GVk3wa4NmmfF6+GDcuSTb48Ks93Dd2YtbxLU+UTnVTWfL7I0P8krUPgEv8IaMA7NOlp8d+TVASPqnXgK6Q+akwwnrmHhJMxtiG9gtBUBomMeyvtwilZ3CkbhUN/TPMwRZ6VkCL+JrjesGYGyhZgAjYZm5G0129sih3xehBcUsrr+SdWZwpNd9TNJHthVDbjM4g9DLPA26stPZUI8JcdK9M3TxbRHGPAk/6t+TFvo/kQmD4Lvtd3PVaUV4i89V40DzerJA2PNRD/V/dwARuItBaVNdYM83pp7YQVvcm/dtP+LY45nEh5/HU=
+    on_success: change
+    on_failure: change
+    on_start: never
+    on_pull_requests: false
