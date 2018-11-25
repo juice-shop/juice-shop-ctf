@@ -25,4 +25,8 @@ ctf:
       }
     })
   })
+
+  it('should be undefined if no map file URL is given', () => {
+    return expect(fetchCountryMapping()).to.eventually.equal(undefined)
+  })
 })
