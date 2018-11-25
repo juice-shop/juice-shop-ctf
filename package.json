@@ -41,7 +41,6 @@
     "test": "standard && nyc --reporter=html --reporter=text mocha test/unit",
     "e2e": "nyc --reporter=text mocha test/e2e --slow=10000",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
-    "stryker": "stryker run stryker.conf.js"
   },
   "engines": {
     "node": "8 - 10"
@@ -74,13 +73,7 @@
     "mocha": "~5",
     "nyc": "~12.0",
     "rewire": "~4.0",
-    "standard": "~11",
-    "stryker": "~0.29",
-    "stryker-api": "~0.21",
-    "stryker-html-reporter": "~0.16",
-    "stryker-javascript-mutator": "~0.11",
-    "stryker-mocha-framework": "~0.12",
-    "stryker-mocha-runner": "~0.14"
+    "standard": "~11"
   },
   "standard": {
     "env": [
