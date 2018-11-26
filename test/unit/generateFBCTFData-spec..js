@@ -11,7 +11,7 @@ const challenge2 = { key: 'key2', name: 'c2', description: 'C2', difficulty: 3, 
 
 const countryMapping = { key1: { code: 'CA' }, key2: { code: 'FR' } }
 
-const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', countryMapping, saltRounds: 1 }
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', countryMapping }
 
 const defaultChallenge1Mapping = {
   'type': 'flag',
