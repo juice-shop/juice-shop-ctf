@@ -43,7 +43,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": "8 - 10"
+    "node": "8 - 11"
   },
   "dependencies": {
     "bcryptjs": "~2.4.3",
