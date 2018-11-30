@@ -22,7 +22,7 @@ The following open source CTF frameworks are supported by
 `juice-shop-ctf-cli`:
 
 * [CTFd](https://ctfd.io/)
-  (≥[1.1.0](https://github.com/CTFd/CTFd/releases/tag/1.1.0))
+  ([1.1.x](https://github.com/CTFd/CTFd/releases/tag/1.1.4) or [1.2.x](https://github.com/CTFd/CTFd/releases/tag/1.2.0))
 * [FBCTF](https://github.com/facebook/fbctf)
 
 ## Setup ![node](https://img.shields.io/node/v/juice-shop-ctf-cli.svg) [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli)
