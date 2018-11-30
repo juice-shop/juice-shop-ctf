@@ -10,7 +10,6 @@ script:
 - npm test && npm run e2e
 after_success:
 - npm run coverage
-- bash <(curl -s https://copilot.blackducksoftware.com/ci/travis/scripts/upload)
 sudo: false
 deploy:
   provider: npm
