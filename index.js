@@ -9,7 +9,7 @@ const options = require('./lib/options')
 
 const generateCTFExport = require('./lib/generators/')
 
-const ctfdCompatibleVersion = '>=1.1.0'
+const ctfdCompatibleVersion = '1.1.x or 1.2.x'
 
 const argv = require('yargs')
   .option('config', {
