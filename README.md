@@ -6,6 +6,7 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
 [![Total alerts](https://img.shields.io/lgtm/alerts/g/bkimminich/juice-shop-ctf.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bkimminich/juice-shop-ctf/alerts/)
 [![Language grade: JavaScript](https://img.shields.io/lgtm/grade/javascript/g/bkimminich/juice-shop-ctf.svg?logo=lgtm&logoWidth=18)](https://lgtm.com/projects/g/bkimminich/juice-shop-ctf/context:javascript)
+![GitHub stars](https://img.shields.io/github/stars/bkimminich/juice-shop-ctf.svg?label=GitHub%20%E2%98%85&style=flat)
 
 The NPM package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
