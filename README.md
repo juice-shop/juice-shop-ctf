@@ -6,13 +6,10 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
 ![GitHub stars](https://img.shields.io/github/stars/bkimminich/juice-shop-ctf.svg?label=GitHub%20%E2%98%85&style=flat)
 
-The NPM package
+The Node package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
-lets you create a archive files for conveniently import
-[OWASP Juice Shop](http://owasp-juice.shop) challenges into different
-[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
-frameworks. This allows you to populate a CTF game server in a matter of
-minutes.
+helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) events with the
+[OWASP Juice Shop](http://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
 
 [![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662?size=medium&rows=28&speed=1.25)
 
