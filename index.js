@@ -23,6 +23,49 @@ const argv = require('yargs')
   .help()
   .argv
 
+const questions = [
+  {
+    type: 'list',
+    name: 'ctfFramework',
+    message: 'CTF framework to generate data for?',
+    choices: [options.ctfdFramework, options.fbctfFramework],
+    default: 0
+  },
+  {
+    type: 'input',
+    name: 'juiceShopUrl',
+    message: 'Juice Shop URL to retrieve challenges?',
+    default: 'https://juice-shop.herokuapp.com'
+  },
+  {
+    type: 'input',
+    name: 'ctfKey',
+    message: 'Secret key <or> URL to ctf.key file?',
+    default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
+  },
+  {
+    type: 'input',
+    name: 'countryMapping',
+    message: 'URL to country-mapping.yml file?',
+    default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
+    when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
+  },
+  {
+    type: 'list',
+    name: 'insertHints',
+    message: 'Insert a text hint along with each challenge?',
+    choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
+    default: 0
+  },
+  {
+    type: 'list',
+    name: 'insertHintUrls',
+    message: 'Insert a hint URL along with each challenge?',
+    choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
+    default: 0
+  }
+]
+
 function getConfig (argv, questions) {
   if (argv.config) {
     return readConfigStream(fs.createReadStream(argv.config))
@@ -31,49 +74,6 @@ function getConfig (argv, questions) {
 }
 
 const juiceShopCtfCli = async () => {
-  const questions = [
-    {
-      type: 'list',
-      name: 'ctfFramework',
-      message: 'CTF framework to generate data for?',
-      choices: [options.ctfdFramework, options.fbctfFramework],
-      default: 0
-    },
-    {
-      type: 'input',
-      name: 'juiceShopUrl',
-      message: 'Juice Shop URL to retrieve challenges?',
-      default: 'https://juice-shop.herokuapp.com'
-    },
-    {
-      type: 'input',
-      name: 'ctfKey',
-      message: 'Secret key <or> URL to ctf.key file?',
-      default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
-    },
-    {
-      type: 'input',
-      name: 'countryMapping',
-      message: 'URL to country-mapping.yml file?',
-      default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
-      when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
-    },
-    {
-      type: 'list',
-      name: 'insertHints',
-      message: 'Insert a text hint along with each challenge?',
-      choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
-      default: 0
-    },
-    {
-      type: 'list',
-      name: 'insertHintUrls',
-      message: 'Insert a hint URL along with each challenge?',
-      choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
-      default: 0
-    }
-  ]
-
   console.log()
   console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' (' + ctfdCompatibleVersion + ') or ' + options.fbctfFramework.bold + ' score server')
 
