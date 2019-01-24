@@ -1,26 +1,29 @@
 language: node_js
 node_js:
-- 11
 - 10
-- 9
 - 8
+- 9
+- 11
 stages:
   - lint
   - test
+  - e2e
   - deploy
+install: if [ -z "$TRAVIS_TAG" ]; then rm -rf node_modules && npm install; fi
+script: if [ -z "$TRAVIS_TAG" ]; then npm test; fi
 jobs:
   include:
     - stage: lint
       if: tag IS blank
       install: npm install standard
       script: npm run lint
-    - stage: test
+    - stage: e2e
       if: tag IS blank
-      before_install: rm -rf node_modules
       script: npm test && npm run e2e
       after_success: npm run coverage
     - stage: deploy
       if: branch = master AND tag IS present
+      node_js: 11
       install: skip
       script: skip
       deploy:
