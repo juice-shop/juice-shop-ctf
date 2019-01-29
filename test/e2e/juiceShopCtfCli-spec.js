@@ -151,7 +151,7 @@ insertHintUrls: paid`)
 
   it('should be possible to create a CTFd 1.x export with a config file', function () {
     fs.writeFileSync(configFile, `
-ctfFramework: CTFd 1.x
+ctfFramework: "CTFd 1.x"
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
