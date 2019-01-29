@@ -73,7 +73,7 @@ function getConfig (argv, questions) {
 
 const juiceShopCtfCli = async () => {
   console.log()
-  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
+  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ', ' + options.ctfd2Framework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
 
   try {
     const answers = await getConfig(argv, questions)
