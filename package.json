@@ -21,6 +21,7 @@
     "capture the flag",
     "ctf",
     "ctfd",
+    "fbctf",
     "cli"
   ],
   "preferGlobal": true,
