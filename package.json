@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "5.0.2",
+  "version": "6.0.0",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
@@ -21,6 +21,7 @@
     "capture the flag",
     "ctf",
     "ctfd",
+    "fbctf",
     "cli"
   ],
   "preferGlobal": true,
@@ -53,7 +54,7 @@
     "yargs": "~12.0.5",
     "dateformat": "~3.0.3",
     "inquirer": "~6.2.0",
-    "joi": "~14.2.0",
+    "joi": "~14.3.1",
     "jssha": "~2.3.1",
     "js-yaml": "~3.12.0",
     "node-zip": "~1.1.1",
@@ -62,7 +63,7 @@
     "request-promise": "~4.2.2"
   },
   "devDependencies": {
-    "ava": "~1.0.1",
+    "ava": "~1.1.0",
     "chai": "~4.2.0",
     "chai-as-promised": "~7.1.1",
     "chai-spies": "~1.0.0",
