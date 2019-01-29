@@ -50,9 +50,9 @@ desired configuration in a file with the following format:
 ctfFramework: CTFd 2.x | CTFd 1.x | FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd
 insertHints: none | free | paid
-insertHintUrls: none | free | paid
+insertHintUrls: none | free | paid # optional for FBCTF
 ```
 
 You can then run the generator with:
