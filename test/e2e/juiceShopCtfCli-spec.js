@@ -81,9 +81,15 @@ describe('juice-shop-ctf', () => {
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
-  it('should generate a FBCTF export when choosen', function () {
+  it('should generate a CTFd 2.x export when choosen', function () {
     this.timeout(TIMEOUT)
     return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+      .eventually.match(/CTF framework to generate data for\? CTFd 2.x/i)
+  })
+
+  it('should generate a FBCTF export when choosen', function () {
+    this.timeout(TIMEOUT)
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 

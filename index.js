@@ -7,9 +7,7 @@ const readConfigStream = require('./lib/readConfigStream')
 const fs = require('fs')
 const options = require('./lib/options')
 
-const generateCTFExport = require('./lib/generators/')
-
-const ctfdCompatibleVersion = '1.1.x or 1.2.x'
+const generateCtfExport = require('./lib/generators/')
 
 const argv = require('yargs')
   .option('config', {
@@ -28,7 +26,7 @@ const questions = [
     type: 'list',
     name: 'ctfFramework',
     message: 'CTF framework to generate data for?',
-    choices: [options.ctfdFramework, options.fbctfFramework],
+    choices: [options.ctfdFramework, options.ctfd2Framework, options.fbctfFramework],
     default: 0
   },
   {
@@ -75,7 +73,7 @@ function getConfig (argv, questions) {
 
 const juiceShopCtfCli = async () => {
   console.log()
-  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' (' + ctfdCompatibleVersion + ') or ' + options.fbctfFramework.bold + ' score server')
+  console.log('Generate ' + 'OWASP Juice Shop'.bold + ' challenge archive for setting up ' + options.ctfdFramework.bold + ' or ' + options.fbctfFramework.bold + ' score server')
 
   try {
     const answers = await getConfig(argv, questions)
@@ -88,7 +86,7 @@ const juiceShopCtfCli = async () => {
       fetchCountryMapping(answers.countryMapping)
     ])
 
-    await generateCTFExport(answers.ctfFramework || options.ctfdFramework, challenges, {
+    await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
       ctfKey: fetchedSecretKey,
