@@ -1,25 +1,39 @@
 language: node_js
 node_js:
+- 10
 - 8
 - 9
-- 10
 - 11
-before_install:
-- rm -rf node_modules
-script:
-- npm test && npm run e2e
-after_success:
-- npm run coverage
-sudo: false
-deploy:
-  provider: npm
-  email: npmjs.org@kimminich.de
-  api_key:
-    secure: Ct1lTpU5cht0OybpGB9+HfkWBBa1k6TPrnajp08cKYbeKUx1ybYdbkuM0z2F9XMeoyTHNcawYyqlHmNFcqSNwYpx7d54Mn7KkWWiUwpeekG+PPSzjoEMYkQt7Q1MQfwBV0kyzVFL+R1x9lg83BKDBGd/clwBAvZhMCDc/EiocTyVvkul9mhSBbsMLHyNeU1EVbyQdPDh2tsOQKPbpr4rCsH9xGes/VZQ6YWcJvyCwDryj4VlNsH4USJvuG992yy5RT0kg2gAcUm8gq3wkzlRPkJWT4RFmdxyzidWOPq6DPZfULNQ3z+gmZxeyNJJkAZHFYPIZC66xKxx8/3e3cuX+dS1E4LofwLpB3bydnFmOVaAWA0pdD/tlWFLPBK5GzA13BHTG2zJdaeSo1CxS98i2Yoj5JsQrnW0mDp/7AH47eAznaWTsukEKYCFjmu0fUMI5SWV4CXtWCzNxb9E8UqboM0j92aH3R3BIBVWytnRfBXyD5gACfLNM6V4SJVaXPG5apdj2jX4tiHruug6uUzSIxuVhtOH+PXrBC49ZNmM3gFclz6qcwcT7eUxsR4c38CNCByuzn/bA9IEvIpAK2/KqLodWdaivGmt/2PKBt9BhOSaWaep7+ZKkBMVE5yeuUI3w/ZDXavooYfw9CqsrmDfRC0H1L6zWaiyuhnyRjH0bIE=
-  on:
-    tags: true
-    repo: bkimminich/juice-shop-ctf
-    node: 10
+stages:
+  - lint
+  - test
+  - e2e
+  - deploy
+install: if [ -z "$TRAVIS_TAG" ]; then rm -rf node_modules && npm install; fi
+script: if [ -z "$TRAVIS_TAG" ]; then npm test; fi
+jobs:
+  include:
+    - stage: lint
+      if: tag IS blank
+      install: npm install standard
+      script: npm run lint
+    - stage: e2e
+      if: tag IS blank
+      script: npm test && npm run e2e
+      after_success: npm run coverage
+    - stage: deploy
+      if: tag IS present
+      node_js: 11
+      install: skip
+      script: skip
+      deploy:
+        provider: npm
+        email: npmjs.org@kimminich.de
+        api_key:
+          secure: Ct1lTpU5cht0OybpGB9+HfkWBBa1k6TPrnajp08cKYbeKUx1ybYdbkuM0z2F9XMeoyTHNcawYyqlHmNFcqSNwYpx7d54Mn7KkWWiUwpeekG+PPSzjoEMYkQt7Q1MQfwBV0kyzVFL+R1x9lg83BKDBGd/clwBAvZhMCDc/EiocTyVvkul9mhSBbsMLHyNeU1EVbyQdPDh2tsOQKPbpr4rCsH9xGes/VZQ6YWcJvyCwDryj4VlNsH4USJvuG992yy5RT0kg2gAcUm8gq3wkzlRPkJWT4RFmdxyzidWOPq6DPZfULNQ3z+gmZxeyNJJkAZHFYPIZC66xKxx8/3e3cuX+dS1E4LofwLpB3bydnFmOVaAWA0pdD/tlWFLPBK5GzA13BHTG2zJdaeSo1CxS98i2Yoj5JsQrnW0mDp/7AH47eAznaWTsukEKYCFjmu0fUMI5SWV4CXtWCzNxb9E8UqboM0j92aH3R3BIBVWytnRfBXyD5gACfLNM6V4SJVaXPG5apdj2jX4tiHruug6uUzSIxuVhtOH+PXrBC49ZNmM3gFclz6qcwcT7eUxsR4c38CNCByuzn/bA9IEvIpAK2/KqLodWdaivGmt/2PKBt9BhOSaWaep7+ZKkBMVE5yeuUI3w/ZDXavooYfw9CqsrmDfRC0H1L6zWaiyuhnyRjH0bIE=
+        on:
+          repo: bkimminich/juice-shop-ctf
+          tags: true
 notifications:
   slack:
     rooms:

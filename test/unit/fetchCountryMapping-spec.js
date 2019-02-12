@@ -29,4 +29,13 @@ ctf:
   it('should be undefined if no map file URL is given', () => {
     return expect(fetchCountryMapping()).to.eventually.equal(undefined)
   })
+
+  it('should log retrieval error to console', () => {
+    fetchCountryMapping.__set__({
+      request () {
+        return new Promise((resolve, reject) => { reject(new Error('Argh!')) })
+      }
+    })
+    return expect(fetchCountryMapping('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch country mapping from API! Argh!')
+  })
 })

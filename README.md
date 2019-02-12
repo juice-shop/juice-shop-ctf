@@ -6,13 +6,10 @@
 [![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
 ![GitHub stars](https://img.shields.io/github/stars/bkimminich/juice-shop-ctf.svg?label=GitHub%20%E2%98%85&style=flat)
 
-The NPM package
+The Node package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
-lets you create a archive files for conveniently import
-[OWASP Juice Shop](http://owasp-juice.shop) challenges into different
-[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
-frameworks. This allows you to populate a CTF game server in a matter of
-minutes.
+helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) events with the
+[OWASP Juice Shop](http://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
 
 [![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662?size=medium&rows=28&speed=1.25)
 
@@ -21,7 +18,8 @@ minutes.
 The following open source CTF frameworks are supported by
 `juice-shop-ctf-cli`:
 
-* [CTFd](https://ctfd.io/)
+* [CTFd 2.x](https://github.com/CTFd/CTFd/releases/latest)
+* [CTFd 1.x](https://ctfd.io/)
   ([1.1.x](https://github.com/CTFd/CTFd/releases/tag/1.1.4) or [1.2.x](https://github.com/CTFd/CTFd/releases/tag/1.2.0))
 * [FBCTF](https://github.com/facebook/fbctf)
 
@@ -49,12 +47,12 @@ Instead of answering questions in the CLI you can also provide your
 desired configuration in a file with the following format:
 
 ```yaml
-ctfFramework: CTFd | FBCTF
+ctfFramework: CTFd 2.x | CTFd 1.x | FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd
 insertHints: none | free | paid
-insertHintUrls: none | free | paid
+insertHintUrls: none | free | paid # optional for FBCTF
 ```
 
 You can then run the generator with:

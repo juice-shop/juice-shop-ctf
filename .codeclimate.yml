@@ -1,0 +1,16 @@
+engines:
+  eslint:
+    enabled: true
+  fixme:
+    enabled: true
+ratings:
+  paths:
+    - '**.js'
+checks:
+  method-complexity:
+    config:
+      threshold: 7
+  similar-code:
+    enabled: false
+  identical-code:
+    enabled: false
