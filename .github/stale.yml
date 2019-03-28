@@ -1,8 +1,10 @@
-daysUntilStale: 84
+---
+daysUntilStale: 28
 daysUntilClose: 14
 exemptLabels:
   - bounty
-  - enhancement
+  - critical
+  - feature
   - technical debt
 staleLabel: stale
 markComment: >
