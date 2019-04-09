@@ -13,7 +13,6 @@ out/
 # NPM
 node_modules/
 npm-debug.log.*
-package-lock.json
 
 # App
 OWASP_Juice_Shop.*.zip
