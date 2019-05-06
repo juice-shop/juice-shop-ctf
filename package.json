@@ -45,7 +45,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": "8 - 11"
+    "node": "8 - 12"
   },
   "dependencies": {
     "@hapi/joi": "^15.0.0",
