@@ -12,7 +12,7 @@ The Node package
 helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) events with the
 [OWASP Juice Shop](http://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
 
-[![asciicast](https://asciinema.org/a/197662.png)](https://asciinema.org/a/197662?size=medium&rows=28&speed=1.25)
+[![asciicast](https://asciinema.org/a/244925.png)](https://asciinema.org/a/244925?size=medium&rows=28&speed=1.25)
 
 ## Supported CTF Frameworks
 
