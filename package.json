@@ -43,7 +43,9 @@
     "fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
     "e2e": "nyc --reporter=text mocha test/e2e --slow=10000",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "snyk-protect": "snyk protect",
+    "prepare": "npm run snyk-protect"
   },
   "engines": {
     "node": "8 - 12"
@@ -61,7 +63,8 @@
     "path": "^0.12.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "yargs": "^13.2.4"
+    "yargs": "^13.2.4",
+    "snyk": "^1.189.0"
   },
   "devDependencies": {
     "ava": "^1.4.1",
@@ -92,5 +95,6 @@
   },
   "nyc": {
     "report-dir": "./build/reports/coverage"
-  }
+  },
+  "snyk": true
 }
