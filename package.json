@@ -61,7 +61,7 @@
     "path": "^0.12.7",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
-    "yargs": "^13.2.4"
+    "yargs": "^14.0.0"
   },
   "devDependencies": {
     "ava": "^1.4.1",
