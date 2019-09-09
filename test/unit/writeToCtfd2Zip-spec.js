@@ -19,7 +19,8 @@ describe('Output for CTFd 2.x', () => {
           expect(data).to.match(/flags.json/)
           expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.CTFd2\.zip/)
           return new Promise(resolve => { resolve() })
-        } }
+        }
+      }
     })
     return expect(writeToCtfd2Zip({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.fulfilled
@@ -30,7 +31,8 @@ describe('Output for CTFd 2.x', () => {
       fs: {
         writeFileAsync (path, data) {
           return new Promise(() => { throw new Error('Argh!') })
-        } }
+        }
+      }
     })
     return expect(writeToCtfd2Zip({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.rejectedWith('Failed to write output to file! Argh!')
@@ -49,7 +51,8 @@ describe('Output for CTFd 2.x', () => {
           expect(data).to.match(/flags.json/)
           expect(path).to.match(/custom\.zip/)
           return new Promise(resolve => { resolve() })
-        } }
+        }
+      }
     })
     return expect(writeToCtfd2Zip({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.zip'))
       .to.be.fulfilled
