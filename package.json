@@ -76,7 +76,7 @@
     "mocha": "^6.1.4",
     "nyc": "^14.1.1",
     "rewire": "^4.0.1",
-    "standard": "^12.0.1"
+    "standard": "^14.2.0"
   },
   "standard": {
     "env": [
