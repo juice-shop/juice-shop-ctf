@@ -16,7 +16,7 @@ jobs:
   include:
     - stage: lint
       if: tag IS blank
-      install: npm install standard
+      install: npm install standard@14
       script: npm run lint
     - stage: e2e
       if: tag IS blank

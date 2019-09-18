@@ -15,7 +15,8 @@ describe('Output for FBCTF', () => {
         writeFileAsync (path, data) {
           expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/)
           return new Promise(resolve => { resolve() })
-        } }
+        }
+      }
     })
     return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.fulfilled
@@ -26,7 +27,8 @@ describe('Output for FBCTF', () => {
       fs: {
         writeFileAsync (path, data) {
           return new Promise(() => { throw new Error('Argh!') })
-        } }
+        }
+      }
     })
     return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
       .to.be.rejectedWith('Failed to write output to file! Argh!')
@@ -41,7 +43,8 @@ describe('Output for FBCTF', () => {
         writeFileAsync (path, data) {
           expect(path).to.match(/custom\.json/)
           return new Promise(resolve => { resolve() })
-        } }
+        }
+      }
     })
     return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.json'))
       .to.be.fulfilled
