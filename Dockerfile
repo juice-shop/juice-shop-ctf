@@ -1,4 +1,4 @@
-FROM node:10 as installer
+FROM node:12 as installer
 COPY . /juice-shop-ctf
 WORKDIR /juice-shop-ctf
 RUN chown -R node .
