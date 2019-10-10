@@ -4,7 +4,7 @@
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
 [![Coverage Status](https://coveralls.io/repos/github/bkimminich/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/bkimminich/juice-shop-ctf?branch=master)
 [![Code Climate](https://codeclimate.com/github/bkimminich/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/bkimminich/juice-shop-ctf)
-[![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
+[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/bkimminich/juice-shop-ctf)](https://codeclimate.com/github/bkimminich/juice-shop-ctf/trends/technical_debt)  
 ![GitHub stars](https://img.shields.io/github/stars/bkimminich/juice-shop-ctf.svg?label=GitHub%20%E2%98%85&style=flat)
 
 The Node package
