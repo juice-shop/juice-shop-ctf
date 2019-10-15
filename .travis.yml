@@ -24,7 +24,7 @@ jobs:
       after_success: npm run coverage
     - stage: deploy
       if: tag IS present
-      node_js: 11
+      node_js: 12
       install: skip
       script: skip
       deploy:
