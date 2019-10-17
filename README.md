@@ -10,7 +10,7 @@
 The Node package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
 helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) events with the
-[OWASP Juice Shop](http://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
+[OWASP Juice Shop](https://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
 
 [![asciicast](https://asciinema.org/a/244925.png)](https://asciinema.org/a/244925?size=medium&rows=28&speed=1.25)
 
@@ -93,14 +93,14 @@ docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.
 ---
 
 **For detailed step-by-step instructions and examples please refer to
-[the _Hosting a CTF event_ chapter](http://pwning.owasp-juice.shop/part1/ctf.html)
+[the _Hosting a CTF event_ chapter](https://pwning.owasp-juice.shop/part1/ctf.html)
 in our (free) companion guide ebook.**
 
 ## Screenshots
 
-![CTFd challenge overview](http://pwning.owasp-juice.shop/part1/img/ctfd_1.png)
+![CTFd challenge overview](https://pwning.owasp-juice.shop/part1/img/ctfd_1.png)
 
-![CTFd challenge details](http://pwning.owasp-juice.shop/part1/img/ctfd_2.png)
+![CTFd challenge details](https://pwning.owasp-juice.shop/part1/img/ctfd_2.png)
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
@@ -139,7 +139,7 @@ way to support the project.
 OWASP hosts a
 [donation form on RegOnline](https://www.regonline.com/Register/Checkin.aspx?EventID=1044369).
 Refer to the
-[Credit card donation step-by-step](http://pwning.owasp-juice.shop/part3/donations.html#credit-card-donation-step-by-step)
+[Credit card donation step-by-step](https://pwning.owasp-juice.shop/part3/donations.html#credit-card-donation-step-by-step)
 guide for help with filling out the donation form correctly.
 
 ## Contributors
