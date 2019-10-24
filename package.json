@@ -70,7 +70,7 @@
     "chai-spies": "^1.0.0",
     "chai-subset": "^1.6.0",
     "chai-things": "^0.2.0",
-    "coveralls": "^3.0.6",
+    "coveralls": "^3.0.7",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
     "mocha": "^6.2.1",
