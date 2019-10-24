@@ -48,56 +48,56 @@ describe('juice-shop-ctf', () => {
 
   it('should insert free hints when chosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 2000)).to
       .eventually.match(/Insert a text hint along with each challenge\? Free text hints/i)
   })
 
   it('should insert paid hints when chosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 2000)).to
       .eventually.match(/Insert a text hint along with each challenge\? Paid text hints/i)
   })
 
   it('should insert free hint URLs when chosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER], 2000)).to
       .eventually.match(/Insert a hint URL along with each challenge\? Free hint URLs/i)
   })
 
   it('should insert paid hint URLs when chosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 2000)).to
       .eventually.match(/Insert a hint URL along with each challenge\? Paid hint URLs/i)
   })
 
   it('should fail on invalid Juice Shop URL', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, 'localhorst', ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, 'localhorst', ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/Failed to fetch challenges from API!/i)
   })
 
   it('should fail on invalid ctf.key URL', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
   it('should generate a CTFd 1.x export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/CTF framework to generate data for\? CTFd 1.x/i)
   })
 
   it('should generate a FBCTF export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 
   it('should fail when output file cannot be written', function () {
     this.timeout(TIMEOUT)
     fs.openSync(outputFile, 'w', 0)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/Failed to write output to file!/i)
   })
 
