@@ -25,4 +25,9 @@ describe('Secret key', () => {
     })
     return expect(fetchSecretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch secret key from URL! Argh!')
   })
+
+  it('should be exactly the given input for empty values', () => {
+    expect(fetchSecretKey(undefined)).to.eventually.equal(undefined)
+    expect(fetchSecretKey(null)).to.eventually.equal(null)
+  })
 })
