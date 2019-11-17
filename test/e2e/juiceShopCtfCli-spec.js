@@ -12,6 +12,7 @@ const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + 
 const desiredCtfdOutputFile = './output.zip'
 const desiredCtfd2OutputFile = './output2.zip'
 const desiredFbctfOutputFile = './output.json'
+const desiredRtbOutputFile = './output.xml'
 const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
@@ -31,6 +32,9 @@ function cleanup () {
   }
   if (fs.existsSync(desiredFbctfOutputFile)) {
     fs.unlinkSync(desiredFbctfOutputFile)
+  }
+  if (fs.existsSync(desiredRtbOutputFile)) {
+    fs.unlinkSync(desiredRtbOutputFile)
   }
 }
 
