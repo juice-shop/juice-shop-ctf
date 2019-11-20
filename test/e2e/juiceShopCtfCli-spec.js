@@ -98,6 +98,12 @@ describe('juice-shop-ctf', () => {
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 
+  it('should generate a RootTheBox export when choosen', function () {
+    this.timeout(TIMEOUT)
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+      .eventually.match(/CTF framework to generate data for\? RootTheBox/i)
+  })
+
   it('should fail when output file cannot be written', function () {
     this.timeout(TIMEOUT)
     fs.openSync(outputFile, 'w', 0)
