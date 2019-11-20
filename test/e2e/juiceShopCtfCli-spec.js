@@ -186,4 +186,18 @@ insertHints: paid`)
       .then(() => fs.existsSync(desiredFbctfOutputFile))).to
       .eventually.equal(true)
   })
+
+  it('should be possible to create a RootTheBox export with a config file', function () {
+    fs.writeFileSync(configFile, `
+ctfFramework: RootTheBox
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid`)
+
+    this.timeout(TIMEOUT)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+      .then(() => fs.existsSync(desiredRtbOutputFile))).to
+      .eventually.equal(true)
+  })
 })
