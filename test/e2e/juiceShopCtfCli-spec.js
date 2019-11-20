@@ -12,6 +12,7 @@ const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + 
 const desiredCtfdOutputFile = './output.zip'
 const desiredCtfd2OutputFile = './output2.zip'
 const desiredFbctfOutputFile = './output.json'
+const desiredRtbOutputFile = './output.xml'
 const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
@@ -31,6 +32,9 @@ function cleanup () {
   }
   if (fs.existsSync(desiredFbctfOutputFile)) {
     fs.unlinkSync(desiredFbctfOutputFile)
+  }
+  if (fs.existsSync(desiredRtbOutputFile)) {
+    fs.unlinkSync(desiredRtbOutputFile)
   }
 }
 
@@ -92,6 +96,12 @@ describe('juice-shop-ctf', () => {
     this.timeout(TIMEOUT)
     return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
+  })
+
+  it('should generate a RootTheBox export when choosen', function () {
+    this.timeout(TIMEOUT)
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+      .eventually.match(/CTF framework to generate data for\? RootTheBox/i)
   })
 
   it('should fail when output file cannot be written', function () {
@@ -174,6 +184,20 @@ insertHints: paid`)
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFbctfOutputFile])
       .then(() => fs.existsSync(desiredFbctfOutputFile))).to
+      .eventually.equal(true)
+  })
+
+  it('should be possible to create a RootTheBox export with a config file', function () {
+    fs.writeFileSync(configFile, `
+ctfFramework: RootTheBox
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid`)
+
+    this.timeout(TIMEOUT)
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+      .then(() => fs.existsSync(desiredRtbOutputFile))).to
       .eventually.equal(true)
   })
 })
