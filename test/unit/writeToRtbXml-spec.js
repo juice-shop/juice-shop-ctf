@@ -5,7 +5,7 @@ const expect = chai.expect
 const rewire = require('rewire')
 const writeToRtbXml = rewire('../../lib/writeToRtbXml')
 
-const xml_example = '<?xml version="1.0" encoding="UTF-8"?><rootthebox api="1"></rootthebox></xml>'
+const xmlExample = '<?xml version="1.0" encoding="UTF-8"?><rootthebox api="1"></rootthebox></xml>'
 
 describe('Output for RTB', () => {
   it('should be written to XML file', () => {
@@ -20,7 +20,7 @@ describe('Output for RTB', () => {
         }
       }
     })
-    return expect(writeToRtbXml(xml_example))
+    return expect(writeToRtbXml(xmlExample))
       .to.be.fulfilled
   })
 
@@ -32,7 +32,7 @@ describe('Output for RTB', () => {
         }
       }
     })
-    return expect(writeToRtbXml(xml_example))
+    return expect(writeToRtbXml(xmlExample))
       .to.be.rejectedWith('Failed to write output to file! Argh!')
   })
 
@@ -48,7 +48,7 @@ describe('Output for RTB', () => {
         }
       }
     })
-    return expect(writeToRtbXml(xml_example, 'custom.xml'))
+    return expect(writeToRtbXml(xmlExample, 'custom.xml'))
       .to.be.fulfilled
   })
 })

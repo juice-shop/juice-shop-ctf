@@ -14,25 +14,25 @@ const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: optio
 describe('Generated RTB data', () => {
   it('should respect hint insertion options', function () {
     return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.freeTextHints })).to.eventually.deep.include(
-        '<?xml version="1.0" encoding="UTF-8"?>'
+      '<?xml version="1.0" encoding="UTF-8"?>'
     )
   })
 
   it('should respect hint penalty costs insertion options', function () {
     return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints })).to.eventually.deep.include(
-        '<?xml version="1.0" encoding="UTF-8"?>'
+      '<?xml version="1.0" encoding="UTF-8"?>'
     )
   })
 
   it('should respect hint penalty costs insertion options', function () {
     return expect(generateData([challenge1], { ...defaultOptions, insertHintUrls: options.paidHintUrls })).to.eventually.deep.include(
-        '<?xml version="1.0" encoding="UTF-8"?>'
+      '<?xml version="1.0" encoding="UTF-8"?>'
     )
   })
 
   it('should merge hint & hintUrl together (considering hint text and penalty)', function () {
     return expect(generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls })).to.eventually.deep.include(
-        '<?xml version="1.0" encoding="UTF-8"?>'
+      '<?xml version="1.0" encoding="UTF-8"?>'
     )
   })
 })
