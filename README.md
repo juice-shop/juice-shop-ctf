@@ -23,6 +23,7 @@ The following open source CTF frameworks are supported by
 * [CTFd 1.x](https://ctfd.io/)
   ([1.1.x](https://github.com/CTFd/CTFd/releases/tag/1.1.4) or [1.2.x](https://github.com/CTFd/CTFd/releases/tag/1.2.0))
 * [FBCTF](https://github.com/facebook/fbctf)
+* [RootTheBox](https://github.com/moloch--/RootTheBox)
 
 ## Setup ![node](https://img.shields.io/node/v/juice-shop-ctf-cli.svg) [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) ![npm bundle size](https://img.shields.io/bundlephobia/min/juice-shop-ctf-cli.svg)
 
@@ -48,10 +49,10 @@ Instead of answering questions in the CLI you can also provide your
 desired configuration in a file with the following format:
 
 ```yaml
-ctfFramework: CTFd 2.x | CTFd 1.x | FBCTF
+ctfFramework: CTFd 2.x | CTFd 1.x | FBCTF | RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd
+countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
 insertHints: none | free | paid
 insertHintUrls: none | free | paid # optional for FBCTF
 ```
