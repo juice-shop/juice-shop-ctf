@@ -8,9 +8,8 @@ const DOWN = inquirer.DOWN
 const fs = require('fs')
 const path = require('path')
 const dateFormat = require('dateformat')
-const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd2.zip'
+const outputFile = 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd.zip'
 const desiredCtfdOutputFile = './output.zip'
-const desiredCtfd2OutputFile = './output2.zip'
 const desiredFbctfOutputFile = './output.json'
 const desiredRtbOutputFile = './output.xml'
 const configFile = 'config.yml'
@@ -27,8 +26,8 @@ function cleanup () {
   if (fs.existsSync(configFile)) {
     fs.unlinkSync(configFile)
   }
-  if (fs.existsSync(desiredCtfd2OutputFile)) {
-    fs.unlinkSync(desiredCtfd2OutputFile)
+  if (fs.existsSync(desiredCtfdOutputFile)) {
+    fs.unlinkSync(desiredCtfdOutputFile)
   }
   if (fs.existsSync(desiredFbctfOutputFile)) {
     fs.unlinkSync(desiredFbctfOutputFile)
@@ -86,21 +85,15 @@ describe('juice-shop-ctf', () => {
       .eventually.match(/Failed to fetch secret key from URL!/i)
   })
 
-  it('should generate a CTFd 1.x export when choosen', function () {
-    this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
-      .eventually.match(/CTF framework to generate data for\? CTFd 1.x/i)
-  })
-
   it('should generate a FBCTF export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
+    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 
   it('should generate a RootTheBox export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/CTF framework to generate data for\? RootTheBox/i)
   })
 
@@ -154,14 +147,14 @@ insertHints: paid
 insertHintUrls: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfd2OutputFile])
-      .then(() => fs.existsSync(desiredCtfd2OutputFile))).to
+    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
+      .then(() => fs.existsSync(desiredCtfdOutputFile))).to
       .eventually.equal(true)
   })
 
-  it('should be possible to create a CTFd 1.x export with a config file', function () {
+  it('should be possible to create a CTFd export with a config file', function () {
     fs.writeFileSync(configFile, `
-ctfFramework: CTFd 1.x
+ctfFramework: CTFd
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid

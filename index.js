@@ -26,7 +26,7 @@ const questions = [
     type: 'list',
     name: 'ctfFramework',
     message: 'CTF framework to generate data for?',
-    choices: [options.ctfd2Framework, options.ctfdFramework, options.fbctfFramework, options.rtbFramework],
+    choices: [options.ctfdFramework, options.fbctfFramework, options.rtbFramework],
     default: 0
   },
   {
@@ -73,7 +73,7 @@ function getConfig (argv, questions) {
 
 const juiceShopCtfCli = async () => {
   console.log()
-  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${options.ctfdFramework.bold}, ${options.ctfd2Framework.bold}, ${options.fbctfFramework.bold} or ${options.rtbFramework.bold} score server`)
+  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${options.ctfdFramework.bold}, ${options.fbctfFramework.bold} or ${options.rtbFramework.bold} score server`)
 
   try {
     const answers = await getConfig(argv, questions)

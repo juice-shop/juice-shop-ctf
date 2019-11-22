@@ -24,11 +24,11 @@ describe('Generated CTFd data', () => {
       {
         challenges: {
           results: [
-            { id: 1, name: 'c1', description: 'C1 (Difficulty Level: 1)', value: 100, category: '1', hidden: false, max_attempts: 0, type: 'standard' },
-            { id: 2, name: 'c2', description: 'C2 (Difficulty Level: 2)', value: 250, category: '2', hidden: false, max_attempts: 0, type: 'standard' },
-            { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', hidden: false, max_attempts: 0, type: 'standard' },
-            { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', hidden: false, max_attempts: 0, type: 'standard' },
-            { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', hidden: false, max_attempts: 0, type: 'standard' }
+            { id: 1, name: 'c1', description: 'C1 (Difficulty Level: 1)', value: 100, category: '1', state: 'visible', max_attempts: 0, type: 'standard' },
+            { id: 2, name: 'c2', description: 'C2 (Difficulty Level: 2)', value: 250, category: '2', state: 'visible', max_attempts: 0, type: 'standard' },
+            { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard' },
+            { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', state: 'visible', max_attempts: 0, type: 'standard' },
+            { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', state: 'visible', max_attempts: 0, type: 'standard' }
           ]
         }
       })
@@ -39,11 +39,11 @@ describe('Generated CTFd data', () => {
       {
         flagKeys: {
           results: [
-            { id: 1, chal: 1, flag: '958c64658383140e7d08d5dee091009cc0eafc1f', type: 'static', data: null },
-            { id: 2, chal: 2, flag: '49294e8b829f5b053f748facad22825ccb4bf420', type: 'static', data: null },
-            { id: 3, chal: 3, flag: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', data: null },
-            { id: 4, chal: 4, flag: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', data: null },
-            { id: 5, chal: 5, flag: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', data: null }
+            { id: 1, challenge_id: 1, content: '958c64658383140e7d08d5dee091009cc0eafc1f', type: 'static', data: null },
+            { id: 2, challenge_id: 2, content: '49294e8b829f5b053f748facad22825ccb4bf420', type: 'static', data: null },
+            { id: 3, challenge_id: 3, content: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', data: null },
+            { id: 4, challenge_id: 4, content: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', data: null },
+            { id: 5, challenge_id: 5, content: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', data: null }
           ]
         }
       })
@@ -66,7 +66,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 0, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -74,7 +74,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 45, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' }
             ]
           }
         })
@@ -88,7 +88,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 0, type: 0 }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -96,7 +96,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 90, type: 0 }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
             ]
           }
         })
@@ -111,8 +111,8 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 0, type: 0 },
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 0, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -120,8 +120,8 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 45, type: 0 },
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 0, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -129,8 +129,8 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 0, type: 0 },
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 90, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
             ]
           }
         }),
@@ -138,8 +138,8 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 45, type: 0 },
-              { id: 10003, chal: 3, hint: 'hintUrl', cost: 90, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
             ]
           }
         })
@@ -173,7 +173,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 0, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -181,7 +181,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hint', cost: 45, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' }
             ]
           }
         })
@@ -199,7 +199,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hintUrl', cost: 0, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
             ]
           }
         }),
@@ -207,7 +207,7 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 3, chal: 3, hint: 'hintUrl', cost: 90, type: 0 }
+              { id: 3, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
             ]
           }
         })

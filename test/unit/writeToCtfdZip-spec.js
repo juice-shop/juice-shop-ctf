@@ -13,11 +13,10 @@ describe('Output for CTFd', () => {
       },
       fs: {
         writeFileAsync (path, data) {
+          expect(data).to.match(/alembic_version.json/)
           expect(data).to.match(/challenges.json/)
           expect(data).to.match(/hints.json/)
-          expect(data).to.match(/keys.json/)
-          expect(data).to.match(/files.json/)
-          expect(data).to.match(/tags.json/)
+          expect(data).to.match(/flags.json/)
           expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.CTFd\.zip/)
           return new Promise(resolve => { resolve() })
         }
@@ -46,11 +45,10 @@ describe('Output for CTFd', () => {
       },
       fs: {
         writeFileAsync (path, data) {
+          expect(data).to.match(/alembic_version.json/)
           expect(data).to.match(/challenges.json/)
           expect(data).to.match(/hints.json/)
-          expect(data).to.match(/keys.json/)
-          expect(data).to.match(/files.json/)
-          expect(data).to.match(/tags.json/)
+          expect(data).to.match(/flags.json/)
           expect(path).to.match(/custom\.zip/)
           return new Promise(resolve => { resolve() })
         }
