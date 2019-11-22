@@ -6,7 +6,7 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/rtb')
 const options = require('../../lib/options')
 
-let defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
 
 describe('Generated RTB data', () => {
   let challenges
@@ -27,7 +27,7 @@ describe('Generated RTB data', () => {
   )
 
   it('should log generator error to console', () =>
-    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith(`Failed to generate challenge data! Cannot read property 'category' of undefined`)
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'category\' of undefined')
   )
 
   it('should contain one <box> per given challenge category', function () {

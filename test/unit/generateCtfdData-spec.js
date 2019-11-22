@@ -7,7 +7,7 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/ctfd')
 const options = require('../../lib/options')
 
-let defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
 
 describe('Generated CTFd data', () => {
   let challenges
@@ -58,7 +58,7 @@ describe('Generated CTFd data', () => {
   )
 
   it('should log generator error to console', () =>
-    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith(`Failed to generate challenge data! Cannot read property 'difficulty' of undefined`)
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'difficulty\' of undefined')
   )
 
   it('should push an object into hints.results for a text hint defined on a challenge', () => {
