@@ -19,9 +19,7 @@ helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_th
 The following open source CTF frameworks are supported by
 `juice-shop-ctf-cli`:
 
-* [CTFd 2.x](https://github.com/CTFd/CTFd/releases/latest)
-* [CTFd 1.x](https://ctfd.io/)
-  ([1.1.x](https://github.com/CTFd/CTFd/releases/tag/1.1.4) or [1.2.x](https://github.com/CTFd/CTFd/releases/tag/1.2.0))
+* [CTFd](https://github.com/CTFd/CTFd/releases/latest)
 * [FBCTF](https://github.com/facebook/fbctf)
 * [RootTheBox](https://github.com/moloch--/RootTheBox)
 
@@ -49,7 +47,7 @@ Instead of answering questions in the CLI you can also provide your
 desired configuration in a file with the following format:
 
 ```yaml
-ctfFramework: CTFd 2.x | CTFd 1.x | FBCTF | RootTheBox
+ctfFramework: CTFd | FBCTF | RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
