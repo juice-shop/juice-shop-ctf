@@ -7,6 +7,8 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/ctfd')
 const options = require('../../lib/options')
 
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
+
 describe('Generated CTFd data', () => {
   let challenges
   beforeEach(() => {
@@ -20,7 +22,7 @@ describe('Generated CTFd data', () => {
   })
 
   it('should consist of one object pushed into challenges.results per challenge', function () {
-    return expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
       {
         challenges: {
           results: [
@@ -35,7 +37,7 @@ describe('Generated CTFd data', () => {
   })
 
   it('should consist of one object pushed into flagKeys.results per challenge', () =>
-    expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+    expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
       {
         flagKeys: {
           results: [
@@ -50,13 +52,13 @@ describe('Generated CTFd data', () => {
   )
 
   it('should be empty when given no challenges', () =>
-    expect(generateData({}, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+    expect(generateData({}, defaultOptions)).to.eventually.deep.include(
       { challenges: { results: [] } }
     )
   )
 
   it('should log generator error to console', () =>
-    expect(generateData({ c1: undefined }, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'difficulty\' of undefined')
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'difficulty\' of undefined')
   )
 
   it('should push an object into hints.results for a text hint defined on a challenge', () => {
@@ -149,7 +151,7 @@ describe('Generated CTFd data', () => {
   it('should not insert a text hint when corresponding hint option is not chosen', () => {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
-    return expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
       { hints: { results: [] } }
     )
   })
@@ -157,7 +159,7 @@ describe('Generated CTFd data', () => {
   it('should not insert a hint URL when corresponding hint option is not chosen', () => {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
-    return expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
       { hints: { results: [] } }
     )
   })
