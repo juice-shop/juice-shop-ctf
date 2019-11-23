@@ -153,10 +153,11 @@ The OWASP Juice Shop core project team are:
 ### Code Contributors
 
 Based on [GitHub](https://github.com/bkimminich/juice-shop-ctf) commits
-on `master` as of Tue, 10 Apr 2018
+on `master` as of Fri, 21 Nov 2019
 
 - [Josh Grossman](httpps://github.com/tghosth) aka `tghosth`
 - [Simon Basset](https://github.com/simbas) aka `simbas`
+- [ElJeffe](https://github.com/jeffg2k) aka `jeffg2k`
 
 ## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf-server.svg)](LICENSE)
 
