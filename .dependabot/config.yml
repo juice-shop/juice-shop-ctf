@@ -1,0 +1,10 @@
+version: 1
+update_configs:
+  - package_manager: "javascript"
+    directory: "/"
+    update_schedule: "live"
+    target_branch: "develop"
+    default_reviewers:
+      - "bkimminich"
+    default_labels:
+      - "dependencies"
