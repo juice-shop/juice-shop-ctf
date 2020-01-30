@@ -9,8 +9,11 @@
 
 The Node package
 [`juice-shop-ctf-cli`](https://www.npmjs.com/package/juice-shop-ctf-cli)
-helps you to prepare [Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security) events with the
-[OWASP Juice Shop](https://owasp-juice.shop) challenges for different popular CTF frameworks. This interactive utility allows you to populate a CTF game server in a matter of minutes.
+helps you to prepare
+[Capture the Flag](https://en.wikipedia.org/wiki/Capture_the_flag#Computer_security)
+events with the [OWASP Juice Shop](https://owasp-juice.shop) challenges
+for different popular CTF frameworks. This interactive utility allows
+you to populate a CTF game server in a matter of minutes.
 
 ![Screenshot of juice-shop-ctf-cli in Powershell](images/juice-shop-ctf-cli.png)
 
@@ -128,12 +131,11 @@ Pull requests are also highly welcome - please refer to
 ## Donations [![](https://img.shields.io/badge/support-owasp%20juice%20shop-blue)](https://owasp.org/donate/?reponame=www-project-juice-shop&title=OWASP+Juice+Shop)
 
 The OWASP Foundation gratefully accepts donations via Stripe. Projects
-such as Juice Shop can then request reimbursement for expenses (like
-those listed above) from the Foundation. If you'd like to express your
-support of the Juice Shop project, please make sure to tick the
-"Publicly list me as a supporter of OWASP Juice Shop" checkbox on the
-donation form. You can find our more about donations and how they are
-used here:
+such as Juice Shop can then request reimbursement for expenses from the
+Foundation. If you'd like to express your support of the Juice Shop
+project, please make sure to tick the "Publicly list me as a supporter
+of OWASP Juice Shop" checkbox on the donation form. You can find our
+more about donations and how they are used here:
 
 <https://pwning.owasp-juice.shop/part3/donations.html>
 
