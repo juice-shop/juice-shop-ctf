@@ -55,7 +55,7 @@
     "bluebird": "^3.7.2",
     "colors": "^1.4.0",
     "dateformat": "^3.0.3",
-    "inquirer": "^7.0.6",
+    "inquirer": "7.0.4",
     "js-yaml": "^3.13.1",
     "jssha": "^2.3.1",
     "node-zip": "^1.1.1",
