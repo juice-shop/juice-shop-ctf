@@ -6,8 +6,8 @@ We provide security patches for the latest released minor version.
 
 | Version | Supported          |
 |:--------|:-------------------|
-| 6.1.x   | :white_check_mark: |
-| < 6.1   | :x:                |
+| 8.x     | :white_check_mark: |
+| < 8.0   | :x:                |
 
 ## Reporting a Vulnerability
 

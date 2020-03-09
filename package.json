@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "7.0.1-SNAPSHOT",
+  "version": "8.0.0-SNAPSHOT",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
@@ -47,37 +47,37 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": "8 - 13"
+    "node": "10 - 13"
   },
   "dependencies": {
-    "@hapi/joi": "^16.1.7",
+    "@hapi/joi": "^17.1.0",
     "bcryptjs": "^2.4.3",
-    "bluebird": "^3.7.0",
+    "bluebird": "^3.7.2",
     "colors": "^1.4.0",
     "dateformat": "^3.0.3",
-    "inquirer": "^7.0.0",
+    "inquirer": "^7.0.6",
     "js-yaml": "^3.13.1",
     "jssha": "^2.3.1",
     "node-zip": "^1.1.1",
     "path": "^0.12.7",
-    "request": "^2.88.0",
-    "request-promise": "^4.2.4",
+    "request": "^2.88.2",
+    "request-promise": "^4.2.5",
     "turndown": "^5.0.3",
-    "xmlbuilder": "^13.0.2",
-    "yargs": "^14.2.0"
+    "xmlbuilder": "^14.0.0",
+    "yargs": "^15.3.0"
   },
   "devDependencies": {
-    "ava": "^2.4.0",
+    "ava": "^3.5.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-spies": "^1.0.0",
     "chai-subset": "^1.6.0",
     "chai-things": "^0.2.0",
-    "coveralls": "^3.0.7",
+    "coveralls": "^3.0.9",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
-    "mocha": "^6.2.1",
-    "nyc": "^14.1.1",
+    "mocha": "^7.1.0",
+    "nyc": "^15.0.0",
     "rewire": "^4.0.1",
     "standard": "^14.3.1"
   },
