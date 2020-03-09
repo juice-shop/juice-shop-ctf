@@ -4,7 +4,6 @@
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
 [![Coverage Status](https://coveralls.io/repos/github/bkimminich/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/bkimminich/juice-shop-ctf?branch=master)
 [![Code Climate](https://codeclimate.com/github/bkimminich/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/bkimminich/juice-shop-ctf)
-[![Greenkeeper badge](https://badges.greenkeeper.io/bkimminich/juice-shop-ctf.svg)](https://greenkeeper.io/)
 ![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/bkimminich/juice-shop-ctf.svg)
 ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/juice-shop-ctf-cli.svg)
 
