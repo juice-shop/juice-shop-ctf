@@ -152,12 +152,22 @@ The OWASP Juice Shop core project team are:
 
 ### Code Contributors
 
-Based on [GitHub](https://github.com/bkimminich/juice-shop-ctf) commits
-on `master` as of Fri, 21 Nov 2019
+As reported by [`gitstats`](http://gitstats.sourceforge.net/) analysis
+of `master` as of Fri, 03 Apr 2020 after deduplication with `.mailmap`
+and
+[conversion into Markdown](https://jmalarcon.github.io/markdowntables/).
 
-- [Josh Grossman](httpps://github.com/tghosth) aka `tghosth`
-- [Simon Basset](https://github.com/simbas) aka `simbas`
-- [ElJeffe](https://github.com/jeffg2k) aka `jeffg2k`
+|Author|Commits (%)|+ lines|- lines|First commit|Last commit|Age|Active days|# by commits|
+|--- |--- |--- |--- |--- |--- |--- |--- |--- |
+|Björn Kimminich|450 (84.27%)|25104|16095|2016-11-27|2020-04-02|1222 days, 4:11:13|146|1|
+|Jannik Hollenbach|32 (5.99%)|3950|1898|2017-12-10|2019-03-28|472 days, 21:13:50|9|2|
+|greenkeeper[bot]|25 (4.68%)|25|25|2018-02-05|2019-03-20|408 days, 3:06:26|21|3|
+|Josh Grossman|12 (2.25%)|204|9|2017-01-31|2017-02-01|10:28:48|2|4|
+|Simon Basset|7 (1.31%)|362|12|2018-03-22|2018-03-29|6 days, 17:13:35|5|5|
+|ElJeffe|4 (0.75%)|405|15|2019-11-17|2019-11-20|2 days, 22:27:37|2|6|
+|dependabot[bot]|2 (0.37%)|9|80|2019-10-10|2019-12-28|78 days, 16:31:46|2|7|
+|whitesource-bolt-for-github[bot]|1 (0.19%)|8|0|2019-05-23|2019-05-23|0:00:00|1|8|
+|JuiceShopBot|1 (0.19%)|2|2|2020-03-09|2020-03-09|0:00:00|1|9|
 
 ## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf-server.svg)](LICENSE)
 
