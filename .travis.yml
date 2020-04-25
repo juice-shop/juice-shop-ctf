@@ -8,7 +8,7 @@ stages:
   - test
   - e2e
   - deploy
-install: if [ -z "$TRAVIS_TAG" ]; then rm -rf node_modules && npm install; fi
+install: if [ -z "$TRAVIS_TAG" ]; then npm install; fi
 script: if [ -z "$TRAVIS_TAG" ]; then npm test; fi
 jobs:
   include:
