@@ -1,4 +1,4 @@
-FROM node:12 as installer
+FROM node:14 as installer
 COPY . /juice-shop-ctf
 WORKDIR /juice-shop-ctf
 RUN chown -R node .
@@ -6,7 +6,7 @@ USER node
 ARG DEV_BUILD=false
 RUN if [ ${DEV_BUILD} = true ]; then npm i && npm lint && npm test && npm run e2e; else npm install --production --unsafe-perm; fi
 
-FROM node:12-alpine
+FROM node:14-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
@@ -16,7 +16,7 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
     org.opencontainers.image.vendor="Open Web Application Security Project" \
     org.opencontainers.image.documentation="https://help.owasp-juice.shop/part1/ctf.html" \
     org.opencontainers.image.licenses="MIT" \
-    org.opencontainers.image.version="8.0.3" \
+    org.opencontainers.image.version="8.1.0" \
     org.opencontainers.image.url="https://owasp-juice.shop" \
     org.opencontainers.image.source="https://github.com/bkimminich/juice-shop-ctf.git" \
     org.opencontainers.image.revision=$VCS_REF \

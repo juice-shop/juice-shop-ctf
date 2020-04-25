@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "8.0.3",
+  "version": "8.1.0",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
   "contributors": [
@@ -47,7 +47,7 @@
     "coverage": "nyc report --reporter=text-lcov | coveralls"
   },
   "engines": {
-    "node": "10 - 13"
+    "node": "10 - 14"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
