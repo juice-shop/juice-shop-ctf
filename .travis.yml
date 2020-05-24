@@ -37,6 +37,12 @@ jobs:
           repo: bkimminich/juice-shop-ctf
           tags: true
 notifications:
+  webhooks:
+    urls:
+      - secure: a928aEjEBO4FEuLpg1vwl2aiN6li6H9jwgqSV0/XGvvIk/yycFp263zsRgW1e7X4kmyKLwXA+e75kUFnTNU832ZI52Q47DXmZIHxwKWmryfXlhPZ+OF6MJrNjMQQTkLzgEIGXAYf02TpPV883unB9Tr6oCPZk4DkPo4rzYHzwGgUuMC+2zmiHR743xj3gTwnjZB07/NBp2nxOUhr92s1RsDXT4cBB/4ugw0RlWx0ETE7j7a0xqa4hYcn+2JPXbONjrWkS8KZKk06fQr8tTAAOWwQBIgcUzB6izmCuD3oDddv9mxHgaKOgoZMaqqR1Da5hB8MnHft0z6tRjHxd/CH3qSQJ4KB7rTUJr+18wqfqUQff6dCzuTRNpXBYx8Q8YnKk84VG99jQQXHOHGSTBZnIy/c2OPMhD8d+gBvfPSmRutZjw7iq2epYEf+DhtDEivkvCFQkVLjtj5wH6UYYWY+NluTV7Asiss7MiDvxSERabE4uDuix2mjGn/ztRusxPyAwOIAHIRSAE/821Qu/BGSzFPOnsuO/G1wcevrm73PxC2ZETNgMnItZsxaZorDHQWyGUP74bLViZE6FTM/4Ip4Oc9Ho47sXn8GAyky6INrs5/f08FjeZ1o3S6XUCYOFmKbIX4Z41aG6bRg77GZC9kt9QC6Yjda4QPLqBHvgmlxxAU=
+    on_success: always
+    on_failure: always
+    on_start: never
   slack:
     rooms:
       secure: XmMZn4PEkk3UfowEhOq3Nio9cn92cEDEDmqOCa1Lqy/zQ4YGD6I+3IeHbKEQb6hwy5TqRV96c3zu8hVoXv3I4eOc/LZLhXJ15yRbL6iI1sf+Ba1i4SSdSaF5o92C5C+O6bPrkbrI2ZJZgyD3d9/d8kWFXrBoEIojDjqQ3e08MDqdlRKwGbvbXi/vOj/jUBpnz1v4TgonwU+tQP7CyxEw0bDnS+jFH99ZB7gt2l15S4/werrmsBqlTbgRtP04EmMcdDpWFzA1I/mOAzdwvu/oXc88vTqgc5eqARW9r7+cIZMxBK/Ip7PZOGFnj7oBtl4N3DLxrsmSV5I1/NGLkB78a7vzoVD05K69i5M23QPVZRojoBp67tpgu85v4SbENki6ewoHMnXBUMkum0UaTEJeOCzjTJf/dstAakvxVNMtQs59totMaCWQt1A12nTNXSHJi1PI882E/U2GApBrr0n2by9FjzzWN4SKKEcr7jiQwEaw6TXyDCiA9VlIyVigeXWA5yW3J6XV/4KggtVtdsWcmVC6AvGEQZiRHKY7gaq8Ih/205gOC6hBAJfmh7IwuwLPo1LCnoy/E3q7q78lSoWlS7XOlA0OckzkIrO38q/VbLIGnZnB71WFa+ib6IHdZDdGZtrBAYS3Mjcj94L+/aPwXN2MTv0lynRadzGS6m51I2w=
