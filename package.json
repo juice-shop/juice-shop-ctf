@@ -2,11 +2,6 @@
   "name": "juice-shop-ctf-cli",
   "version": "8.1.0",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
-  "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://www.owasp.org/index.php/User:Bjoern_Kimminich)",
-  "contributors": [
-    "Bjoern Kimminich",
-    "Josh Grossman"
-  ],
   "keywords": [
     "web security",
     "web application security",
@@ -25,29 +20,33 @@
     "rtb",
     "cli"
   ],
-  "preferGlobal": true,
+  "homepage": "https://owasp-juice.shop",
+  "bugs": {
+    "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
+  },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
   },
-  "bugs": {
-    "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
-  },
-  "homepage": "https://owasp-juice.shop",
   "license": "MIT",
+  "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://kimminich.de)",
+  "contributors": [
+    "Bjoern Kimminich",
+    "Josh Grossman"
+  ],
   "main": "index.js",
   "bin": {
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
+    "e2e": "nyc --reporter=text mocha test/e2e --slow=15000 --timeout=30000",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "e2e": "nyc --reporter=text mocha test/e2e --slow=15000 --timeout=30000",
-    "coverage": "nyc report --reporter=text-lcov | coveralls"
+    "test": "nyc --reporter=html --reporter=text mocha test/unit"
   },
-  "engines": {
-    "node": "10 - 14"
+  "nyc": {
+    "report-dir": "./build/reports/coverage"
   },
   "dependencies": {
     "@hapi/joi": "^17.1.1",
@@ -81,6 +80,10 @@
     "rewire": "^4.0.1",
     "standard": "^14.3.3"
   },
+  "engines": {
+    "node": "10 - 14"
+  },
+  "preferGlobal": true,
   "standard": {
     "env": [
       "node",
@@ -91,8 +94,5 @@
       "describe",
       "beforeEach"
     ]
-  },
-  "nyc": {
-    "report-dir": "./build/reports/coverage"
   }
 }
