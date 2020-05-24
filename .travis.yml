@@ -32,7 +32,7 @@ jobs:
         provider: npm
         email: npmjs.org@kimminich.de
         api_token:
-          secure: Ct1lTpU5cht0OybpGB9+HfkWBBa1k6TPrnajp08cKYbeKUx1ybYdbkuM0z2F9XMeoyTHNcawYyqlHmNFcqSNwYpx7d54Mn7KkWWiUwpeekG+PPSzjoEMYkQt7Q1MQfwBV0kyzVFL+R1x9lg83BKDBGd/clwBAvZhMCDc/EiocTyVvkul9mhSBbsMLHyNeU1EVbyQdPDh2tsOQKPbpr4rCsH9xGes/VZQ6YWcJvyCwDryj4VlNsH4USJvuG992yy5RT0kg2gAcUm8gq3wkzlRPkJWT4RFmdxyzidWOPq6DPZfULNQ3z+gmZxeyNJJkAZHFYPIZC66xKxx8/3e3cuX+dS1E4LofwLpB3bydnFmOVaAWA0pdD/tlWFLPBK5GzA13BHTG2zJdaeSo1CxS98i2Yoj5JsQrnW0mDp/7AH47eAznaWTsukEKYCFjmu0fUMI5SWV4CXtWCzNxb9E8UqboM0j92aH3R3BIBVWytnRfBXyD5gACfLNM6V4SJVaXPG5apdj2jX4tiHruug6uUzSIxuVhtOH+PXrBC49ZNmM3gFclz6qcwcT7eUxsR4c38CNCByuzn/bA9IEvIpAK2/KqLodWdaivGmt/2PKBt9BhOSaWaep7+ZKkBMVE5yeuUI3w/ZDXavooYfw9CqsrmDfRC0H1L6zWaiyuhnyRjH0bIE=
+          secure: rimqXeHE0tzIJTzyUvfHbDpQ/E34MKRglvkganNo/Z0Q9A4l/Yx5YVU+J7+BBhC6Tj5Dek93RPPvwkIflfZAoLIKROz3UvrHvXjsU36T1lkRysRpLdsQ6Vp5CcudGlSOGPDU05955z/hnirr4HwgX2ffh6vMvfIpRhEgk4gEpwSjlphKcetlX8aE4QTKJcfWzV2bH+7rbQbVjkOP1GDuTCizVsWdbN/08XypiB6rBbNa3guBrORG9CafQxIV3xdwiKSDtB7PLh4d7qWlmhKmNhbx1iTTWVPrc2R+LDu/3Y9TKh8p9F7r4WGevat/SZ3nbgr5we0xohUYLvxYkelYL4kzZCK8KTjpc0XpsBD0n3E07xSy7OXlPB2gyfW6nnVr4MpUIgq+TIxwjhTcWcGmDMTp/F7h8srvv1dRjVqLbtHkvTIdVIs6UVIS/X2jI46/AgreGMpMRupX1xovprUcnYMP91MqVskRuHCfbGqsS+dtrllWEghpV22SdVXCy6/Prms1MiBYe84d80B8IpiGbivhTAUiCoVmWF71/fe6flGEPV1ZS5do/AaF/ccVFCtHL2QCBPt9e99efjaS/ZKXBkhTuYqCsi5Z6mthqD1b7kaK09VeNJNfqZF0IbNtfEEi1rcrr0WGWii7pu+1OE+n9do/kDYJJ0Ry9dD9snyv5rY=
         on:
           repo: bkimminich/juice-shop-ctf
           tags: true
