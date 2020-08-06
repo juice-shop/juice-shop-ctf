@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "8.1.0",
+  "version": "8.1.1",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "keywords": [
     "web security",
@@ -55,18 +55,18 @@
     "colors": "^1.4.0",
     "dateformat": "^3.0.3",
     "inquirer": "7.0.4",
-    "js-yaml": "^3.13.1",
+    "js-yaml": "^3.14.0",
     "jssha": "^2.4.2",
     "node-zip": "^1.1.1",
     "path": "^0.12.7",
     "request": "^2.88.2",
-    "request-promise": "^4.2.5",
+    "request-promise": "^4.2.6",
     "turndown": "^5.0.3",
     "xmlbuilder": "^14.0.0",
-    "yargs": "^15.3.1"
+    "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "ava": "^3.8.1",
+    "ava": "^3.11.1",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-spies": "^1.0.0",
@@ -75,10 +75,10 @@
     "coveralls": "^3.1.0",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
-    "mocha": "^7.1.2",
-    "nyc": "^15.0.1",
+    "mocha": "^7.2.0",
+    "nyc": "^15.1.0",
     "rewire": "^4.0.1",
-    "standard": "^14.3.3"
+    "standard": "^14.3.4"
   },
   "engines": {
     "node": "10 - 14"
