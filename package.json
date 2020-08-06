@@ -54,15 +54,15 @@
     "bluebird": "^3.7.2",
     "colors": "^1.4.0",
     "dateformat": "^3.0.3",
-    "inquirer": "7.0.4",
+    "inquirer": "^7.3.3",
     "js-yaml": "^3.14.0",
-    "jssha": "^2.4.2",
+    "jssha": "^3.1.1",
     "node-zip": "^1.1.1",
     "path": "^0.12.7",
     "request": "^2.88.2",
     "request-promise": "^4.2.6",
-    "turndown": "^5.0.3",
-    "xmlbuilder": "^14.0.0",
+    "turndown": "^6.0.0",
+    "xmlbuilder": "^15.1.1",
     "yargs": "^15.4.1"
   },
   "devDependencies": {
@@ -75,9 +75,9 @@
     "coveralls": "^3.1.0",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
-    "mocha": "^7.2.0",
+    "mocha": "^8.1.1",
     "nyc": "^15.1.0",
-    "rewire": "^4.0.1",
+    "rewire": "^5.0.0",
     "standard": "^14.3.4"
   },
   "engines": {
