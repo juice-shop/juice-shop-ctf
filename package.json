@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "8.1.1",
+  "version": "8.1.2-SNAPSHOT",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "keywords": [
     "web security",
@@ -49,7 +49,7 @@
     "report-dir": "./build/reports/coverage"
   },
   "dependencies": {
-    "@hapi/joi": "^17.1.1",
+    "joi": "^17.2.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "colors": "^1.4.0",
