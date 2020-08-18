@@ -1,4 +1,9 @@
-# ![Juice Shop CTF Logo](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/master/images/JuiceShopCTF_Logo_100px.png) OWASP Juice Shop CTF [![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects) [![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/releases/latest) [![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop) [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
+# ![Juice Shop CTF Logo](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/master/images/JuiceShopCTF_Logo_100px.png) OWASP Juice Shop CTF Extension
+
+[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)  
+[![GitHub release](https://img.shields.io/github/release/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/releases/latest)  
+[![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)  
+[![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
 
 [![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
@@ -26,7 +31,7 @@ The following open source CTF frameworks are supported by
 * [FBCTF](https://github.com/facebook/fbctf)
 * [RootTheBox](https://github.com/moloch--/RootTheBox)
 
-## Setup ![node](https://img.shields.io/node/v/juice-shop-ctf-cli.svg) [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) ![npm bundle size](https://img.shields.io/bundlephobia/min/juice-shop-ctf-cli.svg)
+## Setup ![node](https://img.shields.io/node/v/juice-shop-ctf-cli.svg) [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) ![npm bundle size](https://img.shields.io/bundlephobia/min/juice-shop-ctf-cli.svg)
 
 ```
 npm install -g juice-shop-ctf-cli
@@ -70,7 +75,7 @@ Optionally you can also choose the name of the output file:
 juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
-### Docker Container [![Docker Automated build](https://img.shields.io/docker/automated/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) [![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) ![Docker Stars](https://img.shields.io/docker/stars/bkimminich/juice-shop-ctf.svg) [![](https://images.microbadger.com/badges/image/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own version badge on microbadger.com")
+### Docker Container [![Docker Automated build](https://img.shields.io/docker/automated/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) [![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) ![Docker Stars](https://img.shields.io/docker/stars/bkimminich/juice-shop-ctf.svg) [![](https://images.microbadger.com/badges/image/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own version badge on microbadger.com")
 
 Share your current directory with the `/data` volume of your
 `bkimminich/juice-shop-ctf` Docker container and run the interactive
@@ -118,7 +123,7 @@ in our (free) companion guide ebook.**
   `0.0.0.0:XXXX` for TCP in the `default` VM's network adapter in
   VirtualBox. For CTFd you need to forward port `8000`.
 
-## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors)
+## Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors)
 
 Found a bug? Got an idea for enhancement? Improvement for cheating
 prevention?
@@ -151,13 +156,14 @@ The OWASP Juice Shop core project team are:
 - [Jannik Hollenbach](https://github.com/J12934) aka `J12934`
 - [Timo Pagel](https://github.com/wurstbrot) aka `wurstbrot`
 
-For a list of all contributors to the OWASP Juice Shop CTF Extension please visit our
-[HALL_OF_FAME.md](HALL_OF_FAME.md).
+For a list of all contributors to the OWASP Juice Shop CTF Extension
+please visit our [HALL_OF_FAME.md](HALL_OF_FAME.md).
 
-## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf-server.svg)](LICENSE)
+## Licensing [![license](https://img.shields.io/github/license/bkimminich/juice-shop-ctf.svg)](LICENSE)
 
 This program is free software: you can redistribute it and/or modify it
-under the terms of the [MIT license](LICENSE). OWASP Juice Shop and any
-contributions are Copyright © by Bjoern Kimminich 2016-2020.
+under the terms of the [MIT license](LICENSE). OWASP Juice Shop CTF
+Extension and any contributions are Copyright © by Bjoern Kimminich
+2016-2020.
 
 ![Juice Shop CTF Logo](https://raw.githubusercontent.com/bkimminich/juice-shop-ctf/develop/images/JuiceShopCTF_Logo_400px.png)
