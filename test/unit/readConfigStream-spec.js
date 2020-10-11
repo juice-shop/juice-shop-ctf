@@ -2,6 +2,7 @@ const chai = require('chai')
 chai.use(require('chai-as-promised'))
 const expect = chai.expect
 const readConfigStream = require('../../lib/readConfigStream')
+const options = require('../../lib/options')
 const Readable = require('stream').Readable
 
 function generateStreamFromYaml (yaml) {
@@ -35,8 +36,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
-      insertHints: 2,
-      insertHintUrls: 2
+      insertHints: options.paidTextHints,
+      insertHintUrls: options.paidHintUrls
     })
   })
 
@@ -46,8 +47,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: '127.0.0.1',
       ctfKey: 'theCtfKey',
-      insertHints: 2,
-      insertHintUrls: 2
+      insertHints: options.paidTextHints,
+      insertHintUrls: options.paidHintUrls
     })
   })
 
@@ -69,8 +70,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
-      insertHints: 0,
-      insertHintUrls: 2
+      insertHints: options.noTextHints,
+      insertHintUrls: options.paidHintUrls
     })
   })
 
@@ -80,8 +81,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
-      insertHints: 1,
-      insertHintUrls: 2
+      insertHints: options.freeTextHints,
+      insertHintUrls: options.paidHintUrls
     })
   })
 
@@ -97,8 +98,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
-      insertHints: 2,
-      insertHintUrls: 0
+      insertHints: options.paidTextHints,
+      insertHintUrls: options.noHintUrls
     })
   })
 
@@ -108,8 +109,8 @@ ctfK`)
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
-      insertHints: 2,
-      insertHintUrls: 1
+      insertHints: options.paidTextHints,
+      insertHintUrls: options.freeHintUrls
     })
   })
 
