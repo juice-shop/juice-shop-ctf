@@ -2,7 +2,7 @@ const chai = require('chai')
 chai.use(require('chai-as-promised'))
 const expect = chai.expect
 const readConfigStream = require('../../lib/readConfigStream')
-const options = require('../../lib/options');
+const options = require('../../lib/options')
 const Readable = require('stream').Readable
 
 function generateStreamFromYaml (yaml) {
