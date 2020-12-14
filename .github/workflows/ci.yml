@@ -26,7 +26,7 @@ jobs:
           node-version: 14
       - name: "Install application"
         run: npm install --ignore-scripts
-      - name: "Lint code and configurations"
+      - name: "Lint code"
         run: npm run lint
   test:
     runs-on: ubuntu-latest
