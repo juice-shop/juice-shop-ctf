@@ -6,6 +6,7 @@
 [![Code Climate](https://codeclimate.com/github/bkimminich/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/bkimminich/juice-shop-ctf)
 ![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/bkimminich/juice-shop-ctf.svg)
 ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/juice-shop-ctf-cli.svg)
+![Merge Chance](https://img.shields.io/endpoint?url=https%3A%2F%2Fmerge-chance.info%2Fbadge%3Frepo%3Dbkimminich/juice-shop-ctf)
 
 Found a bug? Got an idea for enhancement? Feel like adding support for
 another CTF framework?
