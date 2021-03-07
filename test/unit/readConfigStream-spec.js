@@ -11,12 +11,13 @@ function generateStreamFromYaml (yaml) {
   stream.push(null)
   return stream
 }
-function generateStream (url, ctfKey, insertHints, insertHintUrls) {
+function generateStream (url, ctfKey, insertHints, insertHintUrls, insertHintSnippets) {
   const yaml = `
 juiceShopUrl: ${url}
 ctfKey: ${ctfKey}
 insertHints: ${insertHints}
 insertHintUrls: ${insertHintUrls}
+insertHintSnippets: ${insertHintSnippets}
 `
   return generateStreamFromYaml(yaml)
 }
@@ -30,92 +31,98 @@ ctfK`)
     expect(readConfigStream(stream)).to.be.rejectedWith(Error)
   })
 
-  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, paid', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'paid')
+  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 2, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, paid, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
       insertHints: options.paidTextHints,
-      insertHintUrls: options.paidHintUrls
+      insertHintUrls: options.paidHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should resolve with {127.0.0.1, theCtfKey, 2, 2} when using a yaml containing 127.0.0.1, theCtfKey, paid, paid', () => {
-    const stream = generateStream('127.0.0.1', 'theCtfKey', 'paid', 'paid')
+  it('should resolve with {127.0.0.1, theCtfKey, 2, 2, 2} when using a yaml containing 127.0.0.1, theCtfKey, paid, paid. paid', () => {
+    const stream = generateStream('127.0.0.1', 'theCtfKey', 'paid', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: '127.0.0.1',
       ctfKey: 'theCtfKey',
       insertHints: options.paidTextHints,
-      insertHintUrls: options.paidHintUrls
+      insertHintUrls: options.paidHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should reject with an error when using a yaml containing notAUriNorAnIpValue, theCtfKey, paid, paid', () => {
-    const stream = generateStream('notAUriNorAnIpValue', 'theCtfKey', 'paid', 'paid')
+  it('should reject with an error when using a yaml containing notAUriNorAnIpValue, theCtfKey, paid, paid, paid', () => {
+    const stream = generateStream('notAUriNorAnIpValue', 'theCtfKey', 'paid', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.be.rejectedWith(Error)
   })
 
-  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com\', 0, paid, paid', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 0, 'paid', 'paid')
+  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com\', 0, paid, paid, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 0, 'paid', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.be.rejectedWith(Error)
   })
 
-  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 0, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, none, paid', () => {
+  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 0, 2, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, none, paid, paid', () => {
     const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'none', 'paid')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
       insertHints: options.noTextHints,
-      insertHintUrls: options.paidHintUrls
+      insertHintUrls: options.paidHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 1, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, free, paid', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'free', 'paid')
+  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 1, 2, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, free, paid, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'free', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
       insertHints: options.freeTextHints,
-      insertHintUrls: options.paidHintUrls
+      insertHintUrls: options.paidHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com, theCtfKey, invalidValue, paid', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'invalidValue', 'paid')
+  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com, theCtfKey, invalidValue, paid, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'invalidValue', 'paid', 'paid')
 
     expect(readConfigStream(stream)).to.be.rejectedWith(Error)
   })
 
-  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 0} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, none, paid', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'none')
+  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 0, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, none, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'none', 'paid')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
       insertHints: options.paidTextHints,
-      insertHintUrls: options.noHintUrls
+      insertHintUrls: options.noHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 1} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, free, paid', () => {
+  it('should resolve with {http://thejuiceshopurl.com, theCtfKey, 2, 1, 2} when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, free, paid', () => {
     const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'free')
 
     expect(readConfigStream(stream)).to.eventually.deep.equal({
       juiceShopUrl: 'http://thejuiceshopurl.com',
       ctfKey: 'theCtfKey',
       insertHints: options.paidTextHints,
-      insertHintUrls: options.freeHintUrls
+      insertHintUrls: options.freeHintUrls,
+      insertHintSnippets: options.paidHintSnippets
     })
   })
 
-  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, invalidValue', () => {
-    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'invalidValue')
+  it('should reject with an error when using a yaml containing http://thejuiceshopurl.com, theCtfKey, paid, invalidValue, paid', () => {
+    const stream = generateStream('http://thejuiceshopurl.com', 'theCtfKey', 'paid', 'invalidValue', 'paid')
 
     expect(readConfigStream(stream)).to.be.rejectedWith(Error)
   })
