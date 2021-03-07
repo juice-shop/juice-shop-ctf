@@ -32,7 +32,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [10, 12, 14]
+        node-version: [12, 14, 15]
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v2
