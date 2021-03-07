@@ -7,17 +7,17 @@ const expect = chai.expect
 const generateData = require('../../lib/generators/ctfd')
 const options = require('../../lib/options')
 
-const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' }
+const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} }
 
 describe('Generated CTFd data', () => {
   let challenges
   beforeEach(() => {
     challenges = {
-      c1: { id: 1, name: 'c1', description: 'C1', difficulty: 1, category: '1' },
-      c2: { id: 2, name: 'c2', description: 'C2', difficulty: 2, category: '2' },
-      c3: { id: 3, name: 'c3', description: 'C3', difficulty: 3, category: '2' },
-      c4: { id: 4, name: 'c4', description: 'C4', difficulty: 4, category: '3' },
-      c5: { id: 5, name: 'c5', description: 'C5', difficulty: 5, category: '1' }
+      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1' },
+      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2' },
+      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2' },
+      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3' },
+      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1' }
     }
   })
 
@@ -64,7 +64,7 @@ describe('Generated CTFd data', () => {
   it('should push an object into hints.results for a text hint defined on a challenge', () => {
     challenges.c3.hint = 'hint'
     return Promise.all([
-      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -72,7 +72,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -86,7 +86,7 @@ describe('Generated CTFd data', () => {
   it('should push an object into hints.results for a text hint URL defined on a challenge', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -94,7 +94,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -109,7 +109,7 @@ describe('Generated CTFd data', () => {
     challenges.c3.hint = 'hint'
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -118,7 +118,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -127,7 +127,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -136,7 +136,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '' })).to.eventually.deep.include(
+      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
@@ -171,7 +171,7 @@ describe('Generated CTFd data', () => {
     challenges.c4.hint = 'hint'
     challenges.c5.hint = 'hint'
     return Promise.all([
-      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.not.deep.include(
+      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.not.deep.include(
         {
           hints: {
             results: [
@@ -179,7 +179,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.not.deep.include(
+      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.not.deep.include(
         {
           hints: {
             results: [
@@ -197,7 +197,7 @@ describe('Generated CTFd data', () => {
     challenges.c4.hintUrl = 'hintUrl'
     challenges.c5.hintUrl = 'hintUrl'
     return Promise.all([
-      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.not.deep.include(
+      expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.not.deep.include(
         {
           hints: {
             results: [
@@ -205,7 +205,7 @@ describe('Generated CTFd data', () => {
             ]
           }
         }),
-      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '' })).to.eventually.not.deep.include(
+      expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.not.deep.include(
         {
           hints: {
             results: [
