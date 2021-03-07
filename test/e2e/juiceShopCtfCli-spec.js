@@ -110,7 +110,8 @@ describe('juice-shop-ctf', () => {
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: paid`)
+insertHintUrls: paid
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
@@ -133,7 +134,8 @@ insertHints`)
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: invalidValue`)
+insertHintUrls: paid
+insertHintSnippets: invalidValue`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
@@ -145,7 +147,8 @@ insertHintUrls: invalidValue`)
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: paid`)
+insertHintUrls: paid
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
@@ -159,7 +162,8 @@ ctfFramework: CTFd
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: paid`)
+insertHintUrls: paid
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
@@ -173,7 +177,9 @@ ctfFramework: FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
-insertHints: paid`)
+insertHints: paid
+insertHintUrls: paid
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFbctfOutputFile])
@@ -187,7 +193,8 @@ ctfFramework: RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: paid`)
+insertHintUrls: paid
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
