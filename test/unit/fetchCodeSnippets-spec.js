@@ -16,7 +16,7 @@ describe('Code snippets', () => {
           expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets/c1', json: true })
           return new Promise(resolve => { resolve({ snippet: 'function c1 () {}' }) })
         } else {
-          fail('Unexpected request: ' + options)
+          expect(false, 'Unexpected request: ' + options)
         }
       }
     })
