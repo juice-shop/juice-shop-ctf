@@ -92,7 +92,7 @@ const juiceShopCtfCli = async () => {
       fetchSecretKey(answers.ctfKey),
       fetchChallenges(answers.juiceShopUrl),
       fetchCountryMapping(answers.countryMapping),
-      fetchCodeSnippets(answers.juiceShopUrl)
+      fetchCodeSnippets(answers.juiceShopUrl, answers.insertHintSnippets === options.noHintSnippets)
     ])
 
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
