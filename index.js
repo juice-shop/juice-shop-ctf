@@ -66,7 +66,7 @@ const questions = [
   {
     type: 'list',
     name: 'insertHintSnippets',
-    message: 'Insert the vulnerable code snippet as hint for each challenge?',
+    message: 'Insert a code snippet as hint for each challenge?',
     choices: [options.noHintSnippets, options.freeHintSnippets, options.paidHintSnippets],
     default: 0
   }

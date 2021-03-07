@@ -16,7 +16,7 @@ const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
 
-const TIMEOUT = 25000
+const TIMEOUT = 45000
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
 function cleanup () {
@@ -46,7 +46,8 @@ describe('juice-shop-ctf', () => {
     return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/Backup archive written to /i).and
       .eventually.match(/Insert a text hint along with each challenge\? No text hints/i).and
-      .eventually.match(/Insert a hint URL along with each challenge\? No hint URLs/i)
+      .eventually.match(/Insert a hint URL along with each challenge\? No hint URLs/i).and
+      .eventually.match(/Insert a code snippet as hint for each challenge\? No hint snippets/i)
   })
 
   it('should insert free hints when chosen', function () {
