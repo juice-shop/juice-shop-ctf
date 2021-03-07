@@ -134,8 +134,8 @@ insertHints`)
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: invalidValue`)
+insertHintUrls: invalidValue
+insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
     return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
