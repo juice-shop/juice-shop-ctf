@@ -114,7 +114,7 @@ insertHintUrls: paid
 insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
       .eventually.match(/Backup archive written to /i)
   })
 
@@ -125,7 +125,7 @@ ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
       .eventually.match(/can not read /i)
   })
 
@@ -138,7 +138,7 @@ insertHintUrls: paid
 insertHintSnippets: invalidValue`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile]).then(obj => obj.stdout)).to
       .eventually.match(/"insertHintUrls" must be one of /i)
   })
 
@@ -151,7 +151,7 @@ insertHintUrls: paid
 insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
       .then(() => fs.existsSync(desiredCtfdOutputFile))).to
       .eventually.equal(true)
   })
@@ -166,7 +166,7 @@ insertHintUrls: paid
 insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
       .then(() => fs.existsSync(desiredCtfdOutputFile))).to
       .eventually.equal(true)
   })
@@ -182,7 +182,7 @@ insertHintUrls: paid
 insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFbctfOutputFile])
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFbctfOutputFile])
       .then(() => fs.existsSync(desiredFbctfOutputFile))).to
       .eventually.equal(true)
   })
@@ -197,7 +197,7 @@ insertHintUrls: paid
 insertHintSnippets: paid`)
 
     this.timeout(TIMEOUT)
-    return expect(execFile('npx', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
       .then(() => fs.existsSync(desiredRtbOutputFile))).to
       .eventually.equal(true)
   })
