@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2016-2021 Bjoern Kimminich.
+ * SPDX-License-Identifier: MIT
+ */
+
 const chai = require('chai')
 const expect = chai.expect
 const url = require('../../lib/url')

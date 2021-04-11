@@ -1,3 +1,8 @@
+/*
+ * Copyright (c) 2016-2021 Bjoern Kimminich.
+ * SPDX-License-Identifier: MIT
+ */
+
 require('colors') // no assignment necessary as this module extends the String prototype
 const inquirer = require('inquirer')
 const fetchSecretKey = require('./lib/fetchSecretKey')
