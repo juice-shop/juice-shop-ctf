@@ -51,9 +51,17 @@ jobs:
       - name: "Install application"
         run: npm install
       - name: "Execute unit tests"
-        run: npm test
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 2
+          max_attempts: 3
+          command: npm test
       - name: "Execute e2e tests"
-        run: npm run e2e
+        uses: nick-invision/retry@v2
+        with:
+          timeout_minutes: 6
+          max_attempts: 3
+          command: npm run e2e
       - name: "Prepare coverage data"
         run: npm run coverage
       - name: "Publish coverage to Coveralls"
