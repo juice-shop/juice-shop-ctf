@@ -61,6 +61,7 @@ ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key #
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
 insertHints: none | free | paid
 insertHintUrls: none | free | paid # optional for FBCTF
+insertHintSnippets: none | free | paid # optional for FBCTF
 ```
 
 You can then run the generator with:

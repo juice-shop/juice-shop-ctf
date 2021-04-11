@@ -8,6 +8,7 @@ const inquirer = require('inquirer')
 const fetchSecretKey = require('./lib/fetchSecretKey')
 const fetchChallenges = require('./lib/fetchChallenges')
 const fetchCountryMapping = require('./lib/fetchCountryMapping')
+const fetchCodeSnippets = require('./lib/fetchCodeSnippets')
 const readConfigStream = require('./lib/readConfigStream')
 const fs = require('fs')
 const options = require('./lib/options')
@@ -66,6 +67,13 @@ const questions = [
     message: 'Insert a hint URL along with each challenge?',
     choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
     default: 0
+  },
+  {
+    type: 'list',
+    name: 'insertHintSnippets',
+    message: 'Insert a code snippet as hint for each challenge?',
+    choices: [options.noHintSnippets, options.freeHintSnippets, options.paidHintSnippets],
+    default: 0
   }
 ]
 
@@ -85,18 +93,21 @@ const juiceShopCtfCli = async () => {
 
     console.log()
 
-    const [fetchedSecretKey, challenges, countryMapping] = await Promise.all([
+    const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all([
       fetchSecretKey(answers.ctfKey),
       fetchChallenges(answers.juiceShopUrl),
-      fetchCountryMapping(answers.countryMapping)
+      fetchCountryMapping(answers.countryMapping),
+      fetchCodeSnippets(answers.juiceShopUrl, answers.insertHintSnippets === options.noHintSnippets)
     ])
 
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       juiceShopUrl: answers.juiceShopUrl,
       insertHints: answers.insertHints,
       insertHintUrls: answers.insertHintUrls,
+      insertHintSnippets: answers.insertHintSnippets,
       ctfKey: fetchedSecretKey,
       countryMapping,
+      vulnSnippets,
       outputLocation: argv.output
     })
     console.log()
