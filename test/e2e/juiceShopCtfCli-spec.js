@@ -112,7 +112,7 @@ describe('juice-shop-ctf', () => {
 
   it('should accept a config file', function () {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -125,7 +125,7 @@ insertHintSnippets: paid`)
 
   it('should fail when the config file cannot be parsed', function () {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints`)
 
@@ -136,7 +136,7 @@ insertHints`)
 
   it('should fail when the config file contains invalid values', function () {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: invalidValue
@@ -149,7 +149,7 @@ insertHintSnippets: paid`)
 
   it('should write the output file to the specified location', function () {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -164,7 +164,7 @@ insertHintSnippets: paid`)
   it('should be possible to create a CTFd export with a config file', function () {
     fs.writeFileSync(configFile, `
 ctfFramework: CTFd
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -179,7 +179,7 @@ insertHintSnippets: paid`)
   it('should be possible to create a FBCTF export with a config file', function () {
     fs.writeFileSync(configFile, `
 ctfFramework: FBCTF
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
 insertHints: paid
@@ -195,7 +195,7 @@ insertHintSnippets: paid`)
   it('should be possible to create a RootTheBox export with a config file', function () {
     fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: https://juice-shop-staging.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
