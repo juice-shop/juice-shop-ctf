@@ -39,7 +39,7 @@ const questions = [
     type: 'input',
     name: 'juiceShopUrl',
     message: 'Juice Shop URL to retrieve challenges?',
-    default: 'https://juice-shop.herokuapp.com'
+    default: 'https://juice-shop-staging.herokuapp.com' // TODO Revert after successful test that code snippets no longer cause server crash
   },
   {
     type: 'input',
