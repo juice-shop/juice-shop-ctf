@@ -1,10 +1,10 @@
 # Contributing [![GitHub contributors](https://img.shields.io/github/contributors/juice-shop/juice-shop-ctf.svg)](https://github.com/juice-shop/juice-shop-ctf/graphs/contributors) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
 [![CI Pipeline](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml/badge.svg)](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/juice-shop/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/juice-shop/juice-shop-ctf/builds)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
 [![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/juice-shop/juice-shop-ctf?branch=master)
 [![Code Climate](https://codeclimate.com/github/juice-shop/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/juice-shop/juice-shop-ctf)
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/juice-shop/juice-shop-ctf.svg)
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/bkimminich/juice-shop-ctf.svg)
 ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/juice-shop-ctf-cli.svg)
 ![Merge Chance](https://img.shields.io/endpoint?url=https%3A%2F%2Fmerge-chance.info%2Fbadge%3Frepo%3Djuice-shop/juice-shop-ctf)
 

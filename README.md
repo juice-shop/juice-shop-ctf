@@ -6,7 +6,7 @@
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
 
 [![CI Pipeline](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml/badge.svg)](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/juice-shop/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/juice-shop/juice-shop-ctf/builds)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
 [![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/juice-shop/juice-shop-ctf?branch=master)
 [![Code Climate](https://codeclimate.com/github/juice-shop/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/juice-shop/juice-shop-ctf)
 [![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/juice-shop/juice-shop-ctf)](https://codeclimate.com/github/juice-shop/juice-shop-ctf/trends/technical_debt)  
