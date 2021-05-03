@@ -13,7 +13,7 @@ const readConfigStream = require('./lib/readConfigStream')
 const fs = require('fs')
 const options = require('./lib/options')
 
-const generateCtfExport = require('./lib/generators/');
+const generateCtfExport = require('./lib/generators/')
 
 const argv = require('yargs')
   .option('config', {
