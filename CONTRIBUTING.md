@@ -1,18 +1,18 @@
-# Contributing [![GitHub contributors](https://img.shields.io/github/contributors/bkimminich/juice-shop-ctf.svg)](https://github.com/bkimminich/juice-shop-ctf/graphs/contributors) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
+# Contributing [![GitHub contributors](https://img.shields.io/github/contributors/juice-shop/juice-shop-ctf.svg)](https://github.com/juice-shop/juice-shop-ctf/graphs/contributors) [![JavaScript Style Guide](https://img.shields.io/badge/code%20style-standard-brightgreen.svg)](http://standardjs.com/)
 
-[![Build Status](https://travis-ci.org/bkimminich/juice-shop-ctf.svg?branch=master)](https://travis-ci.org/bkimminich/juice-shop-ctf)
-[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
-[![Coverage Status](https://coveralls.io/repos/github/bkimminich/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/bkimminich/juice-shop-ctf?branch=master)
-[![Code Climate](https://codeclimate.com/github/bkimminich/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/bkimminich/juice-shop-ctf)
-![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/bkimminich/juice-shop-ctf.svg)
+[![CI Pipeline](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml/badge.svg)](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml)
+[![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/juice-shop/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/juice-shop/juice-shop-ctf/builds)
+[![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/juice-shop/juice-shop-ctf?branch=master)
+[![Code Climate](https://codeclimate.com/github/juice-shop/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/juice-shop/juice-shop-ctf)
+![Gitlab pipeline status](https://img.shields.io/gitlab/pipeline/juice-shop/juice-shop-ctf.svg)
 ![Snyk Vulnerabilities for npm package](https://img.shields.io/snyk/vulnerabilities/npm/juice-shop-ctf-cli.svg)
-![Merge Chance](https://img.shields.io/endpoint?url=https%3A%2F%2Fmerge-chance.info%2Fbadge%3Frepo%3Dbkimminich/juice-shop-ctf)
+![Merge Chance](https://img.shields.io/endpoint?url=https%3A%2F%2Fmerge-chance.info%2Fbadge%3Frepo%3Djuice-shop/juice-shop-ctf)
 
 Found a bug? Got an idea for enhancement? Feel like adding support for
 another CTF framework?
 
 Feel free to
-[create an issue](https://github.com/bkimminich/juice-shop-ctf/issues)
+[create an issue](https://github.com/juice-shop/juice-shop-ctf/issues)
 or
 [post your ideas in the chat](https://gitter.im/bkimminich/juice-shop)!
 Pull requests are also highly welcome - please follow the guidelines
@@ -50,7 +50,7 @@ their build and will not be merged until compliant.
 
 Pull Requests are verified to pass all of the following test stages
 during the
-[continuous integration build](https://travis-ci.org/bkimminich/juice-shop-ctf).
+[continuous integration build](https://travis-ci.org/juice-shop/juice-shop-ctf).
 It is recommended that you run these tests on your local computer to
 verify they pass before submitting a PR. New features should be
 accompanied by an appropriate number of corresponding tests to verify

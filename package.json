@@ -1,6 +1,6 @@
 {
   "name": "juice-shop-ctf-cli",
-  "version": "8.2.0",
+  "version": "8.2.1",
   "description": "Capture-the-Flag (CTF) environment setup tools for OWASP Juice Shop",
   "keywords": [
     "web security",
@@ -22,17 +22,25 @@
   ],
   "homepage": "https://owasp-juice.shop",
   "bugs": {
-    "url": "https://github.com/bkimminich/juice-shop-ctf/issues"
+    "url": "https://github.com/juice-shop/juice-shop-ctf/issues"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/bkimminich/juice-shop-ctf.git"
+    "url": "git+https://github.com/juice-shop/juice-shop-ctf.git"
   },
   "license": "MIT",
   "author": "Bjoern Kimminich <bjoern.kimminich@owasp.org> (https://kimminich.de)",
   "contributors": [
     "Bjoern Kimminich",
-    "Josh Grossman"
+    "Jannik Hollenbach",
+    "greenkeeper[bot]",
+    "Josh Grossman",
+    "Simon Basset",
+    "JuiceShopBot",
+    "ElJeffe",
+    "dependabot[bot]",
+    "Jamie McCrindle",
+    "whitesource-bolt-for-github[bot]"
   ],
   "main": "index.js",
   "bin": {

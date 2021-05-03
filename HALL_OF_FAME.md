@@ -30,4 +30,4 @@ and
 
 ## Stargazers (over time)
 
-[![Stargazers over time](https://starchart.cc/bkimminich/juice-shop-ctf.svg)](https://starchart.cc/bkimminich/juice-shop-ctf)
+[![Stargazers over time](https://starchart.cc/juice-shop/juice-shop-ctf.svg)](https://starchart.cc/juice-shop/juice-shop-ctf)
