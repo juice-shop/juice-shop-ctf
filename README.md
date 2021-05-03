@@ -76,26 +76,26 @@ Optionally you can also choose the name of the output file:
 juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
-### Docker Container [![Docker Automated build](https://img.shields.io/docker/automated/juice-shop/juice-shop-ctf.svg)](https://hub.docker.com/r/juice-shop/juice-shop-ctf) [![Docker Pulls](https://img.shields.io/docker/pulls/juice-shop/juice-shop-ctf.svg)](https://hub.docker.com/r/juice-shop/juice-shop-ctf) ![Docker Stars](https://img.shields.io/docker/stars/juice-shop/juice-shop-ctf.svg) [![](https://images.microbadger.com/badges/image/juice-shop/juice-shop-ctf.svg)](https://microbadger.com/images/juice-shop/juice-shop-ctf "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/juice-shop/juice-shop-ctf.svg)](https://microbadger.com/images/juice-shop/juice-shop-ctf "Get your own version badge on microbadger.com")
+### Docker Container [![Docker Automated build](https://img.shields.io/docker/automated/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) [![Docker Pulls](https://img.shields.io/docker/pulls/bkimminich/juice-shop-ctf.svg)](https://hub.docker.com/r/bkimminich/juice-shop-ctf) ![Docker Stars](https://img.shields.io/docker/stars/bkimminich/juice-shop-ctf.svg) [![](https://images.microbadger.com/badges/image/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own image badge on microbadger.com") [![](https://images.microbadger.com/badges/version/bkimminich/juice-shop-ctf.svg)](https://microbadger.com/images/bkimminich/juice-shop-ctf "Get your own version badge on microbadger.com")
 
 Share your current directory with the `/data` volume of your
-`juice-shop/juice-shop-ctf` Docker container and run the interactive
+`bkimminich/juice-shop-ctf` Docker container and run the interactive
 mode with:
 
 ```
-docker run -ti --rm -v $(pwd):/data juice-shop/juice-shop-ctf
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf
 ```
 
 Alternatively you can provide a configuration file via:
 
 ```
-docker run -ti --rm -v $(pwd):/data juice-shop/juice-shop-ctf --config myconfig.yml
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml
 ```
 
 Choosing the name of the output file is also possible:
 
 ```
-docker run -ti --rm -v $(pwd):/data juice-shop/juice-shop-ctf --config myconfig.yml --output challenges.out
+docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
 ---
