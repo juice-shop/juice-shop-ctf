@@ -111,7 +111,7 @@ jobs:
     if: github.event_name == 'push' && (success() || failure())
     needs:
       - lint
-      - test
+      - docker
     runs-on: ubuntu-latest
     steps:
       - name: "Slack workflow notification"
