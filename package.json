@@ -48,7 +48,7 @@
   },
   "scripts": {
     "coverage": "nyc report --reporter=lcov",
-    "e2e": "nyc --reporter=text mocha test/e2e --slow=20000 --timeout=45000",
+    "e2e": "nyc --reporter=text mocha test/e2e --slow=30000 --timeout=60000",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit"
