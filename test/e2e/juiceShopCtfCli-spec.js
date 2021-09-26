@@ -21,7 +21,7 @@ const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
 
-const TIMEOUT = 180000
+const TIMEOUT = 45000
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
 function cleanup () {
@@ -101,13 +101,6 @@ describe('juice-shop-ctf', () => {
     this.timeout(TIMEOUT)
     return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/CTF framework to generate data for\? RootTheBox/i)
-  })
-
-  it('should fail when output file cannot be written', function () {
-    this.timeout(TIMEOUT)
-    fs.openSync(outputFile, 'w', 0)
-    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
-      .eventually.match(/Failed to write output to file!/i)
   })
 
   it('should accept a config file', function () {
@@ -205,5 +198,12 @@ insertHintSnippets: paid`)
     return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
       .then(() => fs.existsSync(desiredRtbOutputFile))).to
       .eventually.equal(true)
+  })
+
+  it('should fail when output file cannot be written', function () {
+    this.timeout(TIMEOUT)
+    fs.openSync(outputFile, 'w', 0)
+    return expect(run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
+      .eventually.match(/Failed to write output to file!/i)
   })
 })
