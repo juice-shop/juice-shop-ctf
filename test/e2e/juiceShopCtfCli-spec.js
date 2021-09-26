@@ -21,7 +21,7 @@ const configFile = 'config.yml'
 const util = require('util')
 const execFile = util.promisify(require('child_process').execFile)
 
-const TIMEOUT = 45000
+const TIMEOUT = 60000
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 
 function cleanup () {
