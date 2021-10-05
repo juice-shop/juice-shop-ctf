@@ -6,6 +6,7 @@ on:
     paths-ignore:
       - '*.md'
       - 'LICENSE'
+      - 'images/**'
     tags-ignore:
       - '*'
   pull_request:
