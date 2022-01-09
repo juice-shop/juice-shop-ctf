@@ -32,7 +32,7 @@ const questions = [
     type: 'list',
     name: 'ctfFramework',
     message: 'CTF framework to generate data for?',
-    choices: [options.ctfdFramework, options.fbctfFramework, options.rtbFramework],
+    choices: [options.ctfdFramework, options.ctfd3Framework, options.fbctfFramework, options.rtbFramework],
     default: 0
   },
   {
