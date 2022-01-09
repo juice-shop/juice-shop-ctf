@@ -93,13 +93,13 @@ describe('juice-shop-ctf', () => {
 
   it('should generate a FBCTF export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)).to
       .eventually.match(/CTF framework to generate data for\? FBCTF/i)
   })
 
   it('should generate a RootTheBox export when choosen', function () {
     this.timeout(TIMEOUT)
-    return expect(run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
+    return expect(run(juiceShopCtfCli, [DOWN, DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)).to
       .eventually.match(/CTF framework to generate data for\? RootTheBox/i)
   })
 
