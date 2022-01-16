@@ -10,8 +10,10 @@ const expect = chai.expect
 const rewire = require('rewire')
 const fetchCodeSnippets = rewire('../../lib/fetchCodeSnippets')
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms))
+
 describe('Code snippets', () => {
-  it('should be fetched from the given URL', () => {
+  it('should be fetched from the given URL', async () => {
     fetchCodeSnippets.__set__({
       request (options) {
         if (options.url === 'http://localhost:3000/snippets') {
@@ -19,13 +21,14 @@ describe('Code snippets', () => {
           return new Promise(resolve => { resolve({ challenges: ['c1'] }) })
         } else if (options.url === 'http://localhost:3000/snippets/c1') {
           expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets/c1', json: true })
-          return new Promise(resolve => { resolve({ snippet: 'function c1 () {}' }) })
+          return sleep(10).then(() => ({ snippet: 'function c1 () {}' }))
         } else {
           expect(false, 'Unexpected request: ' + options)
         }
       }
     })
-    return expect(fetchCodeSnippets('http://localhost:3000')).to.eventually.deep.equal({ c1: 'function c1 () {}' })
+    const snippet = await fetchCodeSnippets('http://localhost:3000')
+    expect(snippet).to.deep.equal({ c1: 'function c1 () {}' })
   })
 
   xit('should log retrieval error to console', () => {

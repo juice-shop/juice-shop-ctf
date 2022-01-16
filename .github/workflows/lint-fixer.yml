@@ -10,7 +10,7 @@ jobs:
         uses: actions/checkout@v2
       - name: Install Linter
         run: |
-          npm install --ignore-scripts
+          npm ci --ignore-scripts
       - name: Fix everything which can be fixed
         run: 'npm run lint:fix'
       - uses: stefanzweifel/git-auto-commit-action@v4.0.0

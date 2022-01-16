@@ -18,11 +18,11 @@ describe('Generated CTFd data', () => {
   let challenges
   beforeEach(() => {
     challenges = {
-      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1' },
-      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2' },
-      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2' },
-      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3' },
-      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1' }
+      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1', tags: 'foo,bar' },
+      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2', tags: null },
+      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2', tags: 'foo' },
+      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3', tags: null },
+      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1', tags: 'foo,bar,baz' }
     }
   })
 
@@ -36,6 +36,22 @@ describe('Generated CTFd data', () => {
             { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard' },
             { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', state: 'visible', max_attempts: 0, type: 'standard' },
             { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', state: 'visible', max_attempts: 0, type: 'standard' }
+          ]
+        }
+      })
+  })
+
+  it('should generate tags for challenges', function () {
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
+      {
+        tags: {
+          results: [
+            { challenge_id: 1, id: 100, value: 'foo' },
+            { challenge_id: 1, id: 101, value: 'bar' },
+            { challenge_id: 3, id: 300, value: 'foo' },
+            { challenge_id: 5, id: 500, value: 'foo' },
+            { challenge_id: 5, id: 501, value: 'bar' },
+            { challenge_id: 5, id: 502, value: 'baz' }
           ]
         }
       })
