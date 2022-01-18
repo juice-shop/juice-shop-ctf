@@ -60,7 +60,7 @@
     "joi": "^17.2.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
-    "colors": "^1.4.0",
+    "colors": "1.4.0",
     "dateformat": "^3.0.3",
     "inquirer": "^7.3.3",
     "js-yaml": "^3.14.0",
