@@ -14,7 +14,7 @@ describe('Challenges', () => {
   it('should be fetched from the given URL', () => {
     fetchChallenges.__set__({
       request (options) {
-        expect(options).to.deep.equal({ url: 'http://localhost:3000/api/Challenges', json: true })
+        expect(options).to.deep.equal({ url: 'http://localhost:3000/api/Challenges', strictSSL: true, json: true })
         return new Promise(resolve => { resolve({ data: { c1: { }, c2: { } } }) })
       }
     })

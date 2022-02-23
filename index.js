@@ -24,6 +24,10 @@ const argv = require('yargs')
     alias: 'o',
     describe: 'change the output file'
   })
+  .option('ignoreSslWarnings', {
+    alias: 'i',
+    describe: 'ignore tls certificate warnings'
+  })
   .help()
   .argv
 
@@ -94,10 +98,10 @@ const juiceShopCtfCli = async () => {
     console.log()
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all([
-      fetchSecretKey(answers.ctfKey),
-      fetchChallenges(answers.juiceShopUrl),
-      fetchCountryMapping(answers.countryMapping),
-      fetchCodeSnippets(answers.juiceShopUrl, answers.insertHintSnippets === options.noHintSnippets)
+      fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings),
+      fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings),
+      fetchCountryMapping(answers.countryMapping, argv.ignoreSslWarnings),
+      fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings, answers.insertHintSnippets === options.noHintSnippets)
     ])
 
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
