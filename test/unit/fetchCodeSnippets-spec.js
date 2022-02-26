@@ -17,10 +17,10 @@ describe('Code snippets', () => {
     fetchCodeSnippets.__set__({
       request (options) {
         if (options.url === 'http://localhost:3000/snippets') {
-          expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets', json: true })
+          expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets', json: true, strictSSL: true })
           return new Promise(resolve => { resolve({ challenges: ['c1'] }) })
         } else if (options.url === 'http://localhost:3000/snippets/c1') {
-          expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets/c1', json: true })
+          expect(options).to.deep.equal({ url: 'http://localhost:3000/snippets/c1', json: true, strictSSL: true })
           return sleep(10).then(() => ({ snippet: 'function c1 () {}' }))
         } else {
           expect(false, 'Unexpected request: ' + options)

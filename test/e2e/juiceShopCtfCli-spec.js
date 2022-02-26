@@ -116,6 +116,19 @@ insertHintSnippets: paid`)
       .eventually.match(/Backup archive written to /i)
   })
 
+  it('should be able to ignore SslWarnings', function () {
+    fs.writeFileSync(configFile, `
+juiceShopUrl: https://juice-shop.herokuapp.com
+ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+insertHints: paid
+insertHintUrls: paid
+insertHintSnippets: paid`)
+
+    this.timeout(TIMEOUT)
+    return expect(execFile('node', [juiceShopCtfCli[0], '--config', configFile, '--ignoreSslWarnings']).then(obj => obj.stdout)).to
+      .eventually.match(/Backup archive written to /i)
+  })
+
   it('should fail when the config file cannot be parsed', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
