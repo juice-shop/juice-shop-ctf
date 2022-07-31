@@ -104,6 +104,8 @@ Choosing the name of the output file is also possible:
 docker run -ti --rm -v $(pwd):/data bkimminich/juice-shop-ctf --config myconfig.yml --output challenges.out
 ```
 
+_On Windows `cmd.exe` you have to use `%cd%` instead of `$(pwd)` to mount your current working directory._
+
 ---
 
 **For detailed step-by-step instructions and examples please refer to
