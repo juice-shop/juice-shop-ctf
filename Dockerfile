@@ -21,7 +21,8 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
     org.opencontainers.image.source="https://github.com/juice-shop/juice-shop-ctf.git" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.created=$BUILD_DATE
-COPY --from=installer /juice-shop-ctf /juice-shop-ctf
+COPY --from=installer --chown=node /juice-shop-ctf /juice-shop-ctf
 VOLUME /data
 WORKDIR /data
+USER node
 ENTRYPOINT ["npx", "/juice-shop-ctf/bin/juice-shop-ctf.js"]
