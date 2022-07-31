@@ -6,7 +6,7 @@ USER node
 ARG DEV_BUILD=false
 RUN if [ ${DEV_BUILD} = true ]; then npm i && npm lint && npm test && npm run e2e; else npm install --production --unsafe-perm; fi
 
-FROM node:14-1alpine
+FROM node:14-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
