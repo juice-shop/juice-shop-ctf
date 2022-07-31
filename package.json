@@ -88,7 +88,7 @@
     "standard": "^14.3.4"
   },
   "engines": {
-    "node": "12 - 15"
+    "node": "12 - 17"
   },
   "preferGlobal": true,
   "standard": {

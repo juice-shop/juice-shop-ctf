@@ -1,4 +1,4 @@
-FROM node:14 as installer
+FROM node:16 as installer
 COPY . /juice-shop-ctf
 WORKDIR /juice-shop-ctf
 RUN chown -R node .
@@ -6,7 +6,7 @@ USER node
 ARG DEV_BUILD=false
 RUN if [ ${DEV_BUILD} = true ]; then npm i && npm lint && npm test && npm run e2e; else npm install --production --unsafe-perm; fi
 
-FROM node:14-alpine
+FROM node:16-alpine
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
