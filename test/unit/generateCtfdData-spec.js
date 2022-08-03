@@ -31,11 +31,11 @@ describe('Generated CTFd data', () => {
       {
         challenges: {
           results: [
-            { id: 1, name: 'c1', description: 'C1 (Difficulty Level: 1)', value: 100, category: '1', state: 'visible', max_attempts: 0, type: 'standard' },
-            { id: 2, name: 'c2', description: 'C2 (Difficulty Level: 2)', value: 250, category: '2', state: 'visible', max_attempts: 0, type: 'standard' },
-            { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard' },
-            { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', state: 'visible', max_attempts: 0, type: 'standard' },
-            { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', state: 'visible', max_attempts: 0, type: 'standard' }
+            { id: 1, name: 'c1', description: 'C1 (Difficulty Level: 1)', value: 100, category: '1', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
+            { id: 2, name: 'c2', description: 'C2 (Difficulty Level: 2)', value: 250, category: '2', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
+            { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
+            { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
+            { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', state: 'visible', max_attempts: 0, type: 'standard', next_id: null }
           ]
         }
       })

@@ -27,9 +27,9 @@ you to populate a CTF game server in a matter of minutes.
 The following open source CTF frameworks are supported by
 `juice-shop-ctf-cli`:
 
-* [CTFd 3.4.x](https://github.com/CTFd/CTFd/releases/tag/3.4.3)
+* [CTFd](https://github.com/CTFd/CTFd) (3.4 or higher)
+* [RootTheBox](https://github.com/moloch--/RootTheBox) (3.3 or higher)
 * [FBCTF](https://github.com/facebook/fbctf)
-* [RootTheBox](https://github.com/moloch--/RootTheBox)
 
 ## Setup ![node](https://img.shields.io/node/v/juice-shop-ctf-cli.svg) [![npm](https://img.shields.io/npm/dm/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) [![npm](https://img.shields.io/npm/dt/juice-shop-ctf-cli.svg)](https://www.npmjs.com/package/juice-shop-ctf-cli) ![npm bundle size](https://img.shields.io/bundlephobia/min/juice-shop-ctf-cli.svg)
 
