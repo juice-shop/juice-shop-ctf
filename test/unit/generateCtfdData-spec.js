@@ -104,14 +104,14 @@ describe('Generated CTFd data', () => {
     ])
   })
 
-  it('should push an object into hints.results for a text hint URL defined on a challenge', () => {
+  it('should push an object into hints.results for a text hint URL defined on a challenge without text hint prerequisite', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
         {
           hints: {
             results: [
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: null }
             ]
           }
         }),
@@ -119,14 +119,14 @@ describe('Generated CTFd data', () => {
         {
           hints: {
             results: [
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: null }
             ]
           }
         })
     ])
   })
 
-  it('should push an object each into hints.results for a challenge with text hint and hint URL defined', () => {
+  it('should push an object each into hints.results for a challenge with text hint and hint URL defined with prerequisite relationship', () => {
     challenges.c3.hint = 'hint'
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
@@ -135,7 +135,7 @@ describe('Generated CTFd data', () => {
           hints: {
             results: [
               { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: { prerequisites: [3] } }
             ]
           }
         }),
@@ -144,7 +144,7 @@ describe('Generated CTFd data', () => {
           hints: {
             results: [
               { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: { prerequisites: [3] } }
             ]
           }
         }),
@@ -153,7 +153,7 @@ describe('Generated CTFd data', () => {
           hints: {
             results: [
               { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: { prerequisites: [3] } }
             ]
           }
         }),
@@ -162,7 +162,7 @@ describe('Generated CTFd data', () => {
           hints: {
             results: [
               { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard' }
+              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: { prerequisites: [3] } }
             ]
           }
         })
