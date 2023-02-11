@@ -74,7 +74,7 @@
     "yargs": "^15.4.1"
   },
   "devDependencies": {
-    "ava": "^3.11.1",
+    "ava": "^5.2.0",
     "chai": "^4.2.0",
     "chai-as-promised": "^7.1.1",
     "chai-spies": "^1.0.0",
