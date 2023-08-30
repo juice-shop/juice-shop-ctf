@@ -21,10 +21,10 @@ jobs:
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v2
-      - name: "Use Node.js 14"
+      - name: "Use Node.js 18"
         uses: actions/setup-node@v2
         with:
-          node-version: 14
+          node-version: 18
           cache: npm
       - name: "Install application"
         run: npm install --ignore-scripts
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [12, 14, 16, 18]
+        node-version: [16, 18, 20]
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v2
@@ -68,7 +68,7 @@ jobs:
       - name: "Prepare coverage data"
         run: npm run coverage
       - name: "Publish coverage to Coveralls"
-        if: github.event_name == 'push' && matrix.node-version == '14'
+        if: github.event_name == 'push' && matrix.node-version == '18'
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
