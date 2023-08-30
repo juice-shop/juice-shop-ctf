@@ -59,9 +59,9 @@ ctfFramework: CTFd | FBCTF | RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key instead URL
 countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
-insertHints: none | free | paid
-insertHintUrls: none | free | paid # optional for FBCTF
-insertHintSnippets: none | free | paid # optional for FBCTF
+insertHints: none | free | paid # paid will be free in CTFd
+insertHintUrls: none | free | paid # optional for FBCTF; paid will be free in CTFd
+insertHintSnippets: none | free | paid # optional for FBCTF; paid will be free in CTFd
 ```
 
 You can then run the generator with:
