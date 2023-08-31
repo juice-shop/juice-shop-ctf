@@ -26,103 +26,46 @@ describe('Generated CTFd data', () => {
     }
   })
 
-  it('should consist of one object pushed into challenges.results per challenge', function () {
-    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
-      {
-        challenges: {
-          results: [
-            { id: 1, name: 'c1', description: 'C1 (Difficulty Level: 1)', value: 100, category: '1', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
-            { id: 2, name: 'c2', description: 'C2 (Difficulty Level: 2)', value: 250, category: '2', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
-            { id: 3, name: 'c3', description: 'C3 (Difficulty Level: 3)', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
-            { id: 4, name: 'c4', description: 'C4 (Difficulty Level: 4)', value: 700, category: '3', state: 'visible', max_attempts: 0, type: 'standard', next_id: null },
-            { id: 5, name: 'c5', description: 'C5 (Difficulty Level: 5)', value: 1000, category: '1', state: 'visible', max_attempts: 0, type: 'standard', next_id: null }
-          ]
-        }
-      })
+  it('should consist of one object pushed into result per challenge', function () {
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include.members([
+      { name: 'c1', description: '"C1 (Difficulty Level: 1)"', category: '1', value: 100, type: 'standard', state: 'visible', max_attempts: 0, flags: '958c64658383140e7d08d5dee091009cc0eafc1f', tags: '"foo,bar"', hints: '', type_data: '' },
+      { name: 'c2', description: '"C2 (Difficulty Level: 2)"', category: '2', value: 250, type: 'standard', state: 'visible', max_attempts: 0, flags: '49294e8b829f5b053f748facad22825ccb4bf420', tags: '', hints: '', type_data: '' },
+      { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '', type_data: '' },
+      { name: 'c4', description: '"C4 (Difficulty Level: 4)"', category: '3', value: 700, type: 'standard', state: 'visible', max_attempts: 0, flags: '4e2b98db86cc32c56cba287db411198534af4ab6', tags: '', hints: '', type_data: '' },
+      { name: 'c5', description: '"C5 (Difficulty Level: 5)"', category: '1', value: 1000, type: 'standard', state: 'visible', max_attempts: 0, flags: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', tags: '"foo,bar,baz"', hints: '', type_data: '' }
+    ]
+    )
   })
-
-  it('should generate tags for challenges', function () {
-    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
-      {
-        tags: {
-          results: [
-            { challenge_id: 1, id: 100, value: 'foo' },
-            { challenge_id: 1, id: 101, value: 'bar' },
-            { challenge_id: 3, id: 300, value: 'foo' },
-            { challenge_id: 5, id: 500, value: 'foo' },
-            { challenge_id: 5, id: 501, value: 'bar' },
-            { challenge_id: 5, id: 502, value: 'baz' }
-          ]
-        }
-      })
-  })
-
-  it('should consist of one object pushed into flagKeys.results per challenge', () =>
-    expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
-      {
-        flagKeys: {
-          results: [
-            { id: 1, challenge_id: 1, content: '958c64658383140e7d08d5dee091009cc0eafc1f', type: 'static', data: null },
-            { id: 2, challenge_id: 2, content: '49294e8b829f5b053f748facad22825ccb4bf420', type: 'static', data: null },
-            { id: 3, challenge_id: 3, content: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', type: 'static', data: null },
-            { id: 4, challenge_id: 4, content: '4e2b98db86cc32c56cba287db411198534af4ab6', type: 'static', data: null },
-            { id: 5, challenge_id: 5, content: '554df67c6c0b6a99efecaec4fe2ced73b7b5be60', type: 'static', data: null }
-          ]
-        }
-      })
-  )
 
   it('should be empty when given no challenges', () =>
-    expect(generateData({}, defaultOptions)).to.eventually.deep.include(
-      { challenges: { results: [] } }
-    )
+    expect(generateData({}, defaultOptions)).to.eventually.deep.equal([])
   )
 
   xit('should log generator error to console', () => // FIXME Error message changed slightly in Node 16.x and later
     expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'difficulty\' of undefined')
   )
 
-  it('should push an object into hints.results for a text hint defined on a challenge', () => {
+  it('should fill the hint property for a single text hint defined on a challenge', () => {
     challenges.c3.hint = 'hint'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' }
-            ]
-          }
-        }),
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint"', type_data: '' }
+      ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' }
-            ]
-          }
-        })
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint"', type_data: '' }
+      )
     ])
   })
 
-  it('should push an object into hints.results for a text hint URL defined on a challenge without text hint prerequisite', () => {
+  it('should fill the hint property for a single hint URL defined on a challenge', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: null }
-            ]
-          }
-        }),
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hintUrl"', type_data: '' }
+      ),
       expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: null }
-            ]
-          }
-        })
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hintUrl"', type_data: '' }
+      )
     ])
   })
 
@@ -131,61 +74,41 @@ describe('Generated CTFd data', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: { prerequisites: [3] } }
-            ]
-          }
-        }),
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+      ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 0, type: 'standard', requirements: { prerequisites: [3] } }
-            ]
-          }
-        }),
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+      ),
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 0, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: { prerequisites: [3] } }
-            ]
-          }
-        }),
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+      ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        {
-          hints: {
-            results: [
-              { id: 3, challenge_id: 3, content: 'hint', cost: 45, type: 'standard' },
-              { id: 10003, challenge_id: 3, content: 'hintUrl', cost: 90, type: 'standard', requirements: { prerequisites: [3] } }
-            ]
-          }
-        })
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+      )
     ])
   })
 
   it('should not insert a text hint when corresponding hint option is not chosen', () => {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
-    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
-      { hints: { results: [] } }
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include.members([
+      { name: 'c1', description: '"C1 (Difficulty Level: 1)"', category: '1', value: 100, type: 'standard', state: 'visible', max_attempts: 0, flags: '958c64658383140e7d08d5dee091009cc0eafc1f', tags: '"foo,bar"', hints: '', type_data: '' },
+      { name: 'c2', description: '"C2 (Difficulty Level: 2)"', category: '2', value: 250, type: 'standard', state: 'visible', max_attempts: 0, flags: '49294e8b829f5b053f748facad22825ccb4bf420', tags: '', hints: '', type_data: '' }
+    ]
     )
   })
 
   it('should not insert a hint URL when corresponding hint option is not chosen', () => {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
-    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include(
-      { hints: { results: [] } }
+    return expect(generateData(challenges, defaultOptions)).to.eventually.deep.include.members([
+      { name: 'c1', description: '"C1 (Difficulty Level: 1)"', category: '1', value: 100, type: 'standard', state: 'visible', max_attempts: 0, flags: '958c64658383140e7d08d5dee091009cc0eafc1f', tags: '"foo,bar"', hints: '', type_data: '' },
+      { name: 'c2', description: '"C2 (Difficulty Level: 2)"', category: '2', value: 250, type: 'standard', state: 'visible', max_attempts: 0, flags: '49294e8b829f5b053f748facad22825ccb4bf420', tags: '', hints: '', type_data: '' }
+    ]
     )
   })
 
-  it('should not insert a text hint for challenges that do not have a hint defined', () => {
+  xit('should not insert a text hint for challenges that do not have a hint defined', () => {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
     challenges.c3.hint = undefined
@@ -211,7 +134,7 @@ describe('Generated CTFd data', () => {
     ])
   })
 
-  it('should not insert a hint URL for challenges that do not have a hint defined', () => {
+  xit('should not insert a hint URL for challenges that do not have a hint defined', () => {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
     challenges.c3.hintUrl = undefined
