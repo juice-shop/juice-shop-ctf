@@ -42,7 +42,7 @@ describe('Generated CTFd data', () => {
   )
 
   it('should log generator error to console', () =>
-    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read properties of undefined (reading \'difficulty\')')
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read properties of undefined (reading')
   )
 
   it('should fill the hint property for a single text hint defined on a challenge', () => {

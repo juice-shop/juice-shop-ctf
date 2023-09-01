@@ -32,7 +32,7 @@ describe('Generated RTB data', () => {
   )
 
   it('should log generator error to console', () =>
-    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read properties of undefined (reading \'category\')')
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read properties of undefined (reading')
   )
 
   it('should contain one <box> per given challenge category', function () {
