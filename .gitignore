@@ -15,6 +15,6 @@ node_modules/
 npm-debug.log.*
 
 # App
-OWASP_Juice_Shop.*.zip
+OWASP_Juice_Shop.*.csv
 OWASP_Juice_Shop.*.json
 OWASP_Juice_Shop.*.xml
