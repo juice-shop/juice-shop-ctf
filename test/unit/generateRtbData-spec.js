@@ -31,8 +31,8 @@ describe('Generated RTB data', () => {
     )
   )
 
-  xit('should log generator error to console', () => // FIXME Error message changed slightly in Node 16.x and later
-    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read property \'category\' of undefined')
+  it('should log generator error to console', () =>
+    expect(generateData({ c1: undefined }, defaultOptions)).to.be.rejectedWith('Failed to generate challenge data! Cannot read properties of undefined (reading \'category\')')
   )
 
   it('should contain one <box> per given challenge category', function () {
