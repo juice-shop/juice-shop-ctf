@@ -10,7 +10,7 @@ const expect = chai.expect
 const rewire = require('rewire')
 const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv')
 
-describe('Output for CTFd', () => {
+describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data export
   xit('should be written to ZIP file', () => {
     writeToCtfdCsv.__set__({
       console: {
