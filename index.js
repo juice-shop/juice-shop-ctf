@@ -48,7 +48,7 @@ const questions = [
   {
     type: 'input',
     name: 'ctfKey',
-    message: 'Secret key <or> URL to ctf.key file? (Note: for CTFd you can provide a comma-separated string for multiple flags)',
+    message: 'URL to ctf.key file <or> secret key <or> (CTFd only) comma-separated list of secret keys?',
     default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
   },
   {
