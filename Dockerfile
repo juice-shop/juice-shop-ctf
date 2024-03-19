@@ -24,5 +24,6 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
 COPY --from=installer --chown=node /juice-shop-ctf /juice-shop-ctf
 VOLUME /data
 WORKDIR /data
+RUN chmod +x /juice-shop-ctf/bin/juice-shop-ctf.js
 USER node
 ENTRYPOINT ["npx", "/juice-shop-ctf/bin/juice-shop-ctf.js"]
