@@ -104,6 +104,12 @@ const juiceShopCtfCli = async () => {
       fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings, answers.insertHintSnippets === options.noHintSnippets)
     ])
 
+    for (const challenge of challenges) {
+      if (challenge.name === 'Bonus Payload') {
+        challenge.description = challenge.description.replace('https://', 'https%3A//');
+      }
+    }
+    
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       juiceShopUrl: answers.juiceShopUrl,
       insertHints: answers.insertHints,
