@@ -106,10 +106,10 @@ const juiceShopCtfCli = async () => {
 
     for (const challenge of challenges) {
       if (challenge.name === 'Bonus Payload') {
-        challenge.description = challenge.description.replace('https://', 'https%3A//');
+        challenge.description = challenge.description.replace('https://', 'https%3A//')
       }
     }
-    
+
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       juiceShopUrl: answers.juiceShopUrl,
       insertHints: answers.insertHints,
