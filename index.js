@@ -116,17 +116,24 @@ const juiceShopCtfCli = async () => {
     })
     console.log()
     if (!challenges[0].hint && answers.insertHints !== options.noTextHints) {
-      console.log(`You selected text hints but ${answers.juiceShopUrl} API response did not contain any!`.yellow)
-      console.log(`Make sure that the server uses default.yml or has challenges.showHints: true in its config.`.yellow)
+      console.log('You selected text hints but '.yellow + answers.juiceShopUrl + ' API response did not contain any!'.yellow)
+      console.log('Make sure that the server uses '.yellow + 'default.yml' + ' or has '.yellow + 'challenges.showHints: true' + ' in its config.'.yellow)
     }
-
     if (!challenges[0].hintUrl && answers.insertHintUrls !== options.noHintUrls) {
-      console.log(`You selected hint URLs but ${answers.juiceShopUrl} API response did not contain any!`.yellow)
-      console.log(`Make sure that the server uses default.yml or has challenges.showHints: true in its config.`.yellow)
+      console.log('You selected hint URLs but '.yellow + answers.juiceShopUrl + ' API response did not contain any!'.yellow)
+      console.log('Make sure that the server uses '.yellow + 'default.yml' + ' or has '.yellow + 'challenges.showHints: true' + ' in its config.'.yellow)
     }
-
   } catch (error) {
-    console.log(error.message.red)
+    if (error.response) { // Axios or network-related errors
+      console.error(`Network error: ${error.response.status} - ${error.response.statusText}`.red);
+    } else if (error.code === 'ENOENT') { // File not found
+      console.error(`File not found: ${error.path}`.red);
+    } else if (error.code === 'EACCES') { // Permission error
+      console.error(`Permission denied: ${error.path}`.red);
+    } else {
+      console.error(`Unexpected error: ${error.message}`.red);
+    }
+    process.exit(1); // Exit with error code
   }
 }
 
