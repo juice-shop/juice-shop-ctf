@@ -24,7 +24,7 @@ jobs:
       - name: "Use Node.js 18"
         uses: actions/setup-node@v2
         with:
-          node-version: 18
+          node-version: 20
           cache: npm
       - name: "Install application"
         run: npm install --ignore-scripts
@@ -34,7 +34,7 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        node-version: [16, 18, 20]
+        node-version: [18, 20, 22]
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v2
