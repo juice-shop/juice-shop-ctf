@@ -174,6 +174,6 @@ please visit our [HALL_OF_FAME.md](HALL_OF_FAME.md).
 This program is free software: you can redistribute it and/or modify it
 under the terms of the [MIT license](LICENSE). OWASP Juice Shop CTF
 Extension and any contributions are Copyright © by Bjoern Kimminich &
-the OWASP Juice Shop contributors 2016-2024.
+the OWASP Juice Shop contributors 2016-2025.
 
 ![Juice Shop CTF Logo](https://raw.githubusercontent.com/juice-shop/juice-shop-ctf/develop/images/JuiceShopCTF_Logo_400px.png)
