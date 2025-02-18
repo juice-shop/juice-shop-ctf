@@ -1,5 +1,5 @@
 /*
- * Copyright (c) 2016-2024 Bjoern Kimminich & the OWASP Juice Shop contributors.
+ * Copyright (c) 2016-2025 Bjoern Kimminich & the OWASP Juice Shop contributors.
  * SPDX-License-Identifier: MIT
  */
 
@@ -49,10 +49,10 @@ describe('Generated CTFd data', () => {
     challenges.c3.hint = 'hint'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint"', type_data: '' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":0}]"', type_data: '' }
       ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint"', type_data: '' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":45}]"', type_data: '' }
       )
     ])
   })
@@ -61,10 +61,10 @@ describe('Generated CTFd data', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hintUrl"', type_data: '' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hintUrl"",""cost"":0}]"', type_data: '' }
       ),
       expect(generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hintUrl"', type_data: '' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', category: '2', value: 450, type: 'standard', state: 'visible', max_attempts: 0, flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hintUrl"",""cost"":90}]"', type_data: '' }
       )
     ])
   })
@@ -74,16 +74,16 @@ describe('Generated CTFd data', () => {
     challenges.c3.hintUrl = 'hintUrl'
     return Promise.all([
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":0},{""content"":""hintUrl"",""cost"":0}]"' }
       ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":45},{""content"":""hintUrl"",""cost"":0}]"' }
       ),
       expect(generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":0},{""content"":""hintUrl"",""cost"":90}]"' }
       ),
       expect(generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })).to.eventually.deep.include(
-        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"hint,hintUrl"' }
+        { name: 'c3', description: '"C3 (Difficulty Level: 3)"', value: 450, category: '2', state: 'visible', max_attempts: 0, type: 'standard', type_data: '', flags: 'aae3acb6eff2000c0e12af0d0d875d0bdbf4ca81', tags: '"foo"', hints: '"[{""content"":""hint"",""cost"":45},{""content"":""hintUrl"",""cost"":90}]"' }
       )
     ])
   })
