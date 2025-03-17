@@ -9,5 +9,5 @@ jobs:
       - uses: actions/first-interaction@v1
         with:
           repo-token: ${{ secrets.GITHUB_TOKEN }}
-          issue-message: 'Thanks a lot for opening your first issue with us! 🧡 We''ll get back to you shortly! ⏳ If it was a _Support Request_, please check [our extensive CTF manual](https://pwning.owasp-juice.shop/part1/ctf.html) first. Also, please consider asking on the [community chat](../#troubleshooting-) next time! 💬'
+          issue-message: 'Thanks a lot for opening your first issue with us! 🧡 We''ll get back to you shortly! ⏳ If it was a _Support Request_, please check [our extensive CTF manual](https://pwning.owasp-juice.shop/companion-guide/latest/part1/ctf.html) first. Also, please consider asking on the [community chat](../#troubleshooting-) next time! 💬'
           pr-message: 'Thanks a lot for your contribution! 💖 This seems to be you first PR! 🌠 If it''s getting merged & complies with our [contribution guidelines](../blob/master/CONTRIBUTING.md), you are probably eligible to some free stickers! 🎁'
