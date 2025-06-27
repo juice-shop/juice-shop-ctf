@@ -4,7 +4,7 @@
  */
 
 const assert = require('node:assert')
-const{ describe, it } = require('node:test')
+const { describe, it } = require('node:test')
 const rewire = require('rewire')
 const fetchChallenges = rewire('../../lib/fetchChallenges')
 
@@ -27,7 +27,7 @@ describe('Challenges', () => {
       }
     })
     return assert.rejects(
-      fetchChallenges('http://localh_%&$§rst:3000')   
+      fetchChallenges('http://localh_%&$§rst:3000')
     )
   })
 })
