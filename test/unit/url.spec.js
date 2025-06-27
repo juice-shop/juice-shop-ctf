@@ -3,24 +3,24 @@
  * SPDX-License-Identifier: MIT
  */
 
-const chai = require('chai')
-const expect = chai.expect
+const assert = require('node:assert')
+const { describe, it } = require('node:test')
 const url = require('../../lib/url')
 
 describe('URL', () => {
   it('should be recognized on given valid HTTP URL', () => {
-    expect(url('http://domain')).to.equal(true)
+    assert.strictEqual(url('http://domain'), true)
   })
 
   it('should be recognized on given valid HTTPS URL', () => {
-    expect(url('https://domain')).to.equal(true)
+    assert.strictEqual(url('https://domain'), true)
   })
 
   it('should be recognized on given valid IP address', () => {
-    expect(url('127.0.0.1')).to.equal(true)
+    assert.strictEqual(url('127.0.0.1'), true)
   })
 
   it('should not be recognized on given HMAC key', () => {
-    expect(url('ZRwakRJnHOTckstBeyJbyswgP!QC2T')).to.equal(false)
+    assert.strictEqual(url('ZRwakRJnHOTckstBeyJbyswgP!QC2T'), false)
   })
 })
