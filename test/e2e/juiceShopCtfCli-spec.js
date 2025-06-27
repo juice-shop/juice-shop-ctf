@@ -187,7 +187,7 @@ insertHintSnippets: paid`)
 ctfFramework: FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+countryMapping: https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
