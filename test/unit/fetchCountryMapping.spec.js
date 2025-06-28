@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-const assert = require("node:assert/strict")
-const { describe,it } = require("node:test")
+const assert = require('node:assert/strict')
+const { describe, it } = require('node:test')
 const rewire = require('rewire')
 const fetchCountryMapping = rewire('../../lib/fetchCountryMapping')
 

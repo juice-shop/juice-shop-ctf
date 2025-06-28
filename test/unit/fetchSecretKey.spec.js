@@ -5,7 +5,7 @@
 
 const test = require('node:test')
 const assert = require('node:assert/strict')
-const {describe, it} = test
+const { describe, it } = test
 const rewire = require('rewire')
 const fetchSecretKey = rewire('../../lib/fetchSecretKey')
 
