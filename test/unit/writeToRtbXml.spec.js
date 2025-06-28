@@ -34,7 +34,7 @@ describe('Output for RTB', () => {
         }
       }
     })
-    return assert.doesNotThrow(() => writeToRtbXml(xmlExample), 'Failed to write output to file! Argh!')
+    return assert.rejects(() => writeToRtbXml(xmlExample), /Failed to write output to file! Argh!/)
   })
 
   it('should be written to the desired XML file', () => {
