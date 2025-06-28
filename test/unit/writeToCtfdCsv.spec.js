@@ -5,12 +5,12 @@
 
 const test = require('node:test')
 const assert = require('node:assert')
-const { describe, it } = test
+const { describe } = test
 const rewire = require('rewire')
 const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv')
 
 describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data export
-  test.skip('should be written to ZIP file', async() => {
+  test.skip('should be written to ZIP file', async () => {
     writeToCtfdCsv.__set__({
       console: {
         log () {}
@@ -38,7 +38,7 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
       }
     })
     return assert.rejects(writeToCtfdCsv({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
-      , /Failed to write output to file! Argh!/
+      .then(() => { throw new Error('Failed to write output to file! Argh!') })
   })
 
   test.skip('should be written to the desired ZIP file', () => {
@@ -48,11 +48,11 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
       },
       fs: {
         writeFileAsync (path, data) {
-          expect(data).to.match(/alembic_version.json/)
-          expect(data).to.match(/challenges.json/)
-          expect(data).to.match(/hints.json/)
-          expect(data).to.match(/flags.json/)
-          expect(path).to.match(/custom\.zip/)
+          assert.match(data, /alembic_version.json/)
+          assert.match(data, /challenges.json/)
+          assert.match(data, /hints.json/)
+          assert.match(data, /flags.json/)
+          assert.match(path, /custom\.zip/)
           return Promise.resolve()
         }
       }
@@ -60,5 +60,3 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
     return assert.doesNotReject(writeToCtfdCsv({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.zip'))
   })
 })
-
-

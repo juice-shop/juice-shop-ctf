@@ -3,8 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-const {describe, it} = require('node:test')
-const test = require('node:test')
+const { describe, it } = require('node:test')
 const assert = require('node:assert')
 const rewire = require('rewire')
 const writeToRtbXml = rewire('../../lib/writeToRtbXml')
@@ -19,13 +18,12 @@ describe('Output for RTB', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          assert.match((path),(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/))
+          assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/))
           return Promise.resolve()
         }
       }
     })
     return assert.doesNotReject(() => writeToRtbXml(xmlExample))
-
   })
 
   it('should log file system error to console', () => {
@@ -46,11 +44,11 @@ describe('Output for RTB', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          assert((path),(/custom\.xml/))
+          assert((path), (/custom\.xml/))
           return Promise.resolve()
         }
       }
     })
     return assert.doesNotReject(() => writeToRtbXml(xmlExample, 'custom.xml'))
-  })  
+  })
 })

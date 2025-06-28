@@ -4,7 +4,7 @@
  */
 
 const assert = require('node:assert')
-const{describe, it} = require('node:test')
+const { describe, it } = require('node:test')
 const rewire = require('rewire')
 const writeToFbctfJson = rewire('../../lib/writeToFbctfJson')
 
@@ -16,7 +16,7 @@ describe('Output for FBCTF', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          assert.match((path),(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/))
+          assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/))
           return Promise.resolve()
         }
       }
@@ -32,7 +32,7 @@ describe('Output for FBCTF', () => {
         }
       }
     })
-   return assert.rejects(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }), /Failed to write output to file! Argh!/)
+    return assert.rejects(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }), /Failed to write output to file! Argh!/)
   })
 
   it('should be written to the desired JSON file', () => {
