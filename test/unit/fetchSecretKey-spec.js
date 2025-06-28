@@ -3,36 +3,41 @@
  * SPDX-License-Identifier: MIT
  */
 
-const Promise = require('bluebird')
-const chai = require('chai')
-chai.use(require('chai-as-promised'))
-const expect = chai.expect
+const test = require('node:test')
+const assert = require('node:assert/strict')
+const {describe, it} = test
 const rewire = require('rewire')
 const fetchSecretKey = rewire('../../lib/fetchSecretKey')
 
 describe('Secret key', () => {
-  it('should be exactly the given input if it is not recognized as a URL', () => expect(fetchSecretKey('ZJnHOTckstBeJP!QC2T')).to.eventually.equal('ZJnHOTckstBeJP!QC2T'))
+  it('should be exactly the given input if it is not recognized as a URL', async () => {
+    const result = await fetchSecretKey('ZJnHOTckstBeJP!QC2T')
+    assert.equal(result, 'ZJnHOTckstBeJP!QC2T')
+  })
 
-  it('should be the body of the HTTP response if the given input is a URL', () => {
+  it('should be the body of the HTTP response if the given input is a URL', async () => {
     fetchSecretKey.__set__({
-      request () {
+      request: async () => {
         return new Promise(resolve => { resolve('ZJnHOTckstBeJP!QC2T') })
       }
     })
-    return expect(fetchSecretKey('http://localhorst:3000')).to.eventually.equal('ZJnHOTckstBeJP!QC2T')
+    const result = await fetchSecretKey('http://localhorst:3000')
+    assert.equal(result, 'ZJnHOTckstBeJP!QC2T')
   })
 
-  it('should log retrieval error to console', () => {
+  it('should log retrieval error to console', async () => {
     fetchSecretKey.__set__({
-      request () {
+      request: async () => {
         return new Promise((resolve, reject) => { reject(new Error('Argh!')) })
       }
     })
-    return expect(fetchSecretKey('http://localh_%&$§rst:3000')).to.be.rejectedWith('Failed to fetch secret key from URL! Argh!')
+    await assert.rejects(fetchSecretKey('http://localhorst:3000'), /Failed to fetch secret key from URL! Argh!/)
   })
 
-  it('should be exactly the given input for empty values', () => {
-    expect(fetchSecretKey(undefined)).to.eventually.equal(undefined)
-    expect(fetchSecretKey(null)).to.eventually.equal(null)
+  it('should be exactly the given input for empty values', async () => {
+    const result1 = await fetchSecretKey(undefined)
+    assert.equal(result1, undefined)
+    const result2 = await fetchSecretKey(null)
+    assert.equal(result2, null)
   })
 })
