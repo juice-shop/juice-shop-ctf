@@ -1,4 +1,4 @@
-const {describe,it} = require('node:test')
+const { describe, it } = require('node:test')
 const assert = require('node:assert/strict')
 const generateData = require('../../lib/generators/fbctf.js')
 const options = require('../../lib/options.js')
