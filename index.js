@@ -49,13 +49,13 @@ const questions = [
     type: 'input',
     name: 'ctfKey',
     message: 'URL to ctf.key file <or> secret key <or> (CTFd only) comma-separated list of secret keys?',
-    default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key'
+    default: 'https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key'
   },
   {
     type: 'input',
     name: 'countryMapping',
     message: 'URL to country-mapping.yml file?',
-    default: 'https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml',
+    default: 'https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml',
     when: ({ ctfFramework }) => ctfFramework === options.fbctfFramework
   },
   {

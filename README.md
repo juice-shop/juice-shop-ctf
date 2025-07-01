@@ -58,7 +58,7 @@ desired configuration in a file with the following format:
 ctfFramework: CTFd | FBCTF | RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key # can also be actual key or comma-separated list of keys (CTFd only) instead of URL
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
+countryMapping: https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml # ignored for CTFd and RootTheBox
 insertHints: none | free | paid # "paid" handled as "free" for CTFd
 insertHintUrls: none | free | paid # optional for FBCTF; "paid" handled as "free" for CTFd
 insertHintSnippets: none | free | paid # optional for FBCTF; "paid" handled as "free" for CTFd
@@ -109,16 +109,16 @@ _On Windows `cmd.exe` you have to use `%cd%` instead of `$(pwd)` to mount your c
 ---
 
 **For detailed step-by-step instructions and examples please refer to
-[the _Hosting a CTF event_ chapter](https://pwning.owasp-juice.shop/part1/ctf.html)
+[the _Hosting a CTF event_ chapter](https://pwning.owasp-juice.shop/companion-guide/latest/part1/ctf.html)
 in our (free) companion guide ebook.**
 
 ## Screenshots
 
-![CTFd challenge overview](https://pwning.owasp-juice.shop/part1/img/ctfd_1.png)
+![CTFd challenge overview](https://pwning.owasp-juice.shop/companion-guide/latest/_images/part1/ctfd_1.png)
 
-![FBCTF world map](https://pwning.owasp-juice.shop/part1/img/fbctf_1.png)
+![FBCTF world map](https://pwning.owasp-juice.shop/companion-guide/latest/_images/part1/fbctf_1.png)
 
-![RTB challenge boxes](https://pwning.owasp-juice.shop/part1/img/rtb_1.png)
+![RTB challenge boxes](https://pwning.owasp-juice.shop/companion-guide/latest/_images/part1/rtb_1.png)
 
 ## Troubleshooting [![Gitter](http://img.shields.io/badge/gitter-join%20chat-1dce73.svg)](https://gitter.im/bkimminich/juice-shop)
 
@@ -153,7 +153,7 @@ project, please make sure to tick the "Publicly list me as a supporter
 of OWASP Juice Shop" checkbox on the donation form. You can find our
 more about donations and how they are used here:
 
-<https://pwning.owasp-juice.shop/part3/donations.html>
+<https://pwning.owasp-juice.shop/companion-guide/latest/part3/donations.html>
 
 ## Contributors
 

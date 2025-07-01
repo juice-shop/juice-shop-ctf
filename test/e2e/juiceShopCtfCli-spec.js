@@ -106,7 +106,7 @@ describe('juice-shop-ctf', () => {
   it('should accept a config file', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
@@ -119,7 +119,7 @@ insertHintSnippets: paid`)
   it('should be able to ignore SslWarnings', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
@@ -132,7 +132,7 @@ insertHintSnippets: paid`)
   it('should fail when the config file cannot be parsed', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints`)
 
     this.timeout(TIMEOUT)
@@ -143,7 +143,7 @@ insertHints`)
   it('should fail when the config file contains invalid values', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: invalidValue
 insertHintSnippets: paid`)
@@ -156,7 +156,7 @@ insertHintSnippets: paid`)
   it('should write the output file to the specified location', function () {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
@@ -171,7 +171,7 @@ insertHintSnippets: paid`)
     fs.writeFileSync(configFile, `
 ctfFramework: CTFd
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
@@ -186,8 +186,8 @@ insertHintSnippets: paid`)
     fs.writeFileSync(configFile, `
 ctfFramework: FBCTF
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
-countryMapping: https://raw.githubusercontent.com/bkimminich/juice-shop/master/config/fbctf.yml
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
+countryMapping: https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
@@ -202,7 +202,7 @@ insertHintSnippets: paid`)
     fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
-ctfKey: https://raw.githubusercontent.com/bkimminich/juice-shop/master/ctf.key
+ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
