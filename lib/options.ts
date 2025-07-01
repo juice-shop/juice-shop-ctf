@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-module.exports = {
+const options = {
   noTextHints: 'No text hints',
   freeTextHints: 'Free text hints',
   paidTextHints: 'Paid text hints',
@@ -17,3 +17,5 @@ module.exports = {
   fbctfFramework: 'FBCTF',
   rtbFramework: 'RootTheBox'
 }
+
+export = options
