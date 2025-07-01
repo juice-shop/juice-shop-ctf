@@ -9,14 +9,14 @@ const readConfigStream = require('../../lib/readConfigStream')
 const options = require('../../lib/options')
 const { Readable } = require('stream')
 
-function generateStreamFromYaml(yaml) {
+function generateStreamFromYaml (yaml) {
   const stream = new Readable()
   stream.push(yaml)
   stream.push(null)
   return stream
 }
 
-function generateStream(url, ctfKey, insertHints, insertHintUrls, insertHintSnippets) {
+function generateStream (url, ctfKey, insertHints, insertHintUrls, insertHintSnippets) {
   const yaml = `
 juiceShopUrl: ${url}
 ctfKey: ${ctfKey}
