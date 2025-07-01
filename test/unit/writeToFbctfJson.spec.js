@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-const Promise = require('bluebird')
-const chai = require('chai')
-chai.use(require('chai-as-promised'))
-const expect = chai.expect
+const assert = require('node:assert')
+const { describe, it } = require('node:test')
 const rewire = require('rewire')
 const writeToFbctfJson = rewire('../../lib/writeToFbctfJson')
 
@@ -18,13 +16,12 @@ describe('Output for FBCTF', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/)
-          return new Promise(resolve => { resolve() })
+          assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/))
+          return Promise.resolve()
         }
       }
     })
-    return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
-      .to.be.fulfilled
+    return assert.doesNotReject(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
   })
 
   it('should log file system error to console', () => {
@@ -35,8 +32,7 @@ describe('Output for FBCTF', () => {
         }
       }
     })
-    return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
-      .to.be.rejectedWith('Failed to write output to file! Argh!')
+    return assert.rejects(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }), /Failed to write output to file! Argh!/)
   })
 
   it('should be written to the desired JSON file', () => {
@@ -46,12 +42,11 @@ describe('Output for FBCTF', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          expect(path).to.match(/custom\.json/)
-          return new Promise(resolve => { resolve() })
+          assert.match(path, /custom\.json/)
+          return Promise.resolve()
         }
       }
     })
-    return expect(writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.json'))
-      .to.be.fulfilled
+    return assert.doesNotReject(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.json'))
   })
 })

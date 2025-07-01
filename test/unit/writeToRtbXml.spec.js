@@ -3,10 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-const Promise = require('bluebird')
-const chai = require('chai')
-chai.use(require('chai-as-promised'))
-const expect = chai.expect
+const { describe, it } = require('node:test')
+const assert = require('node:assert')
 const rewire = require('rewire')
 const writeToRtbXml = rewire('../../lib/writeToRtbXml')
 
@@ -20,13 +18,12 @@ describe('Output for RTB', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          expect(path).to.match(/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/)
-          return new Promise(resolve => { resolve() })
+          assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/))
+          return Promise.resolve()
         }
       }
     })
-    return expect(writeToRtbXml(xmlExample))
-      .to.be.fulfilled
+    return assert.doesNotReject(() => writeToRtbXml(xmlExample))
   })
 
   it('should log file system error to console', () => {
@@ -37,8 +34,7 @@ describe('Output for RTB', () => {
         }
       }
     })
-    return expect(writeToRtbXml(xmlExample))
-      .to.be.rejectedWith('Failed to write output to file! Argh!')
+    return assert.rejects(() => writeToRtbXml(xmlExample), /Failed to write output to file! Argh!/)
   })
 
   it('should be written to the desired XML file', () => {
@@ -48,12 +44,11 @@ describe('Output for RTB', () => {
       },
       fs: {
         writeFileAsync (path, data) {
-          expect(path).to.match(/custom\.xml/)
-          return new Promise(resolve => { resolve() })
+          assert((path), (/custom\.xml/))
+          return Promise.resolve()
         }
       }
     })
-    return expect(writeToRtbXml(xmlExample, 'custom.xml'))
-      .to.be.fulfilled
+    return assert.doesNotReject(() => writeToRtbXml(xmlExample, 'custom.xml'))
   })
 })
