@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-function isUrl (text) {
+export function isUrl (text: string): boolean {
   return text.match(/^(http|localhost|[0-9][0-9]?[0-9]?\.)/) !== null
 }
 
-module.exports = isUrl
+
