@@ -3,32 +3,32 @@
  * SPDX-License-Identifier: MIT
  */
 
-const chai = require('chai')
-const expect = chai.expect
+const assert = require('node:assert')
+const { describe, it } = require('node:test')
 const calculateScore = require('../../lib/calculateScore')
 
 describe('Score', () => {
   it('should be 100 points for a * challenge', () => {
-    expect(calculateScore(1)).to.equal(100)
+    assert.strictEqual(calculateScore(1), 100)
   })
 
   it('should be 250 points for a ** challenge', () => {
-    expect(calculateScore(2)).to.equal(250)
+    assert.strictEqual(calculateScore(2), 250)
   })
 
   it('should be 450 points for a *** challenge', () => {
-    expect(calculateScore(3)).to.equal(450)
+    assert.strictEqual(calculateScore(3), 450)
   })
 
   it('should be 700 points for a **** challenge', () => {
-    expect(calculateScore(4)).to.equal(700)
+    assert.strictEqual(calculateScore(4), 700)
   })
 
   it('should be 1000 points for a ***** challenge', () => {
-    expect(calculateScore(5)).to.equal(1000)
+    assert.strictEqual(calculateScore(5), 1000)
   })
 
   it('should be 1350 points for a ****** challenge', () => {
-    expect(calculateScore(6)).to.equal(1350)
+    assert.strictEqual(calculateScore(6), 1350)
   })
 })
