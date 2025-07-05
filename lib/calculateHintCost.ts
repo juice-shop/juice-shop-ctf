@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-const calculateScore = require('./calculateScore')
-const options = require('./options')
+import calculateScore from './calculateScore'
+import * as options from './options'
 
 /* The hint costs depend on the kind of hint and the difficulty of the challenge they are for:
  paid text hint             = 10% of the challenge's score value
@@ -12,7 +12,13 @@ const options = require('./options')
  paid code snippet hint     = 30% of the challenge's score value
  free text/url/snippet hint = free (as in free beer)
  */
-function calculateHintCost ({ difficulty }, hintOption) {
+interface Challenge {
+  difficulty: number
+}
+
+type HintOption = typeof options.paidTextHints | typeof options.paidHintUrls | typeof options.paidHintSnippets
+
+function calculateHintCost ({ difficulty }: Challenge, hintOption: HintOption): number {
   let costMultiplier = 0
   if (hintOption === options.paidTextHints) {
     costMultiplier = 0.1
@@ -23,4 +29,4 @@ function calculateHintCost ({ difficulty }, hintOption) {
   }
   return costMultiplier * calculateScore(difficulty)
 }
-module.exports = calculateHintCost
+export default calculateHintCost

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-const assert = require('node:assert')
-const { describe, it } = require('node:test')
-const calculateHintCost = require('../../lib/calculateHintCost')
-const options = require('../../lib/options')
+import assert from 'node:assert'
+import { describe, it } from 'node:test'
+import calculateHintCost from '../../lib/calculateHintCost'
+import options from '../../lib/options'
 
 describe('Hints', () => {
   it('should cost 10% of their point value for text hints when payment is required', () => {

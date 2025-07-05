@@ -13,7 +13,8 @@
  ****** = 1350
  */
 const multiplier = [100, 125, 150, 175, 200, 225]
-function calculateScore (difficulty) {
+function calculateScore (difficulty: number): number {
   return difficulty * multiplier[difficulty - 1]
 }
-module.exports = calculateScore
+
+export default calculateScore

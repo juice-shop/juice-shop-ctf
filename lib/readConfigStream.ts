@@ -20,20 +20,30 @@ const hintsMap = { none: options.noTextHints, free: options.freeTextHints, paid:
 const hintUrlsMap = { none: options.noHintUrls, free: options.freeHintUrls, paid: options.paidHintUrls }
 const hintSnippetsMap = { none: options.noHintSnippets, free: options.freeHintSnippets, paid: options.paidHintSnippets }
 
-function readConfigStream (stream) {
+interface ConfigDoc {
+  ctfFramework?: string
+  juiceShopUrl: string
+  countryMapping?: string
+  ctfKey: string
+  insertHints: keyof typeof hintsMap
+  insertHintUrls?: keyof typeof hintUrlsMap
+  insertHintSnippets?: keyof typeof hintSnippetsMap
+}
+
+function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
   return new Promise((resolve, reject) => {
     let data = ''
-    stream.on('data', (chunk) => {
+    stream.on('data', (chunk: Buffer | string) => {
       data = data + chunk
     })
     stream.on('end', () => {
       try {
-        yaml.loadAll(data, (doc) => {
+        yaml.loadAll(data, (doc: ConfigDoc) => {
           const validation = schema.validate(doc)
           if (validation.error) {
             reject(validation.error)
           } else {
-            const result = validation.value
+            const result = validation.value as ConfigDoc
             result.insertHints = hintsMap[result.insertHints]
             result.insertHintUrls = result.insertHintUrls ? hintUrlsMap[result.insertHintUrls] : options.noHintUrls
             result.insertHintSnippets = result.insertHintSnippets ? hintSnippetsMap[result.insertHintSnippets] : options.noHintSnippets
