@@ -7,14 +7,13 @@ import assert from "node:assert";
 import { describe, it } from "node:test";
 import rewire from "rewire";
 
-const fetchCodeSnippetsModule = rewire("../../lib/fetchCodeSnippets");
-const fetchCodeSnippets = fetchCodeSnippetsModule.default || fetchCodeSnippetsModule;
+const fetchCodeSnippets = rewire('../../lib/fetchCodeSnippets').default || rewire('../../lib/fetchCodeSnippets');
 
 const sleep = (ms:number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Code snippets', () => {
   it('should be fetched from the given URL', async () => {
-    fetchCodeSnippetsModule.__set__({
+    fetchCodeSnippets.__set__({
       fetch: async (url:string) => {
         if (url === 'http://localhost:3000/snippets') {
           return {
@@ -38,7 +37,7 @@ describe('Code snippets', () => {
   });
 
   it('should log retrieval error to console', async () => {
-    fetchCodeSnippetsModule.__set__({
+    fetchCodeSnippets.__set__({
       fetch: async () => {
         throw new Error('Argh!');
       }
