@@ -7,12 +7,11 @@ import assert from "node:assert";
 import { describe, it } from "node:test";
 import rewire from "rewire";
 
-const fetchChallengesModule = rewire("../../lib/fetchChallenges");
-const fetchChallenges = fetchChallengesModule.default || fetchChallengesModule;
+const fetchChallenges = rewire('../../lib/fetchChallenges').default || rewire('../../lib/fetchChallenges');
 
 describe("Challenges", () => {
   it("should be fetched from the given URL", async () => {
-    fetchChallengesModule.__set__({
+    fetchChallenges.__set__({
       fetch: async () => {
         return {
           ok: true,
@@ -24,7 +23,7 @@ describe("Challenges", () => {
     assert.deepEqual(result, { c1: {}, c2: {} });
   });
   it("should log retrieval error to console", async () => {
-    fetchChallengesModule.__set__({
+    fetchChallenges.__set__({
       fetch: async () => {
         throw new Error("Argh!");
       },
