@@ -3,20 +3,38 @@
  * SPDX-License-Identifier: MIT
  */
 
-const { test } = require('node:test')
-const assert = require('node:assert/strict')
+import { test } from 'node:test'
+import assert from 'node:assert'
+import { Readable } from 'stream'
 const readConfigStream = require('../../lib/readConfigStream')
 const options = require('../../lib/options')
-const { Readable } = require('stream')
 
-function generateStreamFromYaml (yaml) {
+interface GenerateStreamFromYaml {
+  (yaml: string): Readable
+}
+
+const generateStreamFromYaml: GenerateStreamFromYaml = function (yaml: string): Readable {
   const stream = new Readable()
   stream.push(yaml)
   stream.push(null)
   return stream
 }
 
-function generateStream (url, ctfKey, insertHints, insertHintUrls, insertHintSnippets) {
+interface GenerateStreamParams {
+  url: string
+  ctfKey: string | number
+  insertHints: string
+  insertHintUrls: string
+  insertHintSnippets: string
+}
+
+function generateStream (
+  url: GenerateStreamParams['url'],
+  ctfKey: GenerateStreamParams['ctfKey'],
+  insertHints: GenerateStreamParams['insertHints'],
+  insertHintUrls: GenerateStreamParams['insertHintUrls'],
+  insertHintSnippets: GenerateStreamParams['insertHintSnippets']
+): Readable {
   const yaml = `
 juiceShopUrl: ${url}
 ctfKey: ${ctfKey}

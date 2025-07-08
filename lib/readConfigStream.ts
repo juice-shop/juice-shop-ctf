@@ -57,4 +57,4 @@ function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
   })
 }
 
-module.exports = readConfigStream
+export = readConfigStream

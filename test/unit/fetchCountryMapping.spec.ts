@@ -3,23 +3,26 @@
  * SPDX-License-Identifier: MIT
  */
 
-const assert = require('node:assert/strict')
-const { describe, it } = require('node:test')
-const rewire = require('rewire')
-const fetchCountryMapping = rewire('../../lib/fetchCountryMapping')
+import assert from 'node:assert'
+import { describe, it } from 'node:test'
+import rewire from 'rewire'
+
+const fetchCountryMappingModule = rewire('../../lib/fetchCountryMapping')
+const fetchCountryMapping = fetchCountryMappingModule.default || fetchCountryMappingModule
 
 describe('Country mapping', () => {
   it('should be the body of the HTTP response if the given input is a URL', async () => {
-    fetchCountryMapping.__set__({
-      request: async () => {
-        return Promise.resolve(`
+    fetchCountryMappingModule.__set__({
+      fetch: async () => ({
+        ok: true,
+        text: async () => `
 ctf:
   countryMapping:
     scoreBoardChallenge:
       name: Canada
       code: CA
-`)
-      }
+`
+      })
     })
     const result = await fetchCountryMapping('http://localhorst:3000')
     assert.deepEqual(result, {
@@ -36,12 +39,14 @@ ctf:
   })
 
   it('should log retrieval error to console', async () => {
-    fetchCountryMapping.__set__({
-      request: async () => {
-        return new Promise((resolve, reject) => { reject(new Error('Argh!')) })
+    fetchCountryMappingModule.__set__({
+      fetch: async () => {
+        throw new Error('Argh!')
       }
     })
-    const result = await assert.rejects(fetchCountryMapping('http://localhorst:3000'), /Failed to fetch country mapping from API! Argh!/)
-    assert.equal(result, undefined)
+    await assert.rejects(
+      () => fetchCountryMapping('http://localhorst:3000'),
+      /Failed to fetch country mapping from API! Argh!/
+    )
   })
 })

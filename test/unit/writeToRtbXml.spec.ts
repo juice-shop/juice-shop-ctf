@@ -17,7 +17,7 @@ describe('Output for RTB', () => {
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path:string, data:string) {
           assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/))
           return Promise.resolve()
         }
@@ -29,7 +29,7 @@ describe('Output for RTB', () => {
   it('should log file system error to console', () => {
     writeToRtbXml.__set__({
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path:string, data:string) {
           return new Promise(() => { throw new Error('Argh!') })
         }
       }
@@ -43,8 +43,8 @@ describe('Output for RTB', () => {
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
-          assert((path), (/custom\.xml/))
+        writeFileAsync (path:string, data:string) {
+          assert.match(path, /custom\.xml/)
           return Promise.resolve()
         }
       }

@@ -3,10 +3,10 @@
  * SPDX-License-Identifier: MIT
  */
 
-const assert = require('node:assert')
-const { describe, it } = require('node:test')
-const rewire = require('rewire')
-const writeToFbctfJson = rewire('../../lib/writeToFbctfJson')
+import assert from 'node:assert'
+import { describe,it } from 'node:test'
+import rewire from 'rewire'
+const writeToFbctfJson = rewire('../../lib/writeToFbctfJson').default || rewire('../../lib/writeToFbctfJson')
 
 describe('Output for FBCTF', () => {
   it('should be written to JSON file', () => {
@@ -15,7 +15,7 @@ describe('Output for FBCTF', () => {
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path:string, data:string) {
           assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/))
           return Promise.resolve()
         }
@@ -27,7 +27,7 @@ describe('Output for FBCTF', () => {
   it('should log file system error to console', () => {
     writeToFbctfJson.__set__({
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path:string, data:string) {
           return new Promise(() => { throw new Error('Argh!') })
         }
       }
@@ -41,7 +41,7 @@ describe('Output for FBCTF', () => {
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path:string, data:string) {
           assert.match(path, /custom\.json/)
           return Promise.resolve()
         }

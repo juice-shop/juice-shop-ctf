@@ -3,11 +3,11 @@
  * SPDX-License-Identifier: MIT
  */
 
-const test = require('node:test')
-const assert = require('node:assert')
-const { describe } = test
+import { test ,describe} from 'node:test'
+import  assert  from 'node:assert'
 const rewire = require('rewire')
-const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv')
+
+const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv.js')
 
 describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data export
   test.skip('should be written to ZIP file', async () => {
@@ -16,7 +16,7 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path : string, data: string) {
           assert.match(data, /alembic_version.json/)
           assert.match(data, /challenges.json/)
           assert.match(data, /hints.json/)
@@ -32,7 +32,7 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
   test.skip('should log file system error to console', () => {
     writeToCtfdCsv.__set__({
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path: string, data: string) {
           return new Promise(() => { throw new Error('Argh!') })
         }
       }
@@ -47,7 +47,7 @@ describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data ex
         log () {}
       },
       fs: {
-        writeFileAsync (path, data) {
+        writeFileAsync (path: string, data: string) {
           assert.match(data, /alembic_version.json/)
           assert.match(data, /challenges.json/)
           assert.match(data, /hints.json/)
