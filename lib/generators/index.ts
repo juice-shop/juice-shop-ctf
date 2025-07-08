@@ -5,17 +5,32 @@
 
 const writeToCtfdZip = require('../writeToCtfdCsv')
 const writeToFbctfJson = require('../writeToFbctfJson')
-const writeToRtbXml = require('../writeToRtbXml')
-const options = require('../options')
+import writeToRtbXml = require('../writeToRtbXml')
+const ctfOptions = require('../options')
 
 const createCtfdExport = require('./ctfd')
 const createFbctfExport = require('./fbctf')
 const createRtbExport = require('./rtb')
 
-async function generateCTFExport (ctfFramework, challenges, settings) {
-  async function ctfdExport () {
+interface Challenge {
+  [key: string]: any
+}
+
+interface ExportSettings {
+  outputLocation: string
+  [key: string]: any
+}
+
+type CtfFramework = string
+
+async function generateCTFExport (
+  ctfFramework: CtfFramework,
+  challenges: Challenge[],
+  settings: ExportSettings
+): Promise<void> {
+  async function ctfdExport (): Promise<void> {
     const ctfdData = await createCtfdExport(challenges, settings)
-    const ctfdFile = await writeToCtfdZip(ctfdData, settings.outputLocation)
+    const ctfdFile: string = await writeToCtfdZip(ctfdData, settings.outputLocation)
 
     console.log('Backup archive written to ' + ctfdFile)
     console.log()
@@ -23,9 +38,9 @@ async function generateCTFExport (ctfFramework, challenges, settings) {
     console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_ctfd'.bold)
   }
 
-  async function fbctfExport () {
+  async function fbctfExport (): Promise<void> {
     const fbctfData = await createFbctfExport(challenges, settings)
-    const fbctfFile = await writeToFbctfJson(fbctfData, settings.outputLocation)
+    const fbctfFile: string = await writeToFbctfJson(fbctfData, settings.outputLocation)
 
     console.log('Full Game Export written to ' + fbctfFile)
     console.log()
@@ -33,9 +48,9 @@ async function generateCTFExport (ctfFramework, challenges, settings) {
     console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_fbctf'.bold)
   }
 
-  async function rtbExport () {
+  async function rtbExport (): Promise<void> {
     const rtbData = await createRtbExport(challenges, settings)
-    const rtbFile = await writeToRtbXml(rtbData, settings.outputLocation)
+    const rtbFile: string = await writeToRtbXml(rtbData, settings.outputLocation)
 
     console.log('Full Game Export written to ' + rtbFile)
     console.log()
@@ -44,15 +59,15 @@ async function generateCTFExport (ctfFramework, challenges, settings) {
   }
 
   switch (ctfFramework) {
-    case options.ctfdFramework: {
+    case ctfOptions.ctfdFramework: {
       await ctfdExport()
       break
     }
-    case options.fbctfFramework: {
+    case ctfOptions.fbctfFramework: {
       await fbctfExport()
       break
     }
-    case options.rtbFramework: {
+    case ctfOptions.rtbFramework: {
       await rtbExport()
       break
     }
