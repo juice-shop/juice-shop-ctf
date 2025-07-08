@@ -47,12 +47,13 @@
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
+    "build": "tsc && cp -R data dist/data",
     "coverage": "nyc report --reporter=lcov",
     "e2e": "nyc --reporter=text mocha test/e2e --slow=25000 --timeout=45000",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "node:test": "node --test test/unit/*.spec.js"
+    "node:test": "node --test dist/test/unit/*.spec.js "
   },
   "nyc": {
     "report-dir": "./build/reports/coverage"

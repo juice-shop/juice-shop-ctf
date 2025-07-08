@@ -6,7 +6,7 @@
 import assert from 'node:assert/strict'
 import rewire from 'rewire' 
 const fetchSecretKey = rewire('../../lib/fetchSecretKey').default || rewire('../../lib/fetchSecretKey')
-import { describe,it } from 'node:test'
+import { describe, it } from 'node:test'
 
 describe('Secret key', () => {
   it('should be exactly the given input if it is not recognized as a URL', async () => {
@@ -16,9 +16,10 @@ describe('Secret key', () => {
 
   it('should be the body of the HTTP response if the given input is a URL', async () => {
     fetchSecretKey.__set__({
-      request: async () => {
-        return new Promise(resolve => { resolve('ZJnHOTckstBeJP!QC2T') })
-      }
+      fetch: async () => ({
+        ok: true,
+        text: async () => 'ZJnHOTckstBeJP!QC2T'
+      })
     })
     const result = await fetchSecretKey('http://localhorst:3000')
     assert.equal(result, 'ZJnHOTckstBeJP!QC2T')
@@ -26,11 +27,14 @@ describe('Secret key', () => {
 
   it('should log retrieval error to console', async () => {
     fetchSecretKey.__set__({
-      request: async () => {
-        return new Promise((resolve, reject) => { reject(new Error('Argh!')) })
+      fetch: async () => {
+        throw new Error('Argh!')
       }
     })
-    await assert.rejects(fetchSecretKey('http://localhorst:3000'), /Failed to fetch secret key from URL! Argh!/)
+    await assert.rejects(
+      () => fetchSecretKey('http://localhorst:3000'),
+      /Failed to fetch secret key from URL! Argh!/
+    )
   })
 
   it('should be exactly the given input for empty values', async () => {

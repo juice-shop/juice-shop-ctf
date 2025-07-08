@@ -7,12 +7,11 @@ import assert from 'node:assert'
 import { describe, it } from 'node:test'
 import rewire from 'rewire'
 
-const fetchCountryMappingModule = rewire('../../lib/fetchCountryMapping')
-const fetchCountryMapping = fetchCountryMappingModule.default || fetchCountryMappingModule
+const fetchCountryMapping = rewire('../../lib/fetchCountryMapping').default || rewire('../../lib/fetchCountryMapping')
 
 describe('Country mapping', () => {
   it('should be the body of the HTTP response if the given input is a URL', async () => {
-    fetchCountryMappingModule.__set__({
+    fetchCountryMapping.__set__({
       fetch: async () => ({
         ok: true,
         text: async () => `
@@ -39,7 +38,7 @@ ctf:
   })
 
   it('should log retrieval error to console', async () => {
-    fetchCountryMappingModule.__set__({
+    fetchCountryMapping.__set__({
       fetch: async () => {
         throw new Error('Argh!')
       }
