@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as https from 'https'
+const https = require('https')
 
 interface CodeSnippetsOptions {
   juiceShopUrl: string

@@ -47,18 +47,21 @@
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
-    "build": "tsc && cp -R data dist/data",
+    "build": "tsc && cp -R data dist/data && cp -R test/e2e dist/test/e2e && cp -R bin dist/bin && cp index.js dist/index.js",
     "coverage": "nyc report --reporter=lcov",
-    "e2e": "nyc --reporter=text mocha test/e2e --slow=25000 --timeout=45000",
+    "e2e": "mocha dist/test/e2e/juiceShopCtfCli-spec.js --slow=25000 --timeout=45000",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "node:test": "node --test dist/test/unit/*.spec.js "
+    "node:watch": "tsx --watch --test test/unit/*.spec.ts",
+    "node:test:direct": "tsx --test test/unit/*.spec.ts",
+    "node:test": "node --test dist/test/unit/*.spec.js"
   },
   "nyc": {
     "report-dir": "./build/reports/coverage"
   },
   "dependencies": {
+    "@types/jszip": "^3.4.0",
     "bcryptjs": "^2.4.3",
     "bluebird": "^3.7.2",
     "colors": "1.4.0",
@@ -67,6 +70,7 @@
     "joi": "^17.13.3",
     "js-yaml": "^4.1.0",
     "jssha": "^3.3.1",
+    "jszip": "^3.10.1",
     "node-fetch": "^2.7.0",
     "node-zip": "^1.1.1",
     "path": "^0.12.7",
@@ -97,6 +101,7 @@
     "nyc": "^17.1.0",
     "rewire": "^7.0.0",
     "standard": "^17.1.2",
+    "tsx": "^4.20.3",
     "typescript": "^5.8.3"
   },
   "engines": {
