@@ -224,19 +224,24 @@ function createRtbExport (
     category: string
   }
 
-  function insertFlag (
-    challenge: ChallengeForFlag,
-    flags: FlagsElement,
-    order: number
-  ): void {
-    const flag = flags.ele('flag', { type: 'static' })
-    flag.ele('name',  challenge.name as any)
-    flag.ele('description',' turndownService.turndown(challenge.description)' +  ' **Difficulty** ' + difficultyText(challenge.difficulty) as any)  
-    flag.ele('token', hmacSha1(ctfKey, challenge.name))
-    flag.ele('value', calculateScore(challenge.difficulty))
-    flag.ele('order', 'order.toString() ' as any)
-    insertHint(challenge, flag)
-  }
+function insertFlag(
+  challenge: any,
+  flags: any,
+  order: number
+): void {
+  const flag = flags.ele("flag", { type: "static" });
+  flag.ele("name", challenge.name);
+  flag.ele(
+    "description",
+    turndownService.turndown(challenge.description) +
+      " **Difficulty** " +
+      difficultyText(challenge.difficulty)
+  );
+  flag.ele("token", hmacSha1(ctfKey, challenge.name));
+  flag.ele("value", calculateScore(challenge.difficulty));
+  flag.ele("order", order.toString());
+  insertHint(challenge, flag);
+}
 
   interface ChallengeCategory {
     category: string
