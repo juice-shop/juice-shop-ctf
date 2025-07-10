@@ -20,7 +20,6 @@ function writeToRtbXml (report:any, desiredFileName:any) {
     }
     
     fs.writeFileAsync(fileName, xmlContent, { encoding: 'utf8' }).then(() => {
-      console.log(`Backup archive written to ${path.resolve(fileName).green}`)
       resolve(path.resolve(fileName))
     }).catch((error : any) => {
       reject(new Error('Failed to write output to file! ' + error.message))
@@ -28,5 +27,4 @@ function writeToRtbXml (report:any, desiredFileName:any) {
   })
 }
 
-module.exports = writeToRtbXml
 export = writeToRtbXml

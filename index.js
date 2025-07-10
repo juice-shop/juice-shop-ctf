@@ -98,8 +98,8 @@ const juiceShopCtfCli = async () => {
     console.log()
 
     // Only fetch snippets if user wants them
-    const shouldFetchSnippets = answers.insertHintSnippets !== options.noHintSnippets;
-    
+    const shouldFetchSnippets = answers.insertHintSnippets !== options.noHintSnippets
+
     // Prepare fetch operations
     const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings),
@@ -108,20 +108,19 @@ const juiceShopCtfCli = async () => {
     ]
 
     // Conditionally add snippets fetch
-if (shouldFetchSnippets) {
-  fetchOperations.push(
-    fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings)
-      .catch(error => {
-        console.log(`Warning: ${error.message}`.yellow)
-        return {} // Return empty object on error to continue process
-      })
-  )
-}
+    if (shouldFetchSnippets) {
+      fetchOperations.push(
+        fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings)
+          .catch(error => {
+            console.log(`Warning: ${error.message}`.yellow)
+            return {} // Return empty object on error to continue process
+          })
+      )
+    }
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
 
-    const snippets = shouldFetchSnippets ? vulnSnippets : [];
-
+    const snippets = shouldFetchSnippets ? vulnSnippets : []
 
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       juiceShopUrl: answers.juiceShopUrl,
@@ -133,7 +132,6 @@ if (shouldFetchSnippets) {
       vulnSnippets: snippets,
       outputLocation: argv.output
     })
-
   } catch (error) {
     console.log(error.message.red)
   }

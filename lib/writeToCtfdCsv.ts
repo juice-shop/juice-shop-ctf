@@ -28,7 +28,6 @@ async function writeToCtfdCsv(
   await writeFileAsync(fileName, csvContent, {
     encoding: "utf8",
   });
-  console.log(`Backup archive written to ${path.resolve(fileName)}`);
   return path.resolve(fileName);
 }
 
