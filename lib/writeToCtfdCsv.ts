@@ -4,30 +4,32 @@
  */
 
 import dateFormat from "dateformat";
+import { Abortable } from "events";
 import * as fsModule from "fs";
+import { promisify } from "util";
 import * as path from "path";
+
+const writeFileAsync = promisify(fsModule.writeFile);
 
 const fs = fsModule.promises;
 interface CtfdCsvRow {
   [key: string]: string | number | boolean | null | undefined;
 }
 
-function writeToCtfdCsv(
+async function writeToCtfdCsv(
   data: CtfdCsvRow[],
   desiredFileName?: string
 ): Promise<string> {
-  return new Promise((resolve, reject) => {
-    const fileName =
-      desiredFileName ||
-      "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".CTFd.csv";
-    fs.writeFile(fileName, convertToCSV(data), "utf8")
-      .then(() => {
-        resolve(path.resolve(fileName));
-      })
-      .catch(({ message }: { message: string }) => {
-        reject(new Error("Failed to write output to file! " + message));
-      });
+  const fileName =
+    desiredFileName ||
+    "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".CTFd.csv";
+
+  const csvContent = convertToCSV(data);
+  await writeFileAsync(fileName, csvContent, {
+    encoding: "utf8",
   });
+  console.log(`Backup archive written to ${path.resolve(fileName)}`);
+  return path.resolve(fileName);
 }
 
 interface CsvRow {

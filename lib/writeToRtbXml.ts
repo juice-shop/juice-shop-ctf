@@ -9,22 +9,25 @@ import * as path from "path";
 const dateFormat = require("dateformat");
 
 // Polyfill writeFileAsync for compatibility with tests
-if (!(fs as any).writeFileAsync) {
-  (fs as any).writeFileAsync = promisify(fs.writeFile);
-}
+const writeFileAsync = promisify(fs.writeFile);
 
 interface WriteToRtbXmlOptions {
   report: string;
   desiredFileName?: string;
 }
 
-async function writeToRtbXml(report: string, desiredFileName?: string): Promise<string> {
-  let fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml';
-  return (fs as any).writeFileAsync(fileName, report,  { encoding: 'utf8' })
-    .then((): string => path.resolve(fileName))
-    .catch((err: Error): never => {
-      throw new Error("Failed to write output to file! " + err.message);
-    });
+async function writeToRtbXml(
+  report: string,
+  desiredFileName?: string
+): Promise<string> {
+  let fileName: string =
+    desiredFileName ||
+    "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".RTB.xml";
+  await writeFileAsync(fileName, JSON.stringify(report, null, 2), {
+    encoding: "utf8",
+  });
+  console.log(`Backup archive written to ${path.resolve(fileName).green}`);
+  return path.resolve(fileName);
 }
 
 export = writeToRtbXml;

@@ -97,18 +97,31 @@ const juiceShopCtfCli = async () => {
 
     console.log()
 
-    const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all([
+    // Only fetch snippets if user wants them
+    const shouldFetchSnippets = answers.insertHintSnippets !== options.noHintSnippets;
+    
+    // Prepare fetch operations
+    const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings),
-      fetchCountryMapping(answers.countryMapping, argv.ignoreSslWarnings),
-      fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings, answers.insertHintSnippets === options.noHintSnippets)
-    ])
+      fetchCountryMapping(answers.countryMapping, argv.ignoreSslWarnings)
+    ]
 
-    for (const challenge of challenges) {
-      if (challenge.name === 'Bonus Payload') {
-        challenge.description = challenge.description.replace('https://', 'https&colon;//')
-      }
-    }
+    // Conditionally add snippets fetch
+if (shouldFetchSnippets) {
+  fetchOperations.push(
+    fetchCodeSnippets(answers.juiceShopUrl, argv.ignoreSslWarnings)
+      .catch(error => {
+        console.log(`Warning: ${error.message}`.yellow)
+        return {} // Return empty object on error to continue process
+      })
+  )
+}
+
+    const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
+
+    const snippets = shouldFetchSnippets ? vulnSnippets : [];
+
 
     await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
       juiceShopUrl: answers.juiceShopUrl,
@@ -117,18 +130,10 @@ const juiceShopCtfCli = async () => {
       insertHintSnippets: answers.insertHintSnippets,
       ctfKey: fetchedSecretKey,
       countryMapping,
-      vulnSnippets,
+      vulnSnippets: snippets,
       outputLocation: argv.output
     })
-    console.log()
-    if (!challenges[0].hint && answers.insertHints !== options.noTextHints) {
-      console.log('You selected text hints but '.yellow + answers.juiceShopUrl + ' API response did not contain any!'.yellow)
-      console.log('Make sure that the server uses '.yellow + 'default.yml' + ' or has '.yellow + 'challenges.showHints: true' + ' in its config.'.yellow)
-    }
-    if (!challenges[0].hintUrl && answers.insertHintUrls !== options.noHintUrls) {
-      console.log('You selected hint URLs but '.yellow + answers.juiceShopUrl + ' API response did not contain any!'.yellow)
-      console.log('Make sure that the server uses '.yellow + 'default.yml' + ' or has '.yellow + 'challenges.showHints: true' + ' in its config.'.yellow)
-    }
+
   } catch (error) {
     console.log(error.message.red)
   }

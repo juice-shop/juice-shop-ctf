@@ -8,9 +8,8 @@ import { promisify } from "util";
 import * as path from "path";
 const dateFormat = require("dateformat");
 
-if (!(fs as any).writeFileAsync) {
-  (fs as any).writeFileAsync = promisify(fs.writeFile);
-}
+
+const writeFileAsync = promisify(fs.writeFile);
 
 interface FbctfReport {
   [key: string]: any;
@@ -24,12 +23,10 @@ async function writeToFbctfJson(
     desiredFileName ||
     "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".FBCTF.json";
 
-  return (fs as any)
-    .writeFileAsync(fileName, JSON.stringify(report, null, 2),  { encoding: 'utf8' })
-    .then(() => path.resolve(fileName))
-    .catch((err: Error) => {
-      throw new Error("Failed to write output to file! " + err.message);
-    });
+  await writeFileAsync(fileName, JSON.stringify(report, null, 2), {
+    encoding: "utf8",
+  });
+  console.log(`Backup archive written to ${path.resolve(fileName).green}`);
+  return path.resolve(fileName);
 }
-
 export = writeToFbctfJson;

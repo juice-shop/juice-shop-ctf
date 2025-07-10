@@ -28,6 +28,7 @@ async function generateCTFExport (
   challenges: Challenge[],
   settings: ExportSettings
 ): Promise<void> {
+  settings.vulnSnippets = settings.vulnSnippets || {}
   async function ctfdExport (): Promise<void> {
     const ctfdData = await createCtfdExport(challenges, settings)
     const ctfdFile: string = await writeToCtfdZip(ctfdData, settings.outputLocation)

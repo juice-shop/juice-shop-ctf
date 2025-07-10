@@ -5,70 +5,62 @@
 
 const https = require('https')
 
-interface CodeSnippetsOptions {
-  juiceShopUrl: string
-  ignoreSslWarnings: boolean
-  skip?: boolean
-}
-
-interface SnippetResponse {
-  snippet: string
-}
-
-async function fetchCodeSnippets(
-  options: string | CodeSnippetsOptions
-): Promise<Record<string, string>> {
-  const { juiceShopUrl, ignoreSslWarnings, skip = false } =
-    typeof options === 'string'
-      ? { juiceShopUrl: options, ignoreSslWarnings: false, skip: false }
-      : options
+/**
+ * Fetches code snippets from a Juice Shop instance
+ */
+async function fetchCodeSnippets(options:any) {
+  // Parse options
+  const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl
+  const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false
+  const skip = typeof options === 'string' ? false : options.skip || false
 
   if (skip) {
     return {}
   }
 
+  // Set up agent for SSL
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
 
-  const fetchOptions = { agent, headers: { 'Content-Type': 'application/json' } }
+  const fetchOptions = { agent }
 
   try {
-    const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions)
+    
+    const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions as any)
 
     if (!challengesResponse.ok) {
-      throw new Error(`Failed to fetch snippet list: ${challengesResponse.status}`)
+      throw new Error(`Snippets API returned status ${challengesResponse.status}`)
     }
-
-    const { challenges }: { challenges: string[] } = await challengesResponse.json()
-
-    if (!challenges) {
-      return {}
+    
+    const responseData = await challengesResponse.json()
+    
+    if (!responseData.challenges || !Array.isArray(responseData.challenges)) {
+      throw new Error('Invalid challenges format in response')
     }
+    
+    const { challenges } = responseData
+    const snippets: { [key: string]: string } = {}
+    
+    // Fetch each snippet
+    for (const challengeKey of challenges) {
+      const snippetRes = await fetch(`${juiceShopUrl}/snippets/${challengeKey}`, fetchOptions as any)
 
-    const snippets: Record<string, string> = {}
-
-    const snippetList = await Promise.all(
-      challenges.map(async (challengeKey) => {
-        const snippetRes = await fetch(`${juiceShopUrl}/snippets/${challengeKey}`, fetchOptions)
-
-        if (!snippetRes.ok) {
-          throw new Error(`Failed to fetch snippet for ${challengeKey}: ${snippetRes.status}`)
-        }
-
-        const { snippet }: SnippetResponse = await snippetRes.json()
-        return { challengeKey, snippet }
-      })
-    )
-
-    for (const { challengeKey, snippet } of snippetList) {
-      snippets[challengeKey] = snippet
+      if (!snippetRes.ok) {
+        continue
+      }
+      
+      const snippetData = await snippetRes.json()
+      
+      if (snippetData.snippet) {
+        snippets[challengeKey] = snippetData.snippet
+      }
     }
-
+    
     return snippets
-  } catch (error: any) {
+  } catch (error:any) {
     throw new Error('Failed to fetch snippet from API! ' + error.message)
   }
 }
 
-export = fetchCodeSnippets
+module.exports = fetchCodeSnippets
