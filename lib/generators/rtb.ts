@@ -25,23 +25,26 @@ interface Challenge {
   hintUrl?: string
 }
 
+interface RtbExportOptions {
+    insertHints: string
+    insertHintUrls: string
+    insertHintSnippets: string
+    ctfKey: string
+    vulnSnippets: Record<string, string>
+  }
+
 function createRtbExport (
   challenges: Record<string, Challenge>,
-  {
+  options: RtbExportOptions
+) {
+  const {
     insertHints,
     insertHintUrls,
     insertHintSnippets,
     ctfKey,
     vulnSnippets
-  }: {
-    insertHints: string,
-    insertHintUrls: string,
-    insertHintSnippets: string,
-    ctfKey: string,
-    vulnSnippets: Record<string, string>
-  }
-){
-  
+  } = options
+
   function checkHints (challenge: Challenge): boolean {
     return (typeof challenge.hint === 'string' && challenge.hint.trim().length > 0 && insertHints !== juiceShopOptions.noTextHints)
   }
