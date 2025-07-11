@@ -5,11 +5,7 @@
 
 const https = require('https')
 
-/**
- * Fetches code snippets from a Juice Shop instance
- */
-async function fetchCodeSnippets(options:any) {
-  // Parse options
+async function fetchCodeSnippets(options:any): Promise<{ [key: string]: string }> {
   const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl
   const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false
   const skip = typeof options === 'string' ? false : options.skip || false
@@ -18,7 +14,6 @@ async function fetchCodeSnippets(options:any) {
     return {}
   }
 
-  // Set up agent for SSL
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined

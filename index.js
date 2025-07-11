@@ -132,8 +132,8 @@ const juiceShopCtfCli = async () => {
       vulnSnippets: snippets,
       outputLocation: argv.output
     })
-  } catch (error) {
-    console.log(error.message.red)
+  } catch (err) {
+    console.log('Failed to write output to file!', err)
   }
 }
 
