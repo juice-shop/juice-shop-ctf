@@ -8,20 +8,27 @@ const fs = require('fs')
 Bluebird.promisifyAll(fs)
 const path = require('path')
 const dateFormatLib = require('dateformat')
-require('colors')
+import 'colors'
 
-function writeToRtbXml (report:any, desiredFileName:any) {
-  return new Bluebird((resolve:any, reject:any) => {
-    const fileName = desiredFileName || 'OWASP_Juice_Shop.' + dateFormatLib(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
+interface WriteToRtbXmlFunction {
+  (report: string | object, desiredFileName?: string): Promise<string>
+}
 
-    let xmlContent = report
+const writeToRtbXml: WriteToRtbXmlFunction = function (
+  report: string | object,
+  desiredFileName?: string
+): Promise<string> {
+  return new Bluebird((resolve: (value: string) => void, reject: (reason?: any) => void) => {
+    const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormatLib(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
+
+    let xmlContent: string | object = report
     if (typeof report === 'string' && report.startsWith('"<?xml')) {
       xmlContent = JSON.parse(report)
     }
-    
-    fs.writeFileAsync(fileName, xmlContent, { encoding: 'utf8' }).then(() => {
+
+    fs.writeFileAsync(fileName, xmlContent, { encoding: 'utf8' }).then((): void => {
       resolve(path.resolve(fileName))
-    }).catch((error : any) => {
+    }).catch((error: { message: string }): void => {
       reject(new Error('Failed to write output to file! ' + error.message))
     })
   })
