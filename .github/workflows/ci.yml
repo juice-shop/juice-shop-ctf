@@ -53,7 +53,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: "Install application"
-        run: npm install
+        run: npm install && npm run build
       - name: "Execute unit tests"
         uses: nick-invision/retry@v3
         with:
