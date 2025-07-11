@@ -53,8 +53,6 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "node:watch": "tsx --watch --test test/unit/*.spec.ts",
-    "node:test:direct": "tsx --test test/unit/*.spec.ts",
     "node:test": "node --test dist/test/unit/*.spec.js"
   },
   "nyc": {
