@@ -68,9 +68,9 @@ interface Country {
 }
 
 interface FbctfExportOptions {
-  insertHints: any
-  insertHintUrls: any
-  insertHintSnippets: any
+  insertHints: string
+  insertHintUrls: string
+  insertHintSnippets: string
   ctfKey: string
   countryMapping: Record<string, Country>
   vulnSnippets: Record<string, string>
