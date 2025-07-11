@@ -3,19 +3,30 @@
  * SPDX-License-Identifier: MIT
  */
 
-const xmlBuilder = require('xmlbuilder')
-const TurndownService = require('turndown')
+import xmlBuilder from "xmlbuilder"
+import TurndownService from 'turndown'
+import calculateScore from "../calculateScore"
+import calculateHintCost from "../calculateHintCost"
 const turndownService = new TurndownService()
-const calculateScore = require('../calculateScore').default
-const calculateHintCost = require('../calculateHintCost').default
 const hmacSha1 = require('../hmac')
-const juiceShopOptions = require('../options')
+import * as juiceShopOptions from '../options'
+
 const { readFileSync } = require('fs')
 const path = require('path')
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { categories: {} }
 
+interface Challenge {
+  key: string
+  name: string
+  description: string
+  category: string
+  difficulty: number
+  hint?: string
+  hintUrl?: string
+}
+
 function createRtbExport (
-  challenges: any,
+  challenges: Record<string, Challenge>,
   {
     insertHints,
     insertHintUrls,
@@ -23,43 +34,14 @@ function createRtbExport (
     ctfKey,
     vulnSnippets
   }: {
-    insertHints: any,
-    insertHintUrls: any,
-    insertHintSnippets: any,
-    ctfKey: any,
-    vulnSnippets: any
+    insertHints: string,
+    insertHintUrls: string,
+    insertHintSnippets: string,
+    ctfKey: string,
+    vulnSnippets: Record<string, string>
   }
-) {
-  interface Challenge {
-    key: string
-    name: string
-    description: string
-    category: string
-    difficulty: number
-    hint?: string
-    hintUrl?: string
-  }
-
-  interface RtbTemplate {
-    categories: {
-      [category: string]: {
-        description: string
-        image: string
-      }
-    }
-    configuration: {
-      game_name: string
-      org_footer: string
-      ctf_tagline: string
-      ctf_logo: string
-      scoreboard_right_image: string
-    }
-  }
-
-  interface VulnSnippets {
-    [key: string]: string
-  }
-
+){
+  
   function checkHints (challenge: Challenge): boolean {
     return (typeof challenge.hint === 'string' && challenge.hint.trim().length > 0 && insertHints !== juiceShopOptions.noTextHints)
   }
@@ -77,7 +59,7 @@ function createRtbExport (
   }
 
   function checkHintsSnippet (challenge: ChallengeWithKey): boolean {
-    return (vulnSnippets[challenge.key] && insertHintSnippets !== juiceShopOptions.noHintSnippets)
+    return (typeof vulnSnippets[challenge.key] === 'string' && vulnSnippets[challenge.key].trim().length > 0 && insertHintSnippets !== juiceShopOptions.noHintSnippets)
   }
 
   interface CategoryTemplate {
@@ -210,10 +192,6 @@ function createRtbExport (
     ele: (name: string, attributes?: Record<string, any>) => any
   }
 
-  interface FlagsElement {
-    ele: (name: string, attributes?: Record<string, any>) => FlagElement
-  }
-
   interface ChallengeForFlag {
     name: string
     description: string
@@ -225,8 +203,8 @@ function createRtbExport (
   }
 
 function insertFlag(
-  challenge: any,
-  flags: any,
+  challenge: ChallengeForFlag,
+  flags: FlagElement,
   order: number
 ): void {
   const flag = flags.ele("flag", { type: "static" });
