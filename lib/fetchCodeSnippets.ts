@@ -3,58 +3,72 @@
  * SPDX-License-Identifier: MIT
  */
 
-const https = require('https')
+import * as https from 'https'
 
-async function fetchCodeSnippets(options:any): Promise<{ [key: string]: string }> {
-  const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl
-  const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false
-  const skip = typeof options === 'string' ? false : options.skip || false
+interface FetchOptions {
+  juiceShopUrl: string;
+  ignoreSslWarnings?: boolean;
+  skip?: boolean;
+}
+
+interface SnippetsApiResponse {
+  challenges: string[];
+}
+
+interface SnippetApiResponse {
+  snippet: string;
+}
+
+async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key: string]: string }> {
+  const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl;
+  const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false;
+  const skip = typeof options === 'string' ? false : options.skip || false;
 
   if (skip) {
-    return {}
+    return {};
   }
 
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
-    : undefined
+    : undefined;
 
-  const fetchOptions = { agent }
+  const fetchOptions: { agent: https.Agent | undefined } = { agent };
 
   try {
     
-    const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions as any)
+    const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions as any);
 
     if (!challengesResponse.ok) {
-      throw new Error(`Snippets API returned status ${challengesResponse.status}`)
+      throw new Error(`Snippets API returned status ${challengesResponse.status}`);
     }
     
-    const responseData = await challengesResponse.json()
+    const responseData = await challengesResponse.json() as SnippetsApiResponse;
     
     if (!responseData.challenges || !Array.isArray(responseData.challenges)) {
-      throw new Error('Invalid challenges format in response')
+      throw new Error('Invalid challenges format in response');
     }
     
-    const { challenges } = responseData
-    const snippets: { [key: string]: string } = {}
+    const { challenges } = responseData;
+    const snippets: { [key: string]: string } = {};
     
     // Fetch each snippet
     for (const challengeKey of challenges) {
-      const snippetRes = await fetch(`${juiceShopUrl}/snippets/${challengeKey}`, fetchOptions as any)
+      const snippetRes = await fetch(`${juiceShopUrl}/snippets/${challengeKey}`, fetchOptions as any);
 
       if (!snippetRes.ok) {
-        continue
+        continue;
       }
       
-      const snippetData = await snippetRes.json()
+      const snippetData = await snippetRes.json() as SnippetApiResponse;
       
       if (snippetData.snippet) {
-        snippets[challengeKey] = snippetData.snippet
+        snippets[challengeKey] = snippetData.snippet;
       }
     }
     
-    return snippets
-  } catch (error:any) {
-    throw new Error('Failed to fetch snippet from API! ' + error.message)
+    return snippets;
+  } catch (error: any) {
+    throw new Error('Failed to fetch snippet from API! ' + error.message);
   }
 }
 
