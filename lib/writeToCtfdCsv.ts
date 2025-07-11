@@ -4,7 +4,6 @@
  */
 
 import dateFormat from "dateformat";
-import { Abortable } from "events";
 import * as fsModule from "fs";
 import { promisify } from "util";
 import * as path from "path";

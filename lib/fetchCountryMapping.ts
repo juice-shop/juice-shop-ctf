@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-const https = require('https')
+import * as https from 'https'
 import { options } from 'joi'
 import * as yaml from 'js-yaml'
 

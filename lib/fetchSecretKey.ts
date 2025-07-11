@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-const isUrl = require("./url");
-
-const https = require("https");
+// const isUrl = require("./url");
+import isUrl from "./url";
+import * as https from "https";
 
 async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
   const agent = ignoreSslWarnings

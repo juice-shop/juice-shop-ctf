@@ -1,4 +1,4 @@
-const https = require("https");
+import * as https from "https";
 
 interface Challenge {
   name: string;

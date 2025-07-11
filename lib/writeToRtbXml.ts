@@ -3,12 +3,13 @@
  * SPDX-License-Identifier: MIT
  */
 
-const Bluebird = require('bluebird')
+import Bluebird from 'bluebird'
+import * as path from 'path'
+import dateFormat from 'dateformat'
+import 'colors'
+
 const fs = require('fs')
 Bluebird.promisifyAll(fs)
-const path = require('path')
-const dateFormatLib = require('dateformat')
-import 'colors'
 
 interface WriteToRtbXmlFunction {
   (report: string | object, desiredFileName?: string): Promise<string>
@@ -19,7 +20,7 @@ const writeToRtbXml: WriteToRtbXmlFunction = function (
   desiredFileName?: string
 ): Promise<string> {
   return new Bluebird((resolve: (value: string) => void, reject: (reason?: any) => void) => {
-    const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormatLib(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
+    const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
 
     let xmlContent: string | object = report
     if (typeof report === 'string' && report.startsWith('"<?xml')) {
