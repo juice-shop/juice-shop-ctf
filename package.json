@@ -86,6 +86,7 @@
     "@types/js-yaml": "^4.0.9",
     "@types/node-fetch": "^2.6.12",
     "@types/rewire": "^2.5.30",
+    "@types/turndown": "^5.0.5",
     "@types/yargs": "^17.0.33",
     "@typescript-eslint/eslint-plugin": "^8.35.0",
     "@typescript-eslint/parser": "^8.35.0",
