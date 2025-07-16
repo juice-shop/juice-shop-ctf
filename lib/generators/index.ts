@@ -3,16 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-const writeToCtfdZip = require('../writeToCtfdCsv')
-const writeToFbctfJson = require('../writeToFbctfJson')
-import writeToRtbXml = require('../writeToRtbXml')
-const ctfOptions = require('../options')
+import writeToCtfdZip from '../writeToCtfdCsv'
+import writeToFbctfJson from '../writeToFbctfJson'
+import writeToRtbXml from '../writeToRtbXml'
 import colors from 'colors'
-
+const ctfOptions = require('../options')
 const createCtfdExport = require('./ctfd')
-const createFbctfExport = require('./fbctf')
 const createRtbExport = require('./rtb')
-
+const createFbctfExport = require('./fbctf')
 interface Challenge {
   [key: string]: any
 }
@@ -88,4 +86,4 @@ async function generateCTFExport (
   }
 }
 
-module.exports = generateCTFExport
+export = generateCTFExport

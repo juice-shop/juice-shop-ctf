@@ -47,7 +47,7 @@
     "juice-shop-ctf": "bin/juice-shop-ctf.js"
   },
   "scripts": {
-    "build": "tsc && cp -R data dist/data && cp -R test/e2e dist/test/e2e && cp -R bin dist/bin && cp index.js dist/index.js",
+    "build": "tsc && cp -R data dist/data && cp -R test/e2e dist/test/e2e ",
     "coverage": "nyc report --reporter=lcov",
     "e2e": "mocha dist/test/e2e/juiceShopCtfCli-spec.js --slow=25000 --timeout=45000",
     "lint": "standard",

@@ -4,14 +4,13 @@
  */
 
 import 'colors'
+import calculateHintCost from '../calculateHintCost'
+import calculateScore from '../calculateScore'
 const { hash } = require('bcryptjs')
 const { readFile } = require('fs')
 const path = require('path')
-
 const fbctfOptions = require('../options')
 const hmac = require('../hmac')
-const calculateHintCost = require('../calculateHintCost').default
-const calculateScore = require('../calculateScore').default
 
 interface GenerateRandomString {
   (length: number): string
@@ -141,4 +140,4 @@ async function createFbctfExport (
   return fbctfTemplate
 }
 
-module.exports = createFbctfExport
+export = createFbctfExport

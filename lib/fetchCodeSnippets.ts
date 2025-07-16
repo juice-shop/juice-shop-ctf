@@ -72,4 +72,4 @@ async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key
   }
 }
 
-module.exports = fetchCodeSnippets
+export = fetchCodeSnippets
