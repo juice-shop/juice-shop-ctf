@@ -3,7 +3,6 @@
  * SPDX-License-Identifier: MIT
  */
 
-// const isUrl = require("./url");
 import isUrl from "./url";
 import * as https from "https";
 

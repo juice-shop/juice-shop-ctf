@@ -7,7 +7,7 @@ import { test ,describe} from 'node:test'
 import  assert  from 'node:assert'
 const rewire = require('rewire')
 
-const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv.js')
+const writeToCtfdCsv = rewire('../../lib/writeToCtfdCsv')
 
 describe('Output for CTFd', () => { // TODO Amend test cases for new CSV data export
   test.skip('should be written to ZIP file', async () => {

@@ -9,7 +9,6 @@
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
-    // "preserveSymlinks": true
   },
   "include": ["index.ts", "bin", "lib", "test/**/*.ts"]
 }
