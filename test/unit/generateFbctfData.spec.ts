@@ -130,7 +130,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should not add challenges without a country mapping', async () => {
-    const result = await generateData([challenge1, { ...challenge2, key: 'doentHaveAMappingForThisKey' }], defaultOptions)
+    const result = await generateData([challenge1, { ...challenge2, key: 'doesntHaveAMappingForThisKey' }], defaultOptions)
     assert.deepEqual(result.levels.levels, [defaultChallenge1Mapping])
   })
 
