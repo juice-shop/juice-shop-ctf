@@ -3,50 +3,47 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { describe, it, mock, afterEach } from 'node:test'
 import assert from 'node:assert'
-import { describe,it } from 'node:test'
-import rewire from 'rewire'
-const writeToFbctfJson = rewire('../../lib/writeToFbctfJson').default || rewire('../../lib/writeToFbctfJson')
+import writeToFbctfJson from '../../lib/writeToFbctfJson'
+
+const fs = require('fs')
+import Bluebird from 'bluebird'
+Bluebird.promisifyAll(fs)
+
+const ctfData = { challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }
 
 describe('Output for FBCTF', () => {
-  it('should be written to JSON file', () => {
-    writeToFbctfJson.__set__({
-      console: {
-        log () {}
-      },
-      fs: {
-        writeFileAsync (path:string, data:string) {
-          assert.match((path), (/OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/))
-          return Promise.resolve()
-        }
-      }
-    })
-    return assert.doesNotReject(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }))
+  afterEach(() => {
+    mock.reset()
   })
 
-  it('should log file system error to console', () => {
-    writeToFbctfJson.__set__({
-      fs: {
-        writeFileAsync (path:string, data:string) {
-          return new Promise(() => { throw new Error('Argh!') })
-        }
-      }
+  it('should be written to JSON file', async () => {
+    mock.method(fs, 'writeFileAsync', (path: string, data: string) => {
+      assert.match(path, /OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/)
+      return Promise.resolve() 
     })
-    return assert.rejects(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }), /Failed to write output to file! Argh!/)
+
+    await assert.doesNotReject(() => writeToFbctfJson(ctfData))
   })
 
-  it('should be written to the desired JSON file', () => {
-    writeToFbctfJson.__set__({
-      console: {
-        log () {}
-      },
-      fs: {
-        writeFileAsync (path:string, data:string) {
-          assert.match(path, /custom\.json/)
-          return Promise.resolve()
-        }
-      }
+  it('should log file system error to console', async () => {
+    mock.method(fs, 'writeFileAsync', () => {
+      return Promise.reject(new Error('Argh!'))
     })
-    return assert.doesNotReject(() => writeToFbctfJson({ challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }, 'custom.json'))
+
+    await assert.rejects(
+      () => writeToFbctfJson(ctfData),
+      /Failed to write output to file! Argh!/
+    )
+  })
+
+  it('should be written to the desired JSON file', async () => {
+    mock.method(fs, 'writeFileAsync', (path: string, data: string) => {
+      assert.strictEqual(path, 'custom.json')
+      return Promise.resolve()
+    })
+
+    await assert.doesNotReject(() => writeToFbctfJson(ctfData, 'custom.json'))
   })
 })
