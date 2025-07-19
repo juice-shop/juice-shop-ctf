@@ -4,9 +4,7 @@
  */
 import assert from "node:assert";
 import { describe, it } from "node:test";
-// import {isUrl} from "../../lib/url";
-const isUrl = require("../../lib/url"); // For compatibility with rewire
-
+const isUrl = require("../../lib/url"); 
 describe("URL", () => {
   it("should be recognized on given valid HTTP URL", () => {
     assert.strictEqual(isUrl("http://domain"), true);
