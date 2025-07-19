@@ -53,7 +53,7 @@
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "node:test": "c8 --extension .ts node --test --import tsx test/unit/*.spec.ts 2>&1"
+    "node:test": "c8 --extension .ts node --test --import tsx test/unit/*.spec.ts"
   },
   "c8": {
     "all": true,
