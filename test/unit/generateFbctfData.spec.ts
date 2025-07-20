@@ -101,7 +101,6 @@ const defaultOptions: FbctfOptions = {
 
 const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
   ...defaultOptions,
-    insertHintSnippets: noHintSnippets, 
   ...overrides
 })
 
