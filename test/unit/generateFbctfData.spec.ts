@@ -7,7 +7,7 @@ import { it, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
-import { noTextHints, noHintUrls, freeTextHints, paidTextHints, paidHintUrls } from '../../lib/options'
+import { noTextHints, noHintUrls , noHintSnippets, freeTextHints, paidTextHints, paidHintUrls } from '../../lib/options'
 
 interface Challenge {
   key: string
@@ -90,19 +90,18 @@ const countryMapping: CountryMapping = {
   key2: { code: 'FR' } 
 }
 
-// Update the defaultOptions with an empty string for insertHintSnippets
 const defaultOptions: FbctfOptions = { 
   insertHints: noTextHints, 
   insertHintUrls: noHintUrls, 
-  insertHintSnippets: '', // Ensure this is always defined with a default value
+  insertHintSnippets: noHintSnippets,
   ctfKey: '', 
   countryMapping, 
   vulnSnippets: {} 
 }
 
-// Helper function to create options with custom overrides
 const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
   ...defaultOptions,
+    insertHintSnippets: noHintSnippets, 
   ...overrides
 })
 
