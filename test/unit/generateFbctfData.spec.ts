@@ -5,12 +5,9 @@
 
 import { it, describe } from 'node:test'
 import assert from 'node:assert/strict'
-import rewire from 'rewire'
 import calculateScore from "../../lib/calculateScore"
-
-const generateDataModule = rewire('../../lib/generators/fbctf')
-const generateData = generateDataModule.default || generateDataModule
-import options from '../../lib/options'
+import generateData from "../../lib/generators/fbctf"
+import * as options from '../../lib/options'
 
 interface Challenge {
   key: string
@@ -18,8 +15,8 @@ interface Challenge {
   description: string
   difficulty: number
   category: string
-  hint?: string
-  hintUrl?: string
+  hint: string
+  hintUrl: string
 }
 
 interface CountryMapping {
@@ -53,7 +50,7 @@ interface ChallengeMapping {
   attachments: any[]
 }
 
-const createChallenge = (key: string, name: string, difficulty: number, hint?: string, hintUrl?: string): Challenge => ({
+const createChallenge = (key: string, name: string, difficulty: number, hint: string = '', hintUrl: string = ''): Challenge => ({
   key,
   name,
   description: name.toUpperCase(),
@@ -96,6 +93,7 @@ const countryMapping: CountryMapping = {
 const defaultOptions: FbctfOptions = { 
   insertHints: options.noTextHints, 
   insertHintUrls: options.noHintUrls, 
+  insertHintSnippets: '', 
   ctfKey: '', 
   countryMapping, 
   vulnSnippets: {} 
@@ -109,27 +107,26 @@ describe('Generated FBCTF data', () => {
   const mapping2 = createChallengeMapping('c2', 'FR', 3, '49294e8b829f5b053f748facad22825ccb4bf420')
 
   it('should add levels for each challenge', async () => {
-    const result = await generateData([challenge1, challenge2], defaultOptions)
-    
+    const result = await generateData([challenge1, challenge2], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
     assert.deepEqual(result.levels.levels, [mapping1, mapping2])
   })
 
   it('should not add challenges without a country mapping', async () => {
     const unmapped = createChallenge('unmapped', 'c3', 2)
 
-    const result = await generateData([challenge1, unmapped], defaultOptions)
+    const result = await generateData([challenge1, unmapped], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
     assert.deepEqual(result.levels.levels, [mapping1])
   })
 
   it('should respect hint insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.freeTextHints })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.freeTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1' }
     ])
   })
 
   it('should respect hint penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1', penalty: 10 }
@@ -137,7 +134,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hintUrl penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHintUrls: options.paidHintUrls })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHintUrls: options.paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'https://hint1.com', penalty: 20 }
@@ -145,7 +142,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should merge hint & hintUrl together (considering hint text and penalty)', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       {
@@ -157,7 +154,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should add a dummy user to the export', async () => {
-    const report = await generateData([], defaultOptions)
+    const report = await generateData([], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
     assert.equal(report.teams.teams.length, 1)
   })
 })
