@@ -6,31 +6,9 @@
 import { describe, it, mock, afterEach } from 'node:test'
 import assert from 'node:assert'
 import writeToRtbXml from '../../lib/writeToRtbXml'
-
-import fs from 'fs'
+import { mockWriteFile, WriteFileCallback, getFileNamePattern } from './utils/mockFileSystem'
 
 const xmlExample = '<?xml version="1.0" encoding="UTF-8"?><rootthebox api="1"></rootthebox></xml>'
-
-interface WriteFileCallback {
-  (err: NodeJS.ErrnoException | null): void;
-}
-
-interface WriteFileOptions {
-  encoding?: string | null;
-  mode?: number | string;
-  flag?: string;
-}
-
-type WriteFileFn = (
-  filePath: string,
-  data: string,
-  options?: WriteFileOptions | WriteFileCallback,
-  callback?: WriteFileCallback
-) => void;
-
-function mockWriteFile(impl: WriteFileFn) {
-  mock.method(fs, 'writeFile', impl)
-}
 
 describe('Output for RTB', () => {
   afterEach(() => {
@@ -58,7 +36,7 @@ describe('Output for RTB', () => {
         callback = options as WriteFileCallback
         options = undefined
       }
-      assert.match(filePath, /OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.RTB\.xml/)
+      assert.match(filePath, getFileNamePattern('RTB\\.xml'))
       if (callback) callback(null)
     })
 

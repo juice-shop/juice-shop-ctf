@@ -6,31 +6,9 @@
 import { describe, it, mock, afterEach } from 'node:test'
 import assert from 'node:assert'
 import writeToFbctfJson from '../../lib/writeToFbctfJson'
-
-import fs from 'fs'
+import { mockWriteFile, WriteFileCallback, getFileNamePattern } from './utils/mockFileSystem'
 
 const ctfData = { challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }
-
-interface WriteFileCallback {
-  (err: NodeJS.ErrnoException | null): void;
-}
-
-interface WriteFileOptions {
-  encoding?: string | null;
-  mode?: number | string;
-  flag?: string;
-}
-
-type WriteFileFn = (
-  filePath: string,
-  data: string,
-  options?: WriteFileOptions | WriteFileCallback,
-  callback?: WriteFileCallback
-) => void;
-
-function mockWriteFile(impl: WriteFileFn) {
-  mock.method(fs, 'writeFile', impl)
-}
 
 describe('Output for FBCTF', () => {
   afterEach(() => {
@@ -43,7 +21,7 @@ describe('Output for FBCTF', () => {
         callback = options as WriteFileCallback
         options = undefined
       }
-      assert.match(filePath, /OWASP_Juice_Shop\.[0-9]{4}-[0-9]{2}-[0-9]{2}\.FBCTF\.json/)
+      assert.match(filePath, getFileNamePattern('FBCTF\\.json'))
       if (callback) callback(null)
     })
 
