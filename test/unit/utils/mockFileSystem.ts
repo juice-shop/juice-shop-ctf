@@ -23,7 +23,11 @@ export type WriteFileFn = (
   callback?: WriteFileCallback
 ) => void;
 
-export const DATE_FORMAT_REGEX = /[0-9]{4}-[0-9]{2}-[0-9]{2}/;
+// Regex to match valid dates in the format YYYY-MM-DD.
+// - Year: Any four-digit number.
+// - Month: 01 to 12.
+// - Day: 01 to 31 (does not account for month-specific or leap year rules).
+export const DATE_FORMAT_REGEX = /^(19|20)\d{2}-(0[1-9]|1[0-2])-(0[1-9]|[12]\d|3[01])$/;
 
 export const getFileNamePattern = (extension: string) => 
   new RegExp(`OWASP_Juice_Shop\\.${DATE_FORMAT_REGEX.source}\\.${extension}`);
