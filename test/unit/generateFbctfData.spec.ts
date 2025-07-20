@@ -5,7 +5,7 @@
 
 import { it, describe } from 'node:test'
 import assert from 'node:assert/strict'
-import calculateScore from "../../lib/calculateScore"
+import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
 import * as options from '../../lib/options'
 
