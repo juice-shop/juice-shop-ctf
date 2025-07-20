@@ -8,8 +8,6 @@ import assert from 'node:assert'
 import writeToFbctfJson from '../../lib/writeToFbctfJson'
 
 import fs from 'fs'
-import Bluebird from 'bluebird'
-Bluebird.promisifyAll(fs)
 
 const ctfData = { challenges: { results: [] }, flagKeys: { results: [] }, hints: { results: [] } }
 
