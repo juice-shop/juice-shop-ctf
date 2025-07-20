@@ -26,7 +26,7 @@ interface CountryMapping {
 interface FbctfOptions {
   insertHints: string
   insertHintUrls: string
-  insertHintSnippets?: string
+  insertHintSnippets: string
   ctfKey: string
   countryMapping: CountryMapping
   vulnSnippets: Record<string, string>
@@ -90,14 +90,21 @@ const countryMapping: CountryMapping = {
   key2: { code: 'FR' } 
 }
 
+// Update the defaultOptions with an empty string for insertHintSnippets
 const defaultOptions: FbctfOptions = { 
   insertHints: noTextHints, 
   insertHintUrls: noHintUrls, 
-  insertHintSnippets: '', 
+  insertHintSnippets: '', // Ensure this is always defined with a default value
   ctfKey: '', 
   countryMapping, 
   vulnSnippets: {} 
 }
+
+// Helper function to create options with custom overrides
+const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
+  ...defaultOptions,
+  ...overrides
+})
 
 describe('Generated FBCTF data', () => {
   const challenge1 = createChallenge('key1', 'c1', 1, 'hint1', 'https://hint1.com')
@@ -107,40 +114,44 @@ describe('Generated FBCTF data', () => {
   const mapping2 = createChallengeMapping('c2', 'FR', 3, '49294e8b829f5b053f748facad22825ccb4bf420')
 
   it('should add levels for each challenge', async () => {
-    const result = await generateData([challenge1, challenge2], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1, challenge2], createOptions())
     assert.deepEqual(result.levels.levels, [mapping1, mapping2])
   })
 
   it('should not add challenges without a country mapping', async () => {
     const unmapped = createChallenge('unmapped', 'c3', 2)
 
-    const result = await generateData([challenge1, unmapped], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1, unmapped], createOptions())
     assert.deepEqual(result.levels.levels, [mapping1])
   })
 
   it('should respect hint insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: freeTextHints, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1], createOptions({ insertHints: freeTextHints }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1' }
     ])
   })
 
   it('should respect hint penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: paidTextHints, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1], createOptions({ insertHints: paidTextHints }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1', penalty: 10 }
     ])
   })
 
   it('should respect hintUrl penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHintUrls: paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1], createOptions({ insertHintUrls: paidHintUrls }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'https://hint1.com', penalty: 20 }
     ])
   })
 
   it('should merge hint & hintUrl together (considering hint text and penalty)', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: paidTextHints, insertHintUrls: paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const result = await generateData([challenge1], createOptions({ 
+      insertHints: paidTextHints, 
+      insertHintUrls: paidHintUrls 
+    }))
+    
     assert.deepEqual(result.levels.levels, [
       {
         ...mapping1,
@@ -151,7 +162,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should add a dummy user to the export', async () => {
-    const report = await generateData([], { ...defaultOptions, insertHintSnippets: defaultOptions.insertHintSnippets || '' })
+    const report = await generateData([], createOptions())
     assert.equal(report.teams.teams.length, 1)
   })
 })
