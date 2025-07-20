@@ -7,7 +7,7 @@ import { it, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
-import * as options from '../../lib/options'
+import { noTextHints, noHintUrls, freeTextHints, paidTextHints, paidHintUrls } from '../../lib/options'
 
 interface Challenge {
   key: string
@@ -91,8 +91,8 @@ const countryMapping: CountryMapping = {
 }
 
 const defaultOptions: FbctfOptions = { 
-  insertHints: options.noTextHints, 
-  insertHintUrls: options.noHintUrls, 
+  insertHints: noTextHints, 
+  insertHintUrls: noHintUrls, 
   insertHintSnippets: '', 
   ctfKey: '', 
   countryMapping, 
@@ -119,14 +119,14 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hint insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.freeTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: freeTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1' }
     ])
   })
 
   it('should respect hint penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: paidTextHints, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1', penalty: 10 }
@@ -134,7 +134,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hintUrl penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHintUrls: options.paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHintUrls: paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'https://hint1.com', penalty: 20 }
@@ -142,7 +142,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should merge hint & hintUrl together (considering hint text and penalty)', async () => {
-    const result = await generateData([challenge1], { ...defaultOptions, insertHints: options.paidTextHints, insertHintUrls: options.paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
+    const result = await generateData([challenge1], { ...defaultOptions, insertHints: paidTextHints, insertHintUrls: paidHintUrls, insertHintSnippets: defaultOptions.insertHintSnippets ?? '' })
 
     assert.deepEqual(result.levels.levels, [
       {
