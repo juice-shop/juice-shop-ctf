@@ -35,7 +35,6 @@ function cleanup () {
 }
 
 describe('juice-shop-ctf', () => {
-  
   beforeEach(cleanup)
   after(cleanup)
 
