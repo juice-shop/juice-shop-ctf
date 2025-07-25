@@ -7,7 +7,7 @@ COPY . /juice-shop-ctf/
 WORKDIR /juice-shop-ctf
 RUN npm run build
 
-FROM node:20-alpine as production
+FROM node:20-alpine 
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
