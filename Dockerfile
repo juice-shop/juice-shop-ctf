@@ -34,5 +34,6 @@ COPY --from=builder /juice-shop-ctf/dist/bin /juice-shop-ctf/bin
 VOLUME /data
 WORKDIR /data
 RUN chmod +x /juice-shop-ctf/bin/juice-shop-ctf.js
+RUN chmod +x /juice-shop-ctf/bin/juice-shop-ctf.js
 USER node
 ENTRYPOINT ["npx", "/juice-shop-ctf/bin/juice-shop-ctf.js"]
