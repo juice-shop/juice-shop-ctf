@@ -1,12 +1,17 @@
-FROM node:20 as installer
-COPY . /juice-shop-ctf
+FROM node:20-alpine AS installer
 WORKDIR /juice-shop-ctf
-RUN chown -R node .
-USER node
-ARG DEV_BUILD=false
-RUN if [ ${DEV_BUILD} = true ]; then npm i && npm lint && npm test && npm run e2e; else npm install --production --unsafe-perm; fi
+COPY package*.json .
+RUN npm ci --omit=dev --no-fund
+
+FROM node:20-alpine AS builder
+WORKDIR /juice-shop-ctf
+COPY package*.json .
+RUN npm ci --no-fund
+COPY . .
+RUN npm run build
 
 FROM node:20-alpine
+WORKDIR /juice-shop-ctf
 ARG BUILD_DATE
 ARG VCS_REF
 LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
@@ -21,9 +26,13 @@ LABEL maintainer="Bjoern Kimminich <bjoern.kimminich@owasp.org>" \
     org.opencontainers.image.source="https://github.com/juice-shop/juice-shop-ctf.git" \
     org.opencontainers.image.revision=$VCS_REF \
     org.opencontainers.image.created=$BUILD_DATE
-COPY --from=installer --chown=node /juice-shop-ctf /juice-shop-ctf
-VOLUME /data
-WORKDIR /data
+
+COPY package*.json /juice-shop-ctf/
+COPY --from=installer /juice-shop-ctf/node_modules /juice-shop-ctf/node_modules
+COPY --from=builder /juice-shop-ctf/dist /juice-shop-ctf/data /juice-shop-ctf/lib /juice-shop-ctf/
+
 RUN chmod +x /juice-shop-ctf/bin/juice-shop-ctf.js
 USER node
+VOLUME /data
+WORKDIR /data
 ENTRYPOINT ["npx", "/juice-shop-ctf/bin/juice-shop-ctf.js"]
