@@ -50,7 +50,7 @@
     "build": "tsc && cpx \"data/**/*\" dist/data",
     "prepare": "npm run build",
     "coverage": "nyc report --reporter=lcov",
-    "e2e": "mocha dist/test/e2e/juiceShopCtfCli-spec.js --slow=25000 --timeout=45000",
+    "e2e": "node dist/test/e2e/juiceShopCtfCli.spec.js --slow=25000 --timeout=45000",
     "lint": "standard",
     "lint:fix": "standard --fix",
     "test": "nyc --reporter=html --reporter=text mocha test/unit",
