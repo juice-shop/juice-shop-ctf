@@ -20,7 +20,7 @@ const ENTER = inquirer.ENTER
 const DOWN = inquirer.DOWN
 
 const TIMEOUT = 45000
-const juiceShopCtfCli = [path.join(__dirname, '../../dist/bin/juice-shop-ctf.js')]
+const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
 const outputFile = `OWASP_Juice_Shop.${df(new Date(), 'yyyy-mm-dd')}.CTFd.csv`
 const desiredCtfdOutputFile = './output.zip'
 const desiredFbctfOutputFile = './output.json'
