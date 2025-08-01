@@ -47,7 +47,7 @@
     "juice-shop-ctf": "dist/bin/juice-shop-ctf.js"
   },
   "scripts": {
-    "build": "tsc && cp -R data dist/data && cp -R test/e2e dist/test/e2e ",
+    "build": "tsc && cpx \"data/**/*\" dist/data",
     "prepare": "npm run build",
     "coverage": "nyc report --reporter=lcov",
     "e2e": "mocha dist/test/e2e/juiceShopCtfCli-spec.js --slow=25000 --timeout=45000",
@@ -112,6 +112,7 @@
     "chai-spies": "^1.1.0",
     "chai-subset": "^1.6.0",
     "chai-things": "^0.2.0",
+    "cpx": "^1.5.0",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
     "mocha": "^10.7.3",
