@@ -1,12 +1,12 @@
 FROM node:20-alpine AS installer
 WORKDIR /juice-shop-ctf
 COPY package*.json .
-RUN npm ci --omit=dev --no-fund
+RUN npm ci --omit=dev --no-fund --ignore-scripts
 
 FROM node:20-alpine AS builder
 WORKDIR /juice-shop-ctf
 COPY package*.json .
-RUN npm ci --no-fund
+RUN npm ci --no-fund --ignore-scripts
 COPY . .
 RUN npm run build
 

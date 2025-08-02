@@ -1,15 +1,13 @@
 # ![Juice Shop CTF Logo](https://raw.githubusercontent.com/juice-shop/juice-shop-ctf/master/images/JuiceShopCTF_Logo_100px.png) OWASP Juice Shop CTF Extension
 
-[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects)  
-[![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop-ctf.svg)](https://github.com/juice-shop/juice-shop-ctf/releases/latest)  
-[![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop)  
+[![OWASP Flagship](https://img.shields.io/badge/owasp-flagship%20project-48A646.svg)](https://www.owasp.org/index.php/OWASP_Project_Inventory#tab=Flagship_Projects) 
+[![GitHub release](https://img.shields.io/github/release/juice-shop/juice-shop-ctf.svg)](https://github.com/juice-shop/juice-shop-ctf/releases/latest) 
+[![Twitter Follow](https://img.shields.io/twitter/follow/owasp_juiceshop.svg?style=social&label=Follow)](https://twitter.com/owasp_juiceshop) 
 [![Subreddit subscribers](https://img.shields.io/reddit/subreddit-subscribers/owasp_juiceshop?style=social)](https://reddit.com/r/owasp_juiceshop)
 
 [![CI Pipeline](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml/badge.svg)](https://github.com/juice-shop/juice-shop-ctf/actions/workflows/ci.yml)
 [![Docker Cloud Build Status](https://img.shields.io/docker/cloud/build/bkimminich/juice-shop-ctf.svg)](https://cloud.docker.com/repository/docker/bkimminich/juice-shop-ctf/builds)
 [![Coverage Status](https://coveralls.io/repos/github/juice-shop/juice-shop-ctf/badge.svg?branch=master)](https://coveralls.io/github/juice-shop/juice-shop-ctf?branch=master)
-[![Code Climate](https://codeclimate.com/github/juice-shop/juice-shop-ctf/badges/gpa.svg)](https://codeclimate.com/github/juice-shop/juice-shop-ctf)
-[![Code Climate technical debt](https://img.shields.io/codeclimate/tech-debt/juice-shop/juice-shop-ctf)](https://codeclimate.com/github/juice-shop/juice-shop-ctf/trends/technical_debt)  
 ![GitHub stars](https://img.shields.io/github/stars/juice-shop/juice-shop-ctf.svg?label=GitHub%20%E2%98%85&style=flat)
 
 The Node package
