@@ -16,25 +16,16 @@ describe('Output for FBCTF', () => {
   })
 
   it('should be written to JSON file', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
+    mockWriteFile(async (filePath, data, options) => {
       assert.match(filePath, getFileNamePattern('FBCTF\\.json'))
-      if (callback) callback(null)
     })
 
     await assert.doesNotReject(() => writeToFbctfJson(ctfData))
   })
 
   it('should log file system error to console', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
-      if (callback) callback(new Error('Argh!'))
+    mockWriteFile(async (filePath, data, options, callback) => {
+      throw new Error('Argh!')
     })
 
     await assert.rejects(
@@ -44,13 +35,8 @@ describe('Output for FBCTF', () => {
   })
 
   it('should be written to the desired JSON file', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
+    mockWriteFile(async (filePath, data, options) => {
       assert.strictEqual(filePath, 'custom.json')
-      if (callback) callback(null)
     })
 
     await assert.doesNotReject(() => writeToFbctfJson(ctfData, 'custom.json'))
