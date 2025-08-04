@@ -3,36 +3,30 @@
  * SPDX-License-Identifier: MIT
  */
 
-import Bluebird from 'bluebird'
-import * as path from 'path'
+import fs from 'node:fs/promises'
+import * as path from 'node:path'
 import dateFormat from 'dateformat'
 import 'colors'
-
-const fs = require('fs')
-Bluebird.promisifyAll(fs)
 
 interface WriteToRtbXmlFunction {
   (report: string | object, desiredFileName?: string): Promise<string>
 }
 
-const writeToRtbXml: WriteToRtbXmlFunction = function (
+const writeToRtbXml: WriteToRtbXmlFunction = async function (
   report: string | object,
   desiredFileName?: string
 ): Promise<string> {
-  return new Bluebird((resolve: (value: string) => void, reject: (reason?: any) => void) => {
-    const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
 
-    let xmlContent: string | object = report
-    if (typeof report === 'string' && report.startsWith('"<?xml')) {
-      xmlContent = JSON.parse(report)
-    }
+  const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
 
-    fs.writeFileAsync(fileName, xmlContent, { encoding: 'utf8' }).then((): void => {
-      resolve(path.resolve(fileName))
-    }).catch((error: { message: string }): void => {
-      reject(new Error('Failed to write output to file! ' + error.message))
-    })
-  })
+  const xmlContent: string = typeof report === 'string' ? report : JSON.stringify(report, null, 2)
+
+  try {
+    await fs.writeFile(fileName, xmlContent, { encoding: 'utf8' })
+    return path.resolve(fileName)
+  } catch (error) {
+    throw new Error('Failed to write output to file! ' + (error as Error)?.message)
+  }
 }
 
 export = writeToRtbXml

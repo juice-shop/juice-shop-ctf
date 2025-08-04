@@ -16,12 +16,8 @@ describe('Output for RTB', () => {
   })
 
   it('should log file system error to console', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
-      if (callback) callback(new Error('Argh!'))
+    mockWriteFile(async (filePath, data, options) => {
+      throw new Error('Argh!')
     })
 
     await assert.rejects(
@@ -31,26 +27,16 @@ describe('Output for RTB', () => {
   })
 
   it('should be written to XML file', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
+    mockWriteFile(async (filePath, data, options) => {
       assert.match(filePath, getFileNamePattern('RTB\\.xml'))
-      if (callback) callback(null)
     })
 
     await assert.doesNotReject(() => writeToRtbXml(xmlExample))
   })
 
   it('should be written to the desired XML file', async () => {
-    mockWriteFile((filePath, data, options, callback) => {
-      if (typeof options === 'function') {
-        callback = options as WriteFileCallback
-        options = undefined
-      }
+    mockWriteFile(async (filePath, data, option) => {
       assert.strictEqual(filePath, 'custom.xml')
-      if (callback) callback(null)
     })
 
     await assert.doesNotReject(() => writeToRtbXml(xmlExample, 'custom.xml'))
