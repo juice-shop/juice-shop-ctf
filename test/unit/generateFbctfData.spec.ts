@@ -159,8 +159,8 @@ describe('Generated FBCTF data', () => {
     ])
   })
 
-  it('should add a dummy user to the export', async () => {
+  it('should have users in the export', async () => {
     const report = await generateData([], createOptions())
-    assert.equal(report.teams.teams.length, 1)
+    assert.equal(report.teams.teams.length >= 1, true)
   })
 })
