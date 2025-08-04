@@ -6,7 +6,7 @@
 import { describe, it, beforeEach, after } from 'node:test';
 import assert from 'node:assert';
 import util from 'node:util';
-const fs = require('node:fs')
+import * as fs from 'fs' 
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 // @ts-expect-error FIXME due to non-existing type definitions for inquirer-test
@@ -165,17 +165,17 @@ insertHintSnippets: paid`)
     assert.ok(fs.existsSync(desiredFbctfOutputFile), 'FBCTF output file should have been created')
   })
 
-  it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
-    fs.writeFileSync(configFile, `
+it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
+  fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
-    await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
-    assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
-  })
+  await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+  assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
+})
 
   it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
     fs.openSync(outputFile, 'w', 0o444)
