@@ -53,8 +53,7 @@
     "e2e": "node dist/test/e2e/juiceShopCtfCli.spec.js",
     "lint": "standard",
     "lint:fix": "standard --fix",
-    "test": "nyc --reporter=html --reporter=text mocha test/unit",
-    "node:test": "c8 --extension .ts node --test --import tsx test/unit/*.spec.ts"
+    "test": "c8 --extension .ts node --test --import tsx test/unit/*.spec.ts"
   },
   "c8": {
     "all": true,
@@ -101,15 +100,9 @@
     "@typescript-eslint/parser": "^8.35.0",
     "ava": "^6.1.3",
     "c8": "^10.1.3",
-    "chai": "^4.5.0",
-    "chai-as-promised": "^7.1.2",
-    "chai-spies": "^1.1.0",
-    "chai-subset": "^1.6.0",
-    "chai-things": "^0.2.0",
     "cpx": "^1.5.0",
     "inquirer-test": "^2.0.1",
     "lockfile": "^1.0.4",
-    "mocha": "^10.7.3",
     "nyc": "^17.1.0",
     "rewire": "^7.0.0",
     "standard": "^17.1.2",
@@ -122,8 +115,7 @@
   "preferGlobal": true,
   "standard": {
     "env": [
-      "node",
-      "mocha"
+      "node"
     ],
     "globals": [
       "it",

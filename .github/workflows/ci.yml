@@ -59,7 +59,7 @@ jobs:
         with:
           timeout_minutes: 2
           max_attempts: 3
-          command: npm run node:test
+          command: npm run test
       - name: "Execute e2e tests"
         uses: nick-invision/retry@v3
         with:
@@ -71,7 +71,7 @@ jobs:
         uses: coverallsapp/github-action@master
         with:
           github-token: ${{ secrets.GITHUB_TOKEN }}
-          path-to-lcov: ./build/reports/coverage/lcov.info    
+          path-to-lcov: ./build/reports/coverage/lcov.info
   docker:
     if: github.event_name == 'push' && (github.ref == 'refs/heads/develop' || github.ref == 'refs/heads/master')
     needs: test
