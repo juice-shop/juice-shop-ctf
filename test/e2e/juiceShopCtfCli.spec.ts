@@ -9,7 +9,8 @@ import util from 'node:util';
 const fs = require('node:fs')
 import { execFile } from 'node:child_process';
 import path from 'node:path';
-const inquirer = require('inquirer-test');
+// @ts-expect-error FIXME due to non-existing type definitions for inquirer-test
+import inquirer from 'inquirer-test';
 import df from 'dateformat';
 
 
