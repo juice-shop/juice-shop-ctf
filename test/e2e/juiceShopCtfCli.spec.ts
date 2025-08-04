@@ -3,14 +3,16 @@
  * SPDX-License-Identifier: MIT
  */
 
-const { describe, it, beforeEach, after } = require('node:test')
-const assert = require('node:assert')
-const util = require('node:util')
-const { execFile } = require('node:child_process')
-const fs = require('node:fs')
-const path = require('node:path')
-const inquirer = require('inquirer-test')
-const dateFormat = require('dateformat')
+import { describe, it, beforeEach, after } from 'node:test';
+import assert from 'node:assert';
+import util from 'node:util';
+import * as fs from 'fs' 
+import { execFile } from 'node:child_process';
+import path from 'node:path';
+// @ts-expect-error FIXME due to non-existing type definitions for inquirer-test
+import inquirer from 'inquirer-test';
+import df from 'dateformat';
+
 
 const execFilePromise = util.promisify(execFile)
 
@@ -20,7 +22,7 @@ const DOWN = inquirer.DOWN
 
 const TIMEOUT = 45000
 const juiceShopCtfCli = [path.join(__dirname, '../../bin/juice-shop-ctf.js')]
-const outputFile = `OWASP_Juice_Shop.${dateFormat(new Date(), 'yyyy-mm-dd')}.CTFd.csv`
+const outputFile = `OWASP_Juice_Shop.${df(new Date(), 'yyyy-mm-dd')}.CTFd.csv`
 const desiredCtfdOutputFile = './output.zip'
 const desiredFbctfOutputFile = './output.json'
 const desiredRtbOutputFile = './output.xml'
@@ -108,35 +110,24 @@ insertHintSnippets: paid`)
     assert.match(stdout, /Backup archive written to /i)
   })
 
-  it('should fail when the config file cannot be parsed', { timeout: TIMEOUT }, async () => {
+it('should fail when the config file cannot be parsed', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints`)
-    await assert.rejects(
-      execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]),
-      (err) => {
-        assert.match(err.stdout, /can not read /i)
-        return true
-      }
-    )
-  })
+insertHints`) 
+    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]);
+    assert.match(stdout, /can not read/i, 'stdout should mention a parsing error');
+});
 
-  it('should fail when the config file contains invalid values', { timeout: TIMEOUT }, async () => {
-    fs.writeFileSync(configFile, `
+it('should fail when the config file contains invalid values', { timeout: TIMEOUT }, async () => {
+  fs.writeFileSync(configFile, `
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: invalidValue
-insertHintSnippets: paid`)
-    await assert.rejects(
-      execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]),
-      (err) => {
-        assert.match(err.stdout, /"insertHintUrls" must be one of /i)
-        return true
-      }
-    )
-  })
+insertHintSnippets: paid`);
+    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]);
+    assert.match(stdout, /"insertHintUrls" must be one of/i, 'stdout should mention an invalid value');});
 
   it('should write the output file to the specified location', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
@@ -174,17 +165,17 @@ insertHintSnippets: paid`)
     assert.ok(fs.existsSync(desiredFbctfOutputFile), 'FBCTF output file should have been created')
   })
 
-  it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
-    fs.writeFileSync(configFile, `
+it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
+  fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
 juiceShopUrl: https://juice-shop.herokuapp.com
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
 insertHintSnippets: paid`)
-    await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
-    assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
-  })
+  await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+  assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
+})
 
   it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
     fs.openSync(outputFile, 'w', 0o444)
