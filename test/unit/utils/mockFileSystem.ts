@@ -4,7 +4,8 @@
  */
 
 import { mock } from 'node:test'
-import fs from 'fs'
+import fs from 'node:fs'
+import fsPromises from 'node:fs/promises'
 
 export interface WriteFileCallback {
   (err: NodeJS.ErrnoException | null): void;
@@ -28,4 +29,5 @@ export const getFileNamePattern = (extension: string) =>
 
 export function mockWriteFile(impl: WriteFileFn) {
   mock.method(fs, 'writeFile', impl)
+  mock.method(fsPromises, 'writeFile', impl)
 }
