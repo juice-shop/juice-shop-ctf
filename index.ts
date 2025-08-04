@@ -31,6 +31,8 @@ const argv = require('yargs')
   .help()
   .argv
 
+const DEFAULT_JUICE_SHOP_URL = process.env?.DEFAULT_JUICE_SHOP_URL || 'https://juice-shop.herokuapp.com'
+
 const questions = [
   {
     type: 'list',
@@ -43,7 +45,7 @@ const questions = [
     type: 'input',
     name: 'juiceShopUrl',
     message: 'Juice Shop URL to retrieve challenges?',
-    default: 'https://juice-shop.herokuapp.com'
+    default: DEFAULT_JUICE_SHOP_URL
   },
   {
     type: 'input',

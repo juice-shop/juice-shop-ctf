@@ -36,6 +36,13 @@ jobs:
     strategy:
       matrix:
         node-version: [20, 22, 24]
+    services:
+      juice-shop:
+        image: bkimminich/juice-shop:latest
+        ports:
+          - 3000:3000
+        options: >-
+          --start-period=5s
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v4
@@ -66,6 +73,9 @@ jobs:
           timeout_minutes: 15
           max_attempts: 3
           command: npm run e2e
+        env:
+          DEFAULT_JUICE_SHOP_URL: http://localhost:3000
+
       - name: "Publish coverage to Coveralls"
         if: github.event_name == 'push' && matrix.node-version == '18'
         uses: coverallsapp/github-action@master
