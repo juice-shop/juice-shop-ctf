@@ -4,13 +4,9 @@
  */
 
 import dateFormat from "dateformat";
-import * as fsModule from "fs";
-import { promisify } from "util";
-import * as path from "path";
+import fs from "node:fs/promises";
+import * as path from "node:path";
 
-const writeFileAsync = promisify(fsModule.writeFile);
-
-const fs = fsModule.promises;
 interface CtfdCsvRow {
   [key: string]: string | number | boolean | null | undefined;
 }
@@ -23,11 +19,15 @@ async function writeToCtfdCsv(
     desiredFileName ||
     "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".CTFd.csv";
 
-  const csvContent = convertToCSV(data);
-  await writeFileAsync(fileName, csvContent, {
-    encoding: "utf8",
-  });
-  return path.resolve(fileName);
+  try {
+    const csvContent = convertToCSV(data);
+    await fs.writeFile(fileName, csvContent, { encoding: "utf8" });
+    return path.resolve(fileName);
+  } catch (error) {
+    throw new Error(
+      "Failed to write output to file! " + (error as Error)?.message
+    );
+  }
 }
 
 interface CsvRow {
