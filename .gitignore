@@ -1,7 +1,8 @@
 *.log
 *.out
 build/
-.nyc_output/
+coverage/
+custom.json
 
 # Intellij
 .idea/
