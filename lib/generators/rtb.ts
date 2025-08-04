@@ -7,13 +7,15 @@ import xmlBuilder from "xmlbuilder"
 import TurndownService from 'turndown'
 import calculateScore from "../calculateScore"
 import calculateHintCost from "../calculateHintCost"
+import INITIAL_RTB_TEMPLATE from '../../data/rtbImportTemplate.json'
+
 const turndownService = new TurndownService()
 const hmacSha1 = require('../hmac')
 import * as juiceShopOptions from '../options'
 
 const { readFileSync } = require('fs')
 const path = require('path')
-let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { categories: {} }
+let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
 interface Challenge {
   key: string
@@ -336,12 +338,12 @@ return new Promise((resolve, reject) => {
     const categories = insertCategories(challenges, xmlRTB)
     const boxes = insertCorporation(categories, xmlRTB)
     const sortedChallenges = sortByDifficulty(challenges)
-    
+
     // Convert Set to Array before iteration
     Array.from(categories).forEach(category => {
       insertBoxes(sortedChallenges, boxes, category)
     })
-    
+
     resolve(xmlRTB.end({ pretty: true }))
   } catch (error) {
     if (error instanceof Error) {

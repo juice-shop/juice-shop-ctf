@@ -6,6 +6,8 @@
 import 'colors'
 import calculateHintCost from '../calculateHintCost'
 import calculateScore from '../calculateScore'
+import FBCTF_TEMPLATE from '../../data/fbctfImportTemplate.json'
+
 const { hash } = require('bcryptjs')
 const { readFile } = require('fs')
 const path = require('path')
@@ -23,19 +25,6 @@ const generateRandomString: GenerateRandomString = function (length: number): st
   for (let i = 0; i < length; i++) { text += possible.charAt(Math.floor(Math.random() * possible.length)) }
 
   return text
-}
-
-function loadTemplate () {
-  return new Promise((resolve, reject) => {
-    const filename = path.join(__dirname, '../../data/fbctfImportTemplate.json')
-
-    readFile(filename, { encoding: 'utf8' }, (err: NodeJS.ErrnoException | null, text: string) => {
-      if (err) {
-      reject(err)
-      }
-      resolve(JSON.parse(text))
-    })
-  })
 }
 
 async function createDummyUser () {
@@ -95,7 +84,7 @@ async function createFbctfExport (
     vulnSnippets
   }: FbctfExportOptions
 ): Promise<FbctfTemplate> {
-  const fbctfTemplate = await loadTemplate() as FbctfTemplate
+  const fbctfTemplate: FbctfTemplate = FBCTF_TEMPLATE
 
   fbctfTemplate.teams.teams.push(await createDummyUser())
 
