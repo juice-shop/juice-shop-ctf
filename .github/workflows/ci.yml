@@ -41,8 +41,6 @@ jobs:
         image: bkimminich/juice-shop:latest
         ports:
           - 3000:3000
-        options: >-
-          --start-period=5s
     steps:
       - name: "Check out Git repository"
         uses: actions/checkout@v4
