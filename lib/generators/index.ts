@@ -48,24 +48,23 @@ async function generateCTFExport (
   }
 
   async function rtbExport () {
-  try {
-    const rtbData = await createRtbExport(challenges, settings)
-    if (!rtbData || rtbData.trim() === '') {
-      console.error('Error: Generated RTB data is empty')
-      return
+    try {
+      const rtbData = await createRtbExport(challenges, settings)
+      if (!rtbData || rtbData.trim() === '') {
+        console.error('Error: Generated RTB data is empty')
+        return
+      }
+
+      const rtbFile = await writeToRtbXml(rtbData, settings.outputLocation)
+
+      console.log('Full Game Export written to ' + colors.green(rtbFile))
+      console.log()
+      console.log('For a step-by-step guide to import this file into ' + 'RootTheBox'.bold + ', please refer to')
+      console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_rootthebox'.bold)
+    } catch (error : any) {
+      console.error('Error in RTB export:', error.message)
     }
-    
-    const rtbFile = await writeToRtbXml(rtbData, settings.outputLocation)
-
-    console.log('Full Game Export written to ' + colors.green(rtbFile))
-    console.log()
-    console.log('For a step-by-step guide to import this file into ' + 'RootTheBox'.bold + ', please refer to')
-    console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_rootthebox'.bold)
-  } catch (error : any) {
-    console.error('Error in RTB export:', error.message)
   }
-}
-
 
   switch (ctfFramework) {
     case ctfOptions.ctfdFramework: {
