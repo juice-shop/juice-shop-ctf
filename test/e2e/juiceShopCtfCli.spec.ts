@@ -6,13 +6,14 @@
 import { describe, it, beforeEach, after } from 'node:test';
 import assert from 'node:assert';
 import util from 'node:util';
-import * as fs from 'fs' 
+import * as fs from 'fs'
 import { execFile } from 'node:child_process';
 import path from 'node:path';
 // @ts-expect-error FIXME due to non-existing type definitions for inquirer-test
 import inquirer from 'inquirer-test';
 import df from 'dateformat';
 
+const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
 
 const execFilePromise = util.promisify(execFile)
 
@@ -90,7 +91,7 @@ describe('juice-shop-ctf', () => {
 
   it('should accept a config file', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -101,7 +102,7 @@ insertHintSnippets: paid`)
 
   it('should be able to ignore SslWarnings', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -112,16 +113,16 @@ insertHintSnippets: paid`)
 
 it('should fail when the config file cannot be parsed', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints`) 
+insertHints`)
     const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]);
     assert.match(stdout, /can not read/i, 'stdout should mention a parsing error');
 });
 
 it('should fail when the config file contains invalid values', { timeout: TIMEOUT }, async () => {
   fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: invalidValue
@@ -131,7 +132,7 @@ insertHintSnippets: paid`);
 
   it('should write the output file to the specified location', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -143,7 +144,7 @@ insertHintSnippets: paid`)
   it('should be possible to create a CTFd export with a config file', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
 ctfFramework: CTFd
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid
@@ -155,7 +156,7 @@ insertHintSnippets: paid`)
   it('should be possible to create a FBCTF export with a config file', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
 ctfFramework: FBCTF
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 countryMapping: https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml
 insertHints: paid
@@ -168,7 +169,7 @@ insertHintSnippets: paid`)
 it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
   fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
-juiceShopUrl: https://juice-shop.herokuapp.com
+juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints: paid
 insertHintUrls: paid

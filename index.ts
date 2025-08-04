@@ -31,7 +31,7 @@ const argv = require('yargs')
   .help()
   .argv
 
-const DEFAULT_JUICE_SHOP_URL = process.env?.DEFAULT_JUICE_SHOP_URL || 'https://juice-shop.herokuapp.com'
+const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
 
 const questions = [
   {
