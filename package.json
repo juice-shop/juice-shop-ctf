@@ -110,7 +110,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": "18 - 22"
+    "node": "20 - 24"
   },
   "preferGlobal": true,
   "standard": {
