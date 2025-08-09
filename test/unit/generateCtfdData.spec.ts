@@ -5,8 +5,8 @@
 
 import { it, describe, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
-const generateData = require('../../lib/generators/ctfd')
-import options from '../../lib/options'
+import generateData from '../../lib/generators/ctfd'
+import { options as juiceShopOptions } from '../../lib/options'
 
 interface CtfdChallenge {
   name: string
@@ -20,9 +20,9 @@ interface CtfdChallenge {
   tags: string
   hints: string
   type_data: string
-}
+}juiceShopOptions
 
-const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} }
+const defaultOptions = { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} }
 
 describe('Generated CTFd data', () => {
   let challenges: Record<string, Challenge>
@@ -65,23 +65,23 @@ interface Challenge {
   })
 
   it('should log generator error to console', async () => {
-    await assert.rejects(() => generateData({ c1: undefined }, defaultOptions), /Failed to generate challenge data! Cannot read properties of undefined/)
-  })
+    await assert.rejects(() => generateData({ c1: undefined as unknown as Challenge }, defaultOptions), /Failed to generate challenge data! TypeError: Cannot read properties of undefined/
+  )})
 
   it('should fill the hint property for a single text hint defined on a challenge', async () => {
     challenges.c3.hint = 'hint'
-    const free = await generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })
+    const free = await generateData(challenges, { insertHints: juiceShopOptions.freeTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
     assert.ok(free.some((c: CtfdChallenge) => c.hints.includes('"hint"') && c.hints.includes('0')))
 
-    const paid = await generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })
+    const paid = await generateData(challenges, { insertHints: juiceShopOptions.paidTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
     assert.ok(paid.some((c: CtfdChallenge) => c.hints.includes('"hint"') && c.hints.includes('45')))
   })
 
   it('should fill the hint property for a single hint URL defined on a challenge', async () => {
     challenges.c3.hintUrl = 'hintUrl'
-    const free = await generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
+    const free = await generateData(challenges, { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
     assert.ok(free.some((c: CtfdChallenge) => c.hints.includes('"hintUrl"') && c.hints.includes('0')))
-    const paid = await generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })
+    const paid = await generateData(challenges, { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.paidHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
     assert.ok(paid.some((c: CtfdChallenge) => c.hints.includes('"hintUrl"') && c.hints.includes('90')))
   })
 
@@ -89,26 +89,38 @@ interface Challenge {
     challenges.c3.hint = 'hint'
     challenges.c3.hintUrl = 'hintUrl'
 
-    const result1 = await generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.match(result1.find((c: CtfdChallenge) => c.name === 'c3').hints, /hint.*hintUrl/)
+    const result1 = await generateData(challenges, { insertHints: juiceShopOptions.freeTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
+    const challenge1 = result1.find((c: CtfdChallenge) => c.name === 'c3')
+    assert.ok(challenge1, 'Challenge c3 should exist')
+    assert.match(challenge1.hints, /hint.*hintUrl/)
 
-    const result2 = await generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.match(result2.find((c: CtfdChallenge) => c.name === 'c3').hints, /hint.*hintUrl/)
+    const result2 = await generateData(challenges, { insertHints: juiceShopOptions.paidTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', vulnSnippets: {} })
+    const challenge2 = result2.find((c: CtfdChallenge) => c.name === 'c3')
+    assert.ok(challenge2, 'Challenge c3 should exist')
+    assert.match(challenge2.hints, /hint.*hintUrl/)
   })
 
   it('should not insert a text hint when corresponding hint option is not chosen', async () => {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
     const result = await generateData(challenges, defaultOptions)
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c1').hints, '')
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c2').hints, '')
+    const c1Result = result.find((c: CtfdChallenge) => c.name === 'c1')
+    const c2Result = result.find((c: CtfdChallenge) => c.name === 'c2')
+    assert.ok(c1Result, 'Challenge c1 should exist')
+    assert.ok(c2Result, 'Challenge c2 should exist')
+    assert.equal(c1Result.hints, '')
+    assert.equal(c2Result.hints, '')
   })
 
   it('should not insert a hint URL when corresponding hint option is not chosen', async () => {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
     const result = await generateData(challenges, defaultOptions)
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c1').hints, '')
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c2').hints, '')
+    const c1Result = result.find((c: CtfdChallenge) => c.name === 'c1')
+    const c2Result = result.find((c: CtfdChallenge) => c.name === 'c2')
+    assert.ok(c1Result, 'Challenge c1 should exist')
+    assert.ok(c2Result, 'Challenge c2 should exist')
+    assert.equal(c1Result.hints, '')
+    assert.equal(c2Result.hints, '')
   })
 })

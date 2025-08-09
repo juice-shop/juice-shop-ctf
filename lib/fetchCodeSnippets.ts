@@ -72,4 +72,7 @@ async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key
   }
 }
 
-export = fetchCodeSnippets
+export default fetchCodeSnippets;
+// CommonJS style export for compatibility with rewire
+module.exports = fetchCodeSnippets;
+

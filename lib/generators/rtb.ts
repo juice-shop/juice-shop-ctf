@@ -10,11 +10,10 @@ import calculateHintCost from "../calculateHintCost"
 import INITIAL_RTB_TEMPLATE from '../../data/rtbImportTemplate.json'
 
 const turndownService = new TurndownService()
-const hmacSha1 = require('../hmac')
-import * as juiceShopOptions from '../options'
-
-const { readFileSync } = require('fs')
-const path = require('path')
+import hmacSha1 from "../hmac"
+import { options as juiceShopOptions } from '../options'
+import { readFileSync } from "node:fs"
+import * as path from "node:path"
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
 interface Challenge {
@@ -35,7 +34,7 @@ interface RtbExportOptions {
     vulnSnippets: Record<string, string>
   }
 
-function createRtbExport (
+function createRtbExport(
   challenges: Record<string, Challenge>,
   options: RtbExportOptions
 ) {
@@ -326,7 +325,7 @@ function insertCategories(
 
   function loadTemplate() {
   const template = readFileSync(path.join(__dirname, '../../data/rtbImportTemplate.json'))
-  return JSON.parse(template)
+  return JSON.parse(template.toString())
 }
 
 return new Promise((resolve, reject) => {
@@ -355,4 +354,5 @@ return new Promise((resolve, reject) => {
 })
 }
 
-export = createRtbExport
+export default createRtbExport
+

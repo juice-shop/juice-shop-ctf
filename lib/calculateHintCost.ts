@@ -4,7 +4,7 @@
  */
 
 import calculateScore from './calculateScore'
-import * as options from './options'
+import { options as juiceShopOptions } from './options'
 
 /* The hint costs depend on the kind of hint and the difficulty of the challenge they are for:
  paid text hint             = 10% of the challenge's score value
@@ -16,15 +16,15 @@ interface Challenge {
   difficulty: number
 }
 
-type HintOption = typeof options.paidTextHints | typeof options.paidHintUrls | typeof options.paidHintSnippets
+type HintOption = typeof juiceShopOptions.paidTextHints | typeof juiceShopOptions.paidHintUrls | typeof juiceShopOptions.paidHintSnippets
 
 function calculateHintCost ({ difficulty }: Challenge, hintOption: HintOption): number {
   let costMultiplier = 0
-  if (hintOption === options.paidTextHints) {
+  if (hintOption === juiceShopOptions.paidTextHints) {
     costMultiplier = 0.1
-  } else if (hintOption === options.paidHintUrls) {
+  } else if (hintOption === juiceShopOptions.paidHintUrls) {
     costMultiplier = 0.2
-  } else if (hintOption === options.paidHintSnippets) {
+  } else if (hintOption === juiceShopOptions.paidHintSnippets) {
     costMultiplier = 0.3
   }
   return costMultiplier * calculateScore(difficulty)

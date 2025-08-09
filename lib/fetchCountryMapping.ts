@@ -3,19 +3,22 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as https from 'https'
-import { options } from 'joi'
-import * as yaml from 'js-yaml'
+import * as https from 'node:https';
+import yaml from 'js-yaml';
 
-async function fetchChallenges(challengeMapFile: string, ignoreSslWarnings: boolean) {
+async function fetchCountryMapping(
+  challengeMapFile?: string,
+  ignoreSslWarnings?: boolean
+): Promise<Record<string, any> | undefined> {
   if (!challengeMapFile) {
-    return Promise.resolve()
+    return undefined;
   }
 
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
-
+  const options = { agent };
+ 
   try {
     const response = await fetch(challengeMapFile, options as any)
     const text = await response.text()
@@ -26,4 +29,6 @@ async function fetchChallenges(challengeMapFile: string, ignoreSslWarnings: bool
   }
 }
 
-export = fetchChallenges
+export default fetchCountryMapping;
+// CommonJS style export for compatibility with rewire
+module.exports = fetchCountryMapping;

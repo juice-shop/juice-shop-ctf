@@ -7,12 +7,9 @@ import 'colors'
 import calculateHintCost from '../calculateHintCost'
 import calculateScore from '../calculateScore'
 import FBCTF_TEMPLATE from '../../data/fbctfImportTemplate.json'
-
-const { hash } = require('bcryptjs')
-const { readFile } = require('fs')
-const path = require('path')
-const fbctfOptions = require('../options')
-const hmac = require('../hmac')
+import { hash } from 'bcryptjs'
+import { options as juiceShopOptions } from '../options'
+import hmacSha1 from '../hmac'
 
 interface GenerateRandomString {
   (length: number): string
@@ -73,7 +70,7 @@ interface FbctfTemplate {
   }
 }
 
-async function createFbctfExport (
+async function createFbctfExport(
   challenges: Challenge[],
   {
     insertHints,
@@ -97,13 +94,13 @@ async function createFbctfExport (
     }
 
     const hintText: string[] = []
-    if (insertHints !== fbctfOptions.noTextHints) {
+    if (insertHints !== juiceShopOptions.noTextHints) {
       hintText.push(hint)
     }
-    if (insertHintUrls !== fbctfOptions.noHintUrls) {
+    if (insertHintUrls !== juiceShopOptions.noHintUrls) {
       hintText.push(hintUrl)
     }
-    if (insertHintSnippets !== fbctfOptions.noHintSnippets && vulnSnippets[key]) {
+    if (insertHintSnippets !== juiceShopOptions.noHintSnippets && vulnSnippets[key]) {
       hintText.push(vulnSnippets[key])
     }
 
@@ -118,7 +115,7 @@ async function createFbctfExport (
       bonus: 0,
       bonus_dec: 0,
       bonus_fix: 0,
-      flag: hmac(ctfKey, name),
+      flag: hmacSha1(ctfKey, name),
       hint: hintText.join('\n\n'),
       penalty: calculateHintCost({ difficulty }, insertHints) + calculateHintCost({ difficulty }, insertHintUrls) + calculateHintCost({ difficulty }, insertHintSnippets),
       links: [],
@@ -129,4 +126,4 @@ async function createFbctfExport (
   return fbctfTemplate
 }
 
-export = createFbctfExport
+export default createFbctfExport

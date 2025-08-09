@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-const options = {
+export const options = {
   noTextHints: 'No text hints',
   freeTextHints: 'Free text hints',
   paidTextHints: 'Paid text hints',
@@ -18,4 +18,6 @@ const options = {
   rtbFramework: 'RootTheBox'
 }
 
-export = options
+// For CommonJS compatibility
+// module.exports = options
+// module.exports.options = options

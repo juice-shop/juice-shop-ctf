@@ -5,19 +5,18 @@
 
 import calculateScore from "../calculateScore"
 import calculateHintCost from "../calculateHintCost"
-const hmacSha1 = require('../hmac')
-const juiceShopOptions = require('../options')
-
+import hmacSha1 from "../hmac"
+import {options as juiceShopOptions} from '../options'
 
 interface Challenge {
+  key: string
   name: string
   description: string
-  category: string
   difficulty: number
+  category: string
   hint?: string
   hintUrl?: string
-  key: string
-  tags?: string
+  tags?: string | null
 }
 
 interface VulnSnippets {
@@ -42,13 +41,13 @@ interface ChallengeRow {
   max_attempts: number
   flags: string
   tags: string
+  hints: string
+  type_data: string
   hints_raw?: string[]
   hint_cost?: number[]
-  type_data: string
-  hints?: string
 }
 
-function createCtfdExport (
+function createCtfdExport(
   challenges: { [key: string]: Challenge },
   { insertHints, insertHintUrls, insertHintSnippets, ctfKey, vulnSnippets }: CreateCtfdExportOptions
 ): Promise<ChallengeRow[]> {
@@ -88,20 +87,21 @@ function createCtfdExport (
       const data: ChallengeRow[] = []
       for (const key in challenges) {
         if (Object.prototype.hasOwnProperty.call(challenges, key)) {
-          const challenge = challenges[key]
+        const challenge = challenges[key]
           const row: ChallengeRow = {
-            name: challenge.name,
+          name: challenge.name,
             description: `"${challenge.description.replace(/"/g, '""')} (Difficulty Level: ${challenge.difficulty})"`,
-            category: challenge.category,
-            value: calculateScore(challenge.difficulty),
-            type: 'standard',
-            state: 'visible',
-            max_attempts: 0,
+          category: challenge.category,
+          value: calculateScore(challenge.difficulty),
+          type: 'standard',
+          state: 'visible',
+          max_attempts: 0,
             flags: ctfKey.split(',').length === 1 ? hmacSha1(ctfKey, challenge.name) : `"${ctfKey.split(',').map(key => `${hmacSha1(key, challenge.name)}`).join(',')}"`,
-            tags: challenge.tags ? `"${challenge.tags}"` : '',
+          tags: challenge.tags ? `"${challenge.tags}"` : '',
             hints_raw: insertChallengeHints(challenge),
             hint_cost: insertChallengeHintCosts(challenge),
-            type_data: ''
+            type_data: '',
+            hints: ''
           }
           const hints: { content: string, cost: number }[] = []
           if (row.hints_raw && row.hints_raw.length !== 0) {
@@ -123,10 +123,10 @@ function createCtfdExport (
         }
       }
       resolve(data)
-    } catch (error: any) {
-      reject(new Error('Failed to generate challenge data! ' + error.message))
+    } catch (error) {
+      reject(new Error(`Failed to generate challenge data! ${error}`))
     }
   })
 }
 
-export = createCtfdExport
+export default createCtfdExport

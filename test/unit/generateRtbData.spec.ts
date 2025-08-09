@@ -9,8 +9,7 @@ import rewire from 'rewire'
 
 const generateDataModule = rewire('../../lib/generators/rtb')
 const generateData = generateDataModule.default || generateDataModule
-import options from '../../lib/options'
-
+import {options as juiceShopOptions} from '../../lib/options'
 interface Challenge {
   id: number
   key: string
@@ -27,8 +26,8 @@ interface Challenges {
 }
 
 const defaultOptions = { 
-  insertHints: options.noTextHints, 
-  insertHintUrls: options.noHintUrls, 
+  insertHints: juiceShopOptions.noTextHints, 
+  insertHintUrls: juiceShopOptions.noHintUrls, 
   ctfKey: '', 
   vulnSnippets: {} 
 }
@@ -75,8 +74,8 @@ describe('Generated RTB data', () => {
   it('should add a <hint> for a text hint defined on a challenge', async () => {
     challenges.c3.hint = 'hint'
     const free = await generateData(challenges, { 
-      insertHints: options.freeTextHints, 
-      insertHintUrls: options.noHintUrls, 
+      insertHints: juiceShopOptions.freeTextHints, 
+      insertHintUrls: juiceShopOptions.noHintUrls, 
       ctfKey: '', 
       vulnSnippets: {} 
     })
@@ -84,8 +83,8 @@ describe('Generated RTB data', () => {
     assert.match(free, /<flag type="static">\s{15}<name>c3<\/name>[^]*<hints count="1">\s{17}<hint>\s{19}<description>hint<\/description>\s{19}<price>0<\/price>/)
 
     const paid = await generateData(challenges, { 
-      insertHints: options.paidTextHints, 
-      insertHintUrls: options.noHintUrls, 
+      insertHints: juiceShopOptions.paidTextHints, 
+      insertHintUrls: juiceShopOptions.noHintUrls, 
       ctfKey: '', 
       vulnSnippets: {} 
     })
@@ -96,8 +95,8 @@ describe('Generated RTB data', () => {
   it('should add a <hint> for a hint URL defined on a challenge', async () => {
     challenges.c3.hintUrl = 'hintUrl'
     const free = await generateData(challenges, { 
-      insertHints: options.noTextHints, 
-      insertHintUrls: options.freeHintUrls, 
+      insertHints: juiceShopOptions.noTextHints, 
+      insertHintUrls: juiceShopOptions.freeHintUrls, 
       ctfKey: '', 
       vulnSnippets: {} 
     })
@@ -105,8 +104,8 @@ describe('Generated RTB data', () => {
     assert.match(free, /<flag type="static">\s{15}<name>c3<\/name>[^]*<hints count="1">\s{17}<hint>\s{19}<description>\[C3]\(hintUrl\)<\/description>\s{19}<price>0<\/price>/)
 
     const paid = await generateData(challenges, { 
-      insertHints: options.noTextHints, 
-      insertHintUrls: options.paidHintUrls, 
+      insertHints: juiceShopOptions.noTextHints, 
+      insertHintUrls: juiceShopOptions.paidHintUrls, 
       ctfKey: '', 
       vulnSnippets: {} 
     })
@@ -117,8 +116,8 @@ describe('Generated RTB data', () => {
   it('should extract the link text for a hint URL from its anchor', async () => {
     challenges.c3.hintUrl = 'hintUrl#this-is-the-anchor-to-the-ebook-section'
     const result = await generateData(challenges, { 
-      insertHints: options.noTextHints, 
-      insertHintUrls: options.freeHintUrls, 
+      insertHints: juiceShopOptions.noTextHints, 
+      insertHintUrls: juiceShopOptions.freeHintUrls, 
       ctfKey: '', 
       vulnSnippets: {} 
     })
