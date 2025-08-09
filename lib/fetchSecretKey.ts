@@ -3,8 +3,8 @@
  * SPDX-License-Identifier: MIT
  */
 
-import isUrl from "./url";
-import * as https from "https";
+import * as https from 'node:https';
+import isUrl from './url';
 
 async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
   const agent = ignoreSslWarnings
@@ -12,13 +12,13 @@ async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
     : undefined;
 
   if (origin && isUrl(origin)) {
-    try {
+  try {
       const response = await fetch(origin, { agent } as any);
-
-      if (!response.ok) {
+    
+    if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`);
-      }
-
+    }
+    
       const body = await response.text();
       return body;
     } catch (err) {
@@ -31,4 +31,7 @@ async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
     return origin;
   }
 }
-export = fetchSecretKey;
+
+export default fetchSecretKey;
+// CommonJS style export for compatibility with rewire
+module.exports = fetchSecretKey

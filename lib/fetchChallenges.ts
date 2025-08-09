@@ -1,4 +1,9 @@
-import * as https from "https";
+/*
+ * Copyright (c) 2016-2025 Bjoern Kimminich & the OWASP Juice Shop contributors.
+ * SPDX-License-Identifier: MIT
+ */
+
+import * as https from "node:https";
 
 interface Challenge {
   name: string;
@@ -34,4 +39,7 @@ async function fetchChallenges(
   }
 }
 
-export = fetchChallenges;
+
+export default fetchChallenges;
+// CommonJS style export for compatibility with rewire
+module.exports = fetchChallenges;

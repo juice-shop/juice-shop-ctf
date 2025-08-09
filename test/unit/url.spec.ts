@@ -4,7 +4,7 @@
  */
 import assert from "node:assert";
 import { describe, it } from "node:test";
-const isUrl = require("../../lib/url"); 
+import isUrl from "../../lib/url";
 describe("URL", () => {
   it("should be recognized on given valid HTTP URL", () => {
     assert.strictEqual(isUrl("http://domain"), true);

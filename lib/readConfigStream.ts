@@ -3,9 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-const yaml = require('js-yaml')
-const Joi = require('joi')
-const options = require('./options')
+import yaml from 'js-yaml'
+import Joi from 'joi'
+import { options } from './options'
 const schema = Joi.object().keys({
   ctfFramework: Joi.string().optional().valid(options.ctfdFramework, options.fbctfFramework, options.rtbFramework),
   juiceShopUrl: [Joi.string().uri().required(), Joi.string().ip().required()],
@@ -25,9 +25,9 @@ interface ConfigDoc {
   juiceShopUrl: string
   countryMapping?: string
   ctfKey: string
-  insertHints: keyof typeof hintsMap
-  insertHintUrls?: keyof typeof hintUrlsMap
-  insertHintSnippets?: keyof typeof hintSnippetsMap
+  insertHints: string | keyof typeof hintsMap
+  insertHintUrls?: string | keyof typeof hintUrlsMap
+  insertHintSnippets?: string | keyof typeof hintSnippetsMap
 }
 
 function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
@@ -38,15 +38,15 @@ function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
     })
     stream.on('end', () => {
       try {
-        yaml.loadAll(data, (doc: ConfigDoc) => {
+        yaml.loadAll(data, (doc: unknown) => {
           const validation = schema.validate(doc)
           if (validation.error) {
             reject(validation.error)
           } else {
             const result = validation.value as ConfigDoc
-            result.insertHints = hintsMap[result.insertHints]
-            result.insertHintUrls = result.insertHintUrls ? hintUrlsMap[result.insertHintUrls] : options.noHintUrls
-            result.insertHintSnippets = result.insertHintSnippets ? hintSnippetsMap[result.insertHintSnippets] : options.noHintSnippets
+            result.insertHints = hintsMap[result.insertHints as keyof typeof hintsMap]
+            result.insertHintUrls = result.insertHintUrls ? hintUrlsMap[result.insertHintUrls as keyof typeof hintUrlsMap] : options.noHintUrls
+            result.insertHintSnippets = result.insertHintSnippets ? hintSnippetsMap[result.insertHintSnippets as keyof typeof hintSnippetsMap] : options.noHintSnippets
             resolve(result)
           }
         })
@@ -57,4 +57,4 @@ function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
   })
 }
 
-export = readConfigStream
+export default readConfigStream

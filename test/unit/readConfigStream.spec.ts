@@ -6,8 +6,8 @@
 import { test } from 'node:test'
 import assert from 'node:assert'
 import { Readable } from 'stream'
-const readConfigStream = require('../../lib/readConfigStream')
-const options = require('../../lib/options')
+import readConfigStream from '../../lib/readConfigStream'
+import {options} from '../../lib/options'
 
 interface GenerateStreamFromYaml {
   (yaml: string): Readable

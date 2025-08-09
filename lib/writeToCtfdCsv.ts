@@ -11,7 +11,7 @@ interface CtfdCsvRow {
   [key: string]: string | number | boolean | null | undefined;
 }
 
-async function writeToCtfdCsv(
+ async function writeToCtfdCsv(
   data: CtfdCsvRow[],
   desiredFileName?: string
 ): Promise<string> {
@@ -45,4 +45,4 @@ function convertToCSV(arr: CsvRow[]): string {
   return array.map((it: string[]) => it.toString()).join("\n");
 }
 
-export = writeToCtfdCsv;
+export default writeToCtfdCsv;

@@ -8,4 +8,4 @@ function isUrl (text: string): boolean {
 }
 
 
-export = isUrl
+export default isUrl
