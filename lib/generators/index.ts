@@ -12,31 +12,13 @@ import { options as juiceShopOptions } from '../options'
 import createCtfdExport from './ctfd'
 import createRtbExport from './rtb'
 import createFbctfExport from './fbctf'
-
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  category: string
-  hint?: string
-  hintUrl?: string
-  tags?: string | null
-  [key: string]: any 
-}
-
-interface ExportSettings {
-  outputLocation: string
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
-  ctfKey: string
-  countryMapping?: any
-  vulnSnippets?: Record<string, string>
-  [key: string]: any
-}
+import { Challenge, BaseExportSettings } from '../types/types'
 
 type CtfFramework = string
+type ExportSettings = BaseExportSettings & {
+  vulnSnippets?: Record<string, string>
+  outputLocation: string
+}
 
 async function generateCTFExport (
   ctfFramework: CtfFramework,

@@ -8,6 +8,7 @@ import TurndownService from 'turndown'
 import calculateScore from "../calculateScore"
 import calculateHintCost from "../calculateHintCost"
 import INITIAL_RTB_TEMPLATE from '../../data/rtbImportTemplate.json'
+import { Challenge, BaseExportSettings } from '../types/types'
 
 const turndownService = new TurndownService()
 import hmacSha1 from "../hmac"
@@ -16,23 +17,13 @@ import { readFileSync } from "node:fs"
 import * as path from "node:path"
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  category: string
-  difficulty: number
-  hint?: string
-  hintUrl?: string
-}
-
-interface RtbExportOptions {
+interface RtbExportOptions extends BaseExportSettings {
     insertHints: string
     insertHintUrls: string
     insertHintSnippets: string
     ctfKey: string
     vulnSnippets: Record<string, string>
-  }
+}
 
 function createRtbExport(
   challenges: Record<string, Challenge>,

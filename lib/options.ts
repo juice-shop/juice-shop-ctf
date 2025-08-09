@@ -17,7 +17,3 @@ export const options = {
   fbctfFramework: 'FBCTF',
   rtbFramework: 'RootTheBox'
 }
-
-// For CommonJS compatibility
-// module.exports = options
-// module.exports.options = options

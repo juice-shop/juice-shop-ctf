@@ -8,6 +8,7 @@ import assert from 'node:assert/strict'
 import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
 import {options as juiceShopOptions} from '../../lib/options'
+import { CountryMapping } from '../../lib/types/types'
 
 interface Challenge {
   key: string
@@ -19,10 +20,6 @@ interface Challenge {
   hintUrl: string
 }
 
-interface CountryMapping {
-  [key: string]: { code: string }
-}
-
 interface FbctfOptions {
   insertHints: string
   insertHintUrls: string
@@ -30,6 +27,7 @@ interface FbctfOptions {
   ctfKey: string
   countryMapping: CountryMapping
   vulnSnippets: Record<string, string>
+  outputLocation: string
 }
 
 interface ChallengeMapping {
@@ -89,15 +87,16 @@ const countryMapping: CountryMapping = {
   key1: { code: 'CA' }, 
   key2: { code: 'FR' } 
 }
-
 const defaultOptions: FbctfOptions = { 
   insertHints: juiceShopOptions.noTextHints, 
   insertHintUrls: juiceShopOptions.noHintUrls, 
   insertHintSnippets: juiceShopOptions.noHintSnippets,
   ctfKey: '', 
   countryMapping, 
-  vulnSnippets: {} 
+  vulnSnippets: {},
+  outputLocation: ''
 }
+
 
 const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
   ...defaultOptions,

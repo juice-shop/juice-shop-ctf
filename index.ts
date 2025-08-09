@@ -10,26 +10,29 @@ import fetchChallenges from './lib/fetchChallenges'
 import fetchCountryMapping from './lib/fetchCountryMapping'
 import fetchCodeSnippets from './lib/fetchCodeSnippets'
 import readConfigStream from './lib/readConfigStream'
-import * as options from './lib/options'
+import { options as juiceShopOptions } from './lib/options'
 import * as fs from 'fs'
-
 import generateCtfExport from './lib/generators/'
+import yargs from 'yargs'
 
-const argv = require('yargs')
+const argv = yargs
   .option('config', {
     alias: 'c',
-    describe: 'provide a configuration file'
+    describe: 'provide a configuration file',
+    type: 'string'
   })
   .option('output', {
     alias: 'o',
-    describe: 'change the output file'
+    describe: 'change the output file',
+    type: 'string'
   })
   .option('ignoreSslWarnings', {
     alias: 'i',
-    describe: 'ignore tls certificate warnings'
+    describe: 'ignore tls certificate warnings',
+    type: 'boolean'
   })
   .help()
-  .argv
+  .argv as Argv
 
 const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
 
@@ -38,7 +41,7 @@ const questions = [
     type: 'list',
     name: 'ctfFramework',
     message: 'CTF framework to generate data for?',
-    choices: [options.ctfdFramework, options.fbctfFramework, options.rtbFramework],
+    choices: [juiceShopOptions.ctfdFramework, juiceShopOptions.fbctfFramework, juiceShopOptions.rtbFramework],
     default: 0
   },
   {
@@ -58,27 +61,27 @@ const questions = [
     name: 'countryMapping',
     message: 'URL to country-mapping.yml file?',
     default: 'https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml',
-    when: ({ ctfFramework }: { ctfFramework: string }) => ctfFramework === options.fbctfFramework
+    when: ({ ctfFramework }: { ctfFramework: string }) => ctfFramework === juiceShopOptions.fbctfFramework
   },
   {
     type: 'list',
     name: 'insertHints',
     message: 'Insert a text hint along with each challenge?',
-    choices: [options.noTextHints, options.freeTextHints, options.paidTextHints],
+    choices: [juiceShopOptions.noTextHints, juiceShopOptions.freeTextHints, juiceShopOptions.paidTextHints],
     default: 0
   },
   {
     type: 'list',
     name: 'insertHintUrls',
     message: 'Insert a hint URL along with each challenge?',
-    choices: [options.noHintUrls, options.freeHintUrls, options.paidHintUrls],
+    choices: [juiceShopOptions.noHintUrls, juiceShopOptions.freeHintUrls, juiceShopOptions.paidHintUrls],
     default: 0
   },
   {
     type: 'list',
     name: 'insertHintSnippets',
     message: 'Insert a code snippet as hint for each challenge?',
-    choices: [options.noHintSnippets, options.freeHintSnippets, options.paidHintSnippets],
+    choices: [juiceShopOptions.noHintSnippets, juiceShopOptions.freeHintSnippets, juiceShopOptions.paidHintSnippets],
     default: 0
   }
 ]
@@ -106,7 +109,7 @@ function getConfig (
 ): Promise<ConfigAnswers> {
   if (argv.config) {
     return readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
-      ctfFramework: config.ctfFramework ?? options.ctfdFramework,
+      ctfFramework: config.ctfFramework ?? juiceShopOptions.ctfdFramework,
       juiceShopUrl: config.juiceShopUrl,
       ctfKey: config.ctfKey,
       countryMapping: config.countryMapping,
@@ -118,9 +121,9 @@ function getConfig (
   return inquirer.prompt(questions)
 }
 
-const juiceShopCtfCli = async () => {
+export default async function juiceShopCtfCli() {
   console.log()
-  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${options.ctfdFramework.bold}, ${options.fbctfFramework.bold} or ${options.rtbFramework.bold} score server`)
+  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${juiceShopOptions.ctfdFramework.bold}, ${juiceShopOptions.fbctfFramework.bold} or ${juiceShopOptions.rtbFramework.bold} score server`)
 
   try {
     const answers = await getConfig(argv, questions)
@@ -128,21 +131,20 @@ const juiceShopCtfCli = async () => {
     console.log()
 
     // Only fetch snippets if user wants them
-    const shouldFetchSnippets = answers.insertHintSnippets !== options.noHintSnippets
+    const shouldFetchSnippets = answers.insertHintSnippets !== juiceShopOptions.noHintSnippets
 
     // Prepare fetch operations
     const fetchOperations = [
-      fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings),
-      fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings),
-      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings)
+      fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
+      fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
+      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false)
     ]
 
-    // Conditionally add snippets fetch
     if (shouldFetchSnippets) {
       fetchOperations.push(
         fetchCodeSnippets({
           juiceShopUrl: answers.juiceShopUrl,
-          ignoreSslWarnings: argv.ignoreSslWarnings
+          ignoreSslWarnings: argv.ignoreSslWarnings ?? false
         }).catch((error: Error): Record<string, unknown> => {
           console.log(`Warning: ${error.message}`.yellow)
           return {} // Return empty object on error to continue process
@@ -154,19 +156,19 @@ const juiceShopCtfCli = async () => {
 
     const snippets = shouldFetchSnippets ? vulnSnippets : []
 
-    await generateCtfExport(answers.ctfFramework || options.ctfdFramework, challenges, {
-      juiceShopUrl: answers.juiceShopUrl,
-      insertHints: answers.insertHints,
-      insertHintUrls: answers.insertHintUrls,
-      insertHintSnippets: answers.insertHintSnippets,
-      ctfKey: fetchedSecretKey,
-      countryMapping,
-      vulnSnippets: snippets,
-      outputLocation: argv.output
-    })
+    await generateCtfExport(answers.ctfFramework || juiceShopOptions.ctfdFramework,Array.isArray(challenges) ? challenges : (challenges ? Object.values(challenges) : []),
+      {
+        juiceShopUrl: answers.juiceShopUrl,
+        insertHints: answers.insertHints,
+        insertHintUrls: answers.insertHintUrls,
+        insertHintSnippets: answers.insertHintSnippets,
+      ctfKey: fetchedSecretKey as string || '', 
+        countryMapping,
+      vulnSnippets: snippets as Record<string, string> || {}, 
+        outputLocation: argv.output || ''
+      })
   } catch (err) {
     console.log('Failed to write output to file!', err)
   }
 }
 
-export = juiceShopCtfCli
