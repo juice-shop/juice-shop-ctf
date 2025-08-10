@@ -14,7 +14,8 @@ interface Challenge {
 
 async function fetchChallenges(
   juiceShopUrl: string,
-  ignoreSslWarnings: boolean
+  ignoreSslWarnings: boolean,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<Challenge[]> {
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
@@ -41,5 +42,4 @@ async function fetchChallenges(
 
 
 export default fetchChallenges;
-// CommonJS style export for compatibility with rewire
-module.exports = fetchChallenges;
+

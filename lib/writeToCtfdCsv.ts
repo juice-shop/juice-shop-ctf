@@ -7,7 +7,7 @@ import dateFormat from "dateformat";
 import fs from "node:fs/promises";
 import * as path from "node:path";
 
-interface CtfdCsvRow {
+export interface CtfdCsvRow {
   [key: string]: string | number | boolean | null | undefined;
 }
 

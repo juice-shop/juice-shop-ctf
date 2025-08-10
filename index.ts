@@ -163,7 +163,7 @@ export default async function juiceShopCtfCli() {
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
       ctfKey: fetchedSecretKey as string || '', 
-        countryMapping,
+        countryMapping: (countryMapping && typeof countryMapping === 'object' && !Array.isArray(countryMapping)) ? countryMapping as Record<string, { code: string; name?: string }> : undefined,
       vulnSnippets: snippets as Record<string, string> || {}, 
         outputLocation: argv.output || ''
       })

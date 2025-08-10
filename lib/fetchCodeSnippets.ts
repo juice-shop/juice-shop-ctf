@@ -19,7 +19,10 @@ interface SnippetApiResponse {
   snippet: string;
 }
 
-async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key: string]: string }> {
+async function fetchCodeSnippets(
+  options: string | FetchOptions,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
+): Promise<{ [key: string]: string }> {
   const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl;
   const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false;
   const skip = typeof options === 'string' ? false : options.skip || false;
@@ -73,6 +76,4 @@ async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key
 }
 
 export default fetchCodeSnippets;
-// CommonJS style export for compatibility with rewire
-module.exports = fetchCodeSnippets;
 

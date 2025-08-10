@@ -8,7 +8,8 @@ import yaml from 'js-yaml';
 
 async function fetchCountryMapping(
   challengeMapFile?: string,
-  ignoreSslWarnings?: boolean
+  ignoreSslWarnings?: boolean,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<Record<string, any> | undefined> {
   if (!challengeMapFile) {
     return undefined;
@@ -30,5 +31,3 @@ async function fetchCountryMapping(
 }
 
 export default fetchCountryMapping;
-// CommonJS style export for compatibility with rewire
-module.exports = fetchCountryMapping;

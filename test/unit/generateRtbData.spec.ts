@@ -10,16 +10,7 @@ import rewire from 'rewire'
 const generateDataModule = rewire('../../lib/generators/rtb')
 const generateData = generateDataModule.default || generateDataModule
 import {options as juiceShopOptions} from '../../lib/options'
-interface Challenge {
-  id: number
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  category: string
-  hint?: string
-  hintUrl?: string
-}
+import {Challenge} from '../../lib/types/types'
 
 interface Challenges {
   [key: string]: Challenge

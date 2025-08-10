@@ -3,6 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
+import { options } from "../options"
 
 export interface Challenge {
   key: string
@@ -18,13 +19,13 @@ export interface Challenge {
 }
 
 export interface BaseExportSettings {
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
+  insertHints: typeof options.freeTextHints | typeof options.paidTextHints | typeof options.noTextHints
+  insertHintUrls: typeof options.freeHintUrls | typeof options.paidHintUrls | typeof options.noHintUrls
+  insertHintSnippets: typeof options.freeHintSnippets | typeof options.paidHintSnippets | typeof options.noHintSnippets
   ctfKey: string
   outputLocation: string
   vulnSnippets?: Record<string, string>
-  [key: string]: any
+  juiceShopUrl: string
 }
 
 export interface FbctfExportSettings extends BaseExportSettings {

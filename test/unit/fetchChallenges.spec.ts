@@ -5,31 +5,29 @@
 
 import assert from "node:assert";
 import { describe, it } from "node:test";
-import rewire from "rewire";
-
-const fetchChallenges = rewire('../../lib/fetchChallenges').default || rewire('../../lib/fetchChallenges');
+import fetchChallenges from "../../lib/fetchChallenges";
 
 describe("Challenges", () => {
   it("should be fetched from the given URL", async () => {
-    fetchChallenges.__set__({
+    const result = await fetchChallenges("http://localhost:3000", false, {
       fetch: async () => {
-        return {
-          ok: true,
-          json: async () => ({ data: { c1: {}, c2: {} } }),
-        };
+        return new Response(JSON.stringify({ data: { c1: {}, c2: {} } }), {
+          status: 200,
+          headers: { "Content-Type": "application/json" },
+        });
       },
     });
-    const result = await fetchChallenges("http://localhost:3000");
+
     assert.deepEqual(result, { c1: {}, c2: {} });
   });
+
   it("should log retrieval error to console", async () => {
-    fetchChallenges.__set__({
-      fetch: async () => {
-        throw new Error("Argh!");
-      },
-    });
     await assert.rejects(
-      () => fetchChallenges("http://localh_%&$§rst:3000"),
+      () => fetchChallenges("http://localh_%&$§rst:3000", false, {
+        fetch: async () => {
+          throw new Error("Argh!");
+        }
+      }),
       /Failed to fetch challenges from API! Argh!/
     );
   });

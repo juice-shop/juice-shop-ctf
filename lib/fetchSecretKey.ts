@@ -6,7 +6,11 @@
 import * as https from 'node:https';
 import isUrl from './url';
 
-async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
+async function fetchSecretKey(
+  origin: string | undefined | null, 
+  ignoreSslWarnings: boolean,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
+) {
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined;
@@ -33,5 +37,3 @@ async function fetchSecretKey(origin: string, ignoreSslWarnings: boolean) {
 }
 
 export default fetchSecretKey;
-// CommonJS style export for compatibility with rewire
-module.exports = fetchSecretKey

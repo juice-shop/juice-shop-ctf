@@ -9,26 +9,7 @@ import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
 import {options as juiceShopOptions} from '../../lib/options'
 import { CountryMapping } from '../../lib/types/types'
-
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  category: string
-  hint: string
-  hintUrl: string
-}
-
-interface FbctfOptions {
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
-  ctfKey: string
-  countryMapping: CountryMapping
-  vulnSnippets: Record<string, string>
-  outputLocation: string
-}
+import { Challenge , FbctfExportSettings } from '../../lib/types/types'
 
 interface ChallengeMapping {
   type: string
@@ -87,18 +68,19 @@ const countryMapping: CountryMapping = {
   key1: { code: 'CA' }, 
   key2: { code: 'FR' } 
 }
-const defaultOptions: FbctfOptions = { 
+const defaultOptions: FbctfExportSettings = { 
   insertHints: juiceShopOptions.noTextHints, 
   insertHintUrls: juiceShopOptions.noHintUrls, 
   insertHintSnippets: juiceShopOptions.noHintSnippets,
   ctfKey: '', 
   countryMapping, 
   vulnSnippets: {},
-  outputLocation: ''
+  outputLocation: '',
+  juiceShopUrl: ''
 }
 
 
-const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
+const createOptions = (overrides: Partial<FbctfExportSettings> = {}): FbctfExportSettings => ({
   ...defaultOptions,
   ...overrides
 })
