@@ -43,7 +43,6 @@ describe('Generated CTFd data', () => {
   })
 
   it('should log generator error to console', async () => {
-    // Create a structurally invalid Challenge object (missing required properties)
     const invalidChallenge = { } as Challenge
     await assert.rejects(() => generateData({ c1: invalidChallenge }, defaultOptions), /Failed to generate challenge data!/  )})
 

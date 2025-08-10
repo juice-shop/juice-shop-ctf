@@ -9,7 +9,7 @@ import fetchSecretKey from '../../lib/fetchSecretKey';
 
 describe('Secret key', () => {
   it('should be exactly the given input if it is not recognized as a URL', async () => {
-    const result = await fetchSecretKey('ZJnHOTckstBeJP!QC2T', false);
+    const result = await fetchSecretKey('ZJnHOTckstBeJP!QC2T', false,{});
     assert.equal(result, 'ZJnHOTckstBeJP!QC2T');
   });
 
