@@ -156,17 +156,34 @@ export default async function juiceShopCtfCli() {
 
     const snippets = shouldFetchSnippets ? vulnSnippets : []
 
-    await generateCtfExport(answers.ctfFramework || juiceShopOptions.ctfdFramework,Array.isArray(challenges) ? challenges : (challenges ? Object.values(challenges) : []),
+    const normalizedChallenges = Array.isArray(challenges) 
+      ? challenges 
+      : (challenges ? Object.values(challenges) : []);
+
+    const normalizedCountryMapping = countryMapping && 
+      typeof countryMapping === 'object' && 
+      !Array.isArray(countryMapping)
+        ? countryMapping as Record<string, { code: string; name?: string }>
+        : undefined;
+
+    const normalizedSnippets = shouldFetchSnippets 
+      ? (vulnSnippets as Record<string, string> || {})
+      : {};
+
+    await generateCtfExport(
+      answers.ctfFramework || juiceShopOptions.ctfdFramework,
+      normalizedChallenges,
       {
         juiceShopUrl: answers.juiceShopUrl,
         insertHints: answers.insertHints,
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
-      ctfKey: fetchedSecretKey as string || '', 
-        countryMapping: (countryMapping && typeof countryMapping === 'object' && !Array.isArray(countryMapping)) ? countryMapping as Record<string, { code: string; name?: string }> : undefined,
-      vulnSnippets: snippets as Record<string, string> || {}, 
+        ctfKey: fetchedSecretKey as string || '',
+        countryMapping: normalizedCountryMapping,
+        vulnSnippets: normalizedSnippets,
         outputLocation: argv.output || ''
-      })
+      }
+    );
   } catch (err) {
     console.log('Failed to write output to file!', err)
   }

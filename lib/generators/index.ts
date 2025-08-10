@@ -64,7 +64,7 @@ async function generateCTFExport (
         challengeObject[`c${index + 1}`] = challenge
       })
       const rtbData = await createRtbExport(challengeObject, { ...settings, vulnSnippets: settings.vulnSnippets ?? {} })
-      if (!rtbData) {
+      if (!rtbData || (typeof rtbData === 'string' && rtbData.trim() === '')) {
         console.error('Error: Generated RTB data is empty')
         return
       }

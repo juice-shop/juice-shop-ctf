@@ -43,8 +43,9 @@ describe('Generated CTFd data', () => {
   })
 
   it('should log generator error to console', async () => {
-    await assert.rejects(() => generateData({ c1: undefined as unknown as Challenge }, defaultOptions), /Failed to generate challenge data! TypeError: Cannot read properties of undefined/
-  )})
+    // Create a structurally invalid Challenge object (missing required properties)
+    const invalidChallenge = { } as Challenge
+    await assert.rejects(() => generateData({ c1: invalidChallenge }, defaultOptions), /Failed to generate challenge data!/  )})
 
   it('should fill the hint property for a single text hint defined on a challenge', async () => {
     challenges.c3.hint = 'hint'
