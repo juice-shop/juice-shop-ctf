@@ -17,14 +17,9 @@ import { readFileSync } from "node:fs"
 import * as path from "node:path"
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
-interface RtbExportOptions extends BaseExportSettings {
-    ctfKey: string
-    vulnSnippets: Record<string, string>
-}
-
 function createRtbExport(
   challenges: Record<string, Challenge>,
-  options: RtbExportOptions
+  options: BaseExportSettings
 ) {
   const {
     insertHints,

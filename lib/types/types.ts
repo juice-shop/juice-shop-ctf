@@ -24,7 +24,7 @@ export interface BaseExportSettings {
   insertHintSnippets: typeof options.freeHintSnippets | typeof options.paidHintSnippets | typeof options.noHintSnippets
   ctfKey: string
   outputLocation: string
-  vulnSnippets?: Record<string, string>
+  vulnSnippets: Record<string, string>
   juiceShopUrl: string
 }
 
