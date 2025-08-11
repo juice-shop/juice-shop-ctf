@@ -13,8 +13,8 @@ describe('Code snippets', () => {
   it('should be fetched from the given URL', async () => {
     const snippet = await fetchCodeSnippets({ juiceShopUrl: 'http://localhost:3000' }, {
       fetch: async (url: RequestInfo | URL) => {
-        if (url === 'http://localhost:3000/snippets') {
-          return new Response(JSON.stringify({ challenges: ['c1'] }), {
+        if (url === 'http://localhost:3000/api/challenges') {
+          return new Response(JSON.stringify({ data: [{ key: 'c1', hasCodingChallenge: true }, { key: 'c2', hasCodingChallenge: false }] }), {
             status: 200,
             headers: { 'Content-Type': 'application/json' }
           });
