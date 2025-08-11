@@ -16,4 +16,4 @@ export const options = {
   ctfdFramework: 'CTFd',
   fbctfFramework: 'FBCTF',
   rtbFramework: 'RootTheBox'
-}
+} as const

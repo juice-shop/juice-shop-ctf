@@ -91,9 +91,9 @@ interface ConfigAnswers {
   juiceShopUrl: string
   ctfKey: string
   countryMapping?: string
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
+  insertHints: typeof juiceShopOptions.freeTextHints | typeof juiceShopOptions.paidTextHints | typeof juiceShopOptions.noTextHints
+  insertHintUrls: typeof juiceShopOptions.freeHintUrls | typeof juiceShopOptions.paidHintUrls | typeof juiceShopOptions.noHintUrls
+  insertHintSnippets: typeof juiceShopOptions.freeHintSnippets | typeof juiceShopOptions.paidHintSnippets | typeof juiceShopOptions.noHintSnippets
 }
 
 interface Argv {

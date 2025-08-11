@@ -18,9 +18,6 @@ import * as path from "node:path"
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
 interface RtbExportOptions extends BaseExportSettings {
-    insertHints: string
-    insertHintUrls: string
-    insertHintSnippets: string
     ctfKey: string
     vulnSnippets: Record<string, string>
 }

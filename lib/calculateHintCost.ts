@@ -17,6 +17,8 @@ interface Challenge {
 }
 
 type HintOption = typeof juiceShopOptions.paidTextHints | typeof juiceShopOptions.paidHintUrls | typeof juiceShopOptions.paidHintSnippets
+  | typeof juiceShopOptions.freeTextHints | typeof juiceShopOptions.freeHintUrls | typeof juiceShopOptions.freeHintSnippets
+  | typeof juiceShopOptions.noTextHints | typeof juiceShopOptions.noHintUrls | typeof juiceShopOptions.noHintSnippets
 
 function calculateHintCost ({ difficulty }: Challenge, hintOption: HintOption): number {
   let costMultiplier = 0

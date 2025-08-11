@@ -9,7 +9,6 @@ import hmacSha1 from "../hmac"
 import { options as juiceShopOptions } from '../options'
 import { Challenge, BaseExportSettings, CtfdChallengeData } from '../types/types'
 
-
 function createCtfdExport(
   challenges: { [key: string]: Challenge },
   { insertHints, insertHintUrls, insertHintSnippets, ctfKey, vulnSnippets }: BaseExportSettings
@@ -30,13 +29,13 @@ function createCtfdExport(
 
   function insertChallengeHintCosts (challenge: Challenge): number[] {
     const hintCosts: number[] = []
-    if (challenge.hint && insertHints !== juiceShopOptions.noTextHints) {
+    if (challenge.hint) {
       hintCosts.push(calculateHintCost(challenge, insertHints))
-          }
-    if (challenge.hintUrl && insertHintUrls !== juiceShopOptions.noHintUrls) {
+    }
+    if (challenge.hintUrl) {
       hintCosts.push(calculateHintCost(challenge, insertHintUrls))
-          }
-    if (vulnSnippets && vulnSnippets[challenge.key] && insertHintSnippets !== juiceShopOptions.noHintSnippets) {
+    }
+    if (vulnSnippets && vulnSnippets[challenge.key]) {
       hintCosts.push(calculateHintCost(challenge, insertHintSnippets))
     }
     return hintCosts
