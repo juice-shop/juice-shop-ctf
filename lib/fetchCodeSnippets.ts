@@ -20,13 +20,9 @@ interface SnippetApiResponse {
 }
 
 async function fetchCodeSnippets(
-  options: string | FetchOptions,
+  { juiceShopUrl, ignoreSslWarnings = false, skip = false }: FetchOptions,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<{ [key: string]: string }> {
-  const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl;
-  const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false;
-  const skip = typeof options === 'string' ? false : options.skip || false;
-
   if (skip) {
     return {};
   }
@@ -38,7 +34,7 @@ async function fetchCodeSnippets(
   const fetchOptions: { agent: https.Agent | undefined } = { agent };
 
   try {
-    
+    // this is actually broken. /snippets doesn't exist anymore as a endpoint in JuiceShop, now needs to be determined from the `hasCodingChallenge: true` attribute on the challenge response.
     const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions as any);
 
     if (!challengesResponse.ok) {
@@ -76,4 +72,3 @@ async function fetchCodeSnippets(
 }
 
 export default fetchCodeSnippets;
-

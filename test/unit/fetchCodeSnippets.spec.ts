@@ -11,7 +11,7 @@ const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Code snippets', () => {
   it('should be fetched from the given URL', async () => {
-    const snippet = await fetchCodeSnippets('http://localhost:3000', {
+    const snippet = await fetchCodeSnippets({ juiceShopUrl: 'http://localhost:3000' }, {
       fetch: async (url: RequestInfo | URL) => {
         if (url === 'http://localhost:3000/snippets') {
           return new Response(JSON.stringify({ challenges: ['c1'] }), {
@@ -35,7 +35,7 @@ describe('Code snippets', () => {
 
   it('should log retrieval error to console', async () => {
     await assert.rejects(
-      () => fetchCodeSnippets('http://localh_%&$§rst:3000', {
+      () => fetchCodeSnippets({ juiceShopUrl: 'http://localh_%&$§rst:3000' }, {
         fetch: async (_: RequestInfo | URL) => {
           throw new Error('Argh!');
         }

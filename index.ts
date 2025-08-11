@@ -138,7 +138,7 @@ export default async function juiceShopCtfCli() {
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
       fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false),
-      shouldFetchSnippets ? fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false}) : Promise.resolve({})
+      fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
     ] as const
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
@@ -161,4 +161,3 @@ export default async function juiceShopCtfCli() {
     console.log('Failed to write output to file!', err)
   }
 }
-
