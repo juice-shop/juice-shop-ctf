@@ -29,7 +29,7 @@ export interface BaseExportSettings {
 }
 
 export interface FbctfExportSettings extends BaseExportSettings {
-  countryMapping: Record<string, {code: string, name?: string}>
+  countryMapping: CountryMapping
 }
 
 export interface CountryMapping {
