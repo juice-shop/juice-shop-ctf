@@ -5,14 +5,15 @@
 
 import * as https from 'node:https';
 import yaml from 'js-yaml';
+import type { CountryMapping } from './types/types';
 
 async function fetchCountryMapping(
   challengeMapFile?: string,
   ignoreSslWarnings?: boolean,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
-): Promise<Record<string, any> | undefined> {
+): Promise<CountryMapping> {
   if (!challengeMapFile) {
-    return undefined;
+    return {};
   }
 
   const agent = ignoreSslWarnings

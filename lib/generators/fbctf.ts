@@ -10,7 +10,7 @@ import FBCTF_TEMPLATE from '../../data/fbctfImportTemplate.json'
 import { hash } from 'bcryptjs'
 import { options as juiceShopOptions } from '../options'
 import hmacSha1 from '../hmac'
-import { Challenge, FbctfExportSettings, FbctfTemplate } from '../types/types'
+import type { BaseExportSettings, Challenge, FbctfTemplate } from '../types/types'
 
 interface GenerateRandomString {
   (length: number): string
@@ -49,7 +49,7 @@ async function createFbctfExport(
     ctfKey,
     countryMapping,
     vulnSnippets = {}
-  }: FbctfExportSettings
+  }: BaseExportSettings
 ): Promise<FbctfTemplate> {
   const fbctfTemplate: FbctfTemplate = FBCTF_TEMPLATE
 

@@ -4,13 +4,7 @@
  */
 
 import * as https from "node:https";
-
-interface Challenge {
-  name: string;
-  description: string;
-  category: string;
-  difficulty: number;
-}
+import type { Challenge } from "./types/types";
 
 async function fetchChallenges(
   juiceShopUrl: string,

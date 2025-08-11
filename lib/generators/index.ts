@@ -12,7 +12,7 @@ import { options as juiceShopOptions } from '../options'
 import createCtfdExport from './ctfd'
 import createRtbExport from './rtb'
 import createFbctfExport from './fbctf'
-import { Challenge, BaseExportSettings, FbctfExportSettings } from '../types/types'
+import { Challenge, BaseExportSettings } from '../types/types'
 import { CtfdCsvRow } from '../writeToCtfdCsv'
 
 type CtfFramework = string
@@ -44,11 +44,7 @@ async function generateCTFExport (
   }
 
   async function fbctfExport(): Promise<void> {
-    const fbctfSettings: FbctfExportSettings = {
-      ...settings,
-      countryMapping: settings.countryMapping || {}
-    }
-    const fbctfData = await createFbctfExport(challenges, fbctfSettings)
+    const fbctfData = await createFbctfExport(challenges, settings)
     const fbctfFile: string = await writeToFbctfJson(fbctfData, settings.outputLocation)
 
     console.log('Full Game Export written to ' + colors.green(fbctfFile))

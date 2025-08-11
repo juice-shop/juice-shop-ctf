@@ -26,9 +26,6 @@ export interface BaseExportSettings {
   outputLocation: string
   vulnSnippets: Record<string, string>
   juiceShopUrl: string
-}
-
-export interface FbctfExportSettings extends BaseExportSettings {
   countryMapping: CountryMapping
 }
 

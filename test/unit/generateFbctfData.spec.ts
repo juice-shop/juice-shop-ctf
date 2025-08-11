@@ -9,7 +9,7 @@ import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
 import {options as juiceShopOptions} from '../../lib/options'
 import { CountryMapping } from '../../lib/types/types'
-import { Challenge , FbctfExportSettings } from '../../lib/types/types'
+import { Challenge , BaseExportSettings } from '../../lib/types/types'
 
 interface ChallengeMapping {
   type: string
@@ -68,7 +68,7 @@ const countryMapping: CountryMapping = {
   key1: { code: 'CA' }, 
   key2: { code: 'FR' } 
 }
-const defaultOptions: FbctfExportSettings = { 
+const defaultOptions: BaseExportSettings = { 
   insertHints: juiceShopOptions.noTextHints, 
   insertHintUrls: juiceShopOptions.noHintUrls, 
   insertHintSnippets: juiceShopOptions.noHintSnippets,
@@ -79,8 +79,7 @@ const defaultOptions: FbctfExportSettings = {
   juiceShopUrl: ''
 }
 
-
-const createOptions = (overrides: Partial<FbctfExportSettings> = {}): FbctfExportSettings => ({
+const createOptions = (overrides: Partial<BaseExportSettings> = {}): BaseExportSettings => ({
   ...defaultOptions,
   ...overrides
 })

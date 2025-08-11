@@ -137,50 +137,23 @@ export default async function juiceShopCtfCli() {
     const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
-      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false)
-    ]
-
-    if (shouldFetchSnippets) {
-      fetchOperations.push(
-        fetchCodeSnippets({
-          juiceShopUrl: answers.juiceShopUrl,
-          ignoreSslWarnings: argv.ignoreSslWarnings ?? false
-        }).catch((error: Error): Record<string, unknown> => {
-          console.log(`Warning: ${error.message}`.yellow)
-          return {} // Return empty object on error to continue process
-        })
-      )
-    }
+      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false),
+      shouldFetchSnippets ? fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false}) : Promise.resolve({})
+    ] as const
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
 
-    const snippets = shouldFetchSnippets ? vulnSnippets : []
-
-    const normalizedChallenges = Array.isArray(challenges) 
-      ? challenges 
-      : (challenges ? Object.values(challenges) : []);
-
-    const normalizedCountryMapping = countryMapping && 
-      typeof countryMapping === 'object' && 
-      !Array.isArray(countryMapping)
-        ? countryMapping as Record<string, { code: string; name?: string }>
-        : undefined;
-
-    const normalizedSnippets = shouldFetchSnippets 
-      ? (vulnSnippets as Record<string, string> || {})
-      : {};
-
     await generateCtfExport(
       answers.ctfFramework || juiceShopOptions.ctfdFramework,
-      normalizedChallenges,
+      challenges,
       {
         juiceShopUrl: answers.juiceShopUrl,
         insertHints: answers.insertHints,
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
         ctfKey: fetchedSecretKey as string || '',
-        countryMapping: normalizedCountryMapping,
-        vulnSnippets: normalizedSnippets,
+        countryMapping: countryMapping,
+        vulnSnippets: vulnSnippets,
         outputLocation: argv.output || ''
       }
     );
