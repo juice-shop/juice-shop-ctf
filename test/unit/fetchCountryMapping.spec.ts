@@ -29,9 +29,9 @@ ctf:
     });
   });
 
-  it('should be undefined if no map file URL is given', async () => {
+  it('should be empty if no map file URL is given', async () => {
     const result = await fetchCountryMapping();
-    assert.equal(result, undefined);
+    assert.deepEqual(result, {});
   });
 
   it('should log retrieval error to console', async () => {
