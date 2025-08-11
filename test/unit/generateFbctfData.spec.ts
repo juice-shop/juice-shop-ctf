@@ -36,7 +36,8 @@ const createChallenge = (key: string, name: string, difficulty: number, hint: st
   difficulty,
   category: '1',
   hint,
-  hintUrl
+  hintUrl,
+  hasCodingChallenge: false,
 })
 
 const createChallengeMapping = (

@@ -28,11 +28,11 @@ describe('Generated RTB data', () => {
 
   beforeEach(() => {
     challenges = {
-      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1' },
-      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2' },
-      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2' },
-      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3' },
-      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1' }
+      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1', hasCodingChallenge: false },
+      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2', hasCodingChallenge: false },
+      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2', hasCodingChallenge: false },
+      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3', hasCodingChallenge: false },
+      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1', hasCodingChallenge: false }
     }
   })
 

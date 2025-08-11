@@ -15,6 +15,7 @@ export interface Challenge {
   hintUrl?: string
   tags?: string | null
   id?: number
+  hasCodingChallenge: boolean
   [key: string]: any
 }
 

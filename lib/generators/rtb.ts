@@ -157,7 +157,7 @@ function createRtbExport(
       for (const challenge of challenges) {
         if (category === challenge.category) {
           i += 1
-          insertFlag(challenge as ChallengeForFlag, flags, i)
+          insertFlag(challenge as Challenge, flags, i)
         }
       }
       flags.att({ count: i.toString() })
@@ -179,18 +179,8 @@ function createRtbExport(
     ele: (name: string, attributes?: Record<string, any>) => any
   }
 
-  interface ChallengeForFlag {
-    name: string
-    description: string
-    difficulty: number
-    key: string
-    hint?: string
-    hintUrl?: string
-    category: string
-  }
-
 function insertFlag(
-  challenge: ChallengeForFlag,
+  challenge: Challenge,
   flags: FlagElement,
   order: number
 ): void {
