@@ -178,9 +178,13 @@ insertHintSnippets: paid`)
   assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
 })
 
-  it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
-    fs.openSync(outputFile, 'w', 0o444)
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)
-    assert.match(output, /Failed to write output to file!/i)
-  })
+ it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
+    // Create the output file first
+    fs.writeFileSync(outputFile, '');
+    // Set read-only permissions (no write permission)
+    fs.chmodSync(outputFile, 0o444); 
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000);
+      assert.match(output, /Failed to write output to file!/i);
+   
+  });
 })

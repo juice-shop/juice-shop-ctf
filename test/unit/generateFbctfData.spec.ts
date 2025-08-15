@@ -7,30 +7,9 @@ import { it, describe } from 'node:test'
 import assert from 'node:assert/strict'
 import calculateScore from '../../lib/calculateScore'
 import generateData from "../../lib/generators/fbctf"
-import { noTextHints, noHintUrls , noHintSnippets, freeTextHints, paidTextHints, paidHintUrls } from '../../lib/options'
-
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  category: string
-  hint: string
-  hintUrl: string
-}
-
-interface CountryMapping {
-  [key: string]: { code: string }
-}
-
-interface FbctfOptions {
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
-  ctfKey: string
-  countryMapping: CountryMapping
-  vulnSnippets: Record<string, string>
-}
+import {options as juiceShopOptions} from '../../lib/options'
+import { CountryMapping } from '../../lib/types/types'
+import { Challenge , BaseExportSettings } from '../../lib/types/types'
 
 interface ChallengeMapping {
   type: string
@@ -57,7 +36,8 @@ const createChallenge = (key: string, name: string, difficulty: number, hint: st
   difficulty,
   category: '1',
   hint,
-  hintUrl
+  hintUrl,
+  hasCodingChallenge: false,
 })
 
 const createChallengeMapping = (
@@ -89,17 +69,18 @@ const countryMapping: CountryMapping = {
   key1: { code: 'CA' }, 
   key2: { code: 'FR' } 
 }
-
-const defaultOptions: FbctfOptions = { 
-  insertHints: noTextHints, 
-  insertHintUrls: noHintUrls, 
-  insertHintSnippets: noHintSnippets,
+const defaultOptions: BaseExportSettings = { 
+  insertHints: juiceShopOptions.noTextHints, 
+  insertHintUrls: juiceShopOptions.noHintUrls, 
+  insertHintSnippets: juiceShopOptions.noHintSnippets,
   ctfKey: '', 
   countryMapping, 
-  vulnSnippets: {} 
+  vulnSnippets: {},
+  outputLocation: '',
+  juiceShopUrl: ''
 }
 
-const createOptions = (overrides: Partial<FbctfOptions> = {}): FbctfOptions => ({
+const createOptions = (overrides: Partial<BaseExportSettings> = {}): BaseExportSettings => ({
   ...defaultOptions,
   ...overrides
 })
@@ -124,21 +105,21 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should respect hint insertion options', async () => {
-    const result = await generateData([challenge1], createOptions({ insertHints: freeTextHints }))
+    const result = await generateData([challenge1], createOptions({ insertHints: juiceShopOptions.freeTextHints }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1' }
     ])
   })
 
   it('should respect hint penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], createOptions({ insertHints: paidTextHints }))
+    const result = await generateData([challenge1], createOptions({ insertHints: juiceShopOptions.paidTextHints }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'hint1', penalty: 10 }
     ])
   })
 
   it('should respect hintUrl penalty costs insertion options', async () => {
-    const result = await generateData([challenge1], createOptions({ insertHintUrls: paidHintUrls }))
+    const result = await generateData([challenge1], createOptions({ insertHintUrls: juiceShopOptions.paidHintUrls }))
     assert.deepEqual(result.levels.levels, [
       { ...mapping1, hint: 'https://hint1.com', penalty: 20 }
     ])
@@ -146,8 +127,8 @@ describe('Generated FBCTF data', () => {
 
   it('should merge hint & hintUrl together (considering hint text and penalty)', async () => {
     const result = await generateData([challenge1], createOptions({ 
-      insertHints: paidTextHints, 
-      insertHintUrls: paidHintUrls 
+      insertHints: juiceShopOptions.paidTextHints, 
+      insertHintUrls: juiceShopOptions.paidHintUrls 
     }))
     
     assert.deepEqual(result.levels.levels, [

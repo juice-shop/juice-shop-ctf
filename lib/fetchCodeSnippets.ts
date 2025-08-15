@@ -4,6 +4,7 @@
  */
 
 import * as https from 'https'
+import type { Challenge } from './types/types';
 
 interface FetchOptions {
   juiceShopUrl: string;
@@ -11,19 +12,14 @@ interface FetchOptions {
   skip?: boolean;
 }
 
-interface SnippetsApiResponse {
-  challenges: string[];
-}
-
 interface SnippetApiResponse {
   snippet: string;
 }
 
-async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key: string]: string }> {
-  const juiceShopUrl = typeof options === 'string' ? options : options.juiceShopUrl;
-  const ignoreSslWarnings = typeof options === 'string' ? false : options.ignoreSslWarnings || false;
-  const skip = typeof options === 'string' ? false : options.skip || false;
-
+async function fetchCodeSnippets(
+  { juiceShopUrl, ignoreSslWarnings = false, skip = false }: FetchOptions,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
+): Promise<{ [key: string]: string }> {
   if (skip) {
     return {};
   }
@@ -35,34 +31,32 @@ async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key
   const fetchOptions: { agent: https.Agent | undefined } = { agent };
 
   try {
-    
-    const challengesResponse = await fetch(`${juiceShopUrl}/snippets`, fetchOptions as any);
+    const challengesResponse = await fetch(`${juiceShopUrl}/api/challenges`, fetchOptions as any);
 
     if (!challengesResponse.ok) {
       throw new Error(`Snippets API returned status ${challengesResponse.status}`);
     }
     
-    const responseData = await challengesResponse.json() as SnippetsApiResponse;
+    const { data: challenges} = await challengesResponse.json() as { data: Challenge[]};
     
-    if (!responseData.challenges || !Array.isArray(responseData.challenges)) {
+    if (!challenges || !Array.isArray(challenges)) {
       throw new Error('Invalid challenges format in response');
     }
-    
-    const { challenges } = responseData;
+
+    const challengesWithSnippets = challenges.filter(challenge => challenge.hasCodingChallenge)
+
     const snippets: { [key: string]: string } = {};
     
     // Fetch each snippet
-    for (const challengeKey of challenges) {
-      const snippetRes = await fetch(`${juiceShopUrl}/snippets/${challengeKey}`, fetchOptions as any);
-
-      if (!snippetRes.ok) {
+    for (const challenge of challengesWithSnippets) {
+      const snippetResponse = await fetch(`${juiceShopUrl}/snippets/${challenge.key}`, fetchOptions as any);
+      if (!snippetResponse.ok) {
         continue;
       }
-      
-      const snippetData = await snippetRes.json() as SnippetApiResponse;
-      
+      const snippetData = await snippetResponse.json() as SnippetApiResponse;
+
       if (snippetData.snippet) {
-        snippets[challengeKey] = snippetData.snippet;
+        snippets[challenge.key] = snippetData.snippet;
       }
     }
     
@@ -72,4 +66,4 @@ async function fetchCodeSnippets(options: string | FetchOptions): Promise<{ [key
   }
 }
 
-export = fetchCodeSnippets
+export default fetchCodeSnippets;

@@ -5,7 +5,7 @@
 
 import assert from "node:assert/strict";
 import { describe, it } from "node:test";
-const hmacSha1 = require("../../lib/hmac");
+import hmacSha1 from "../../lib/hmac";
 
 describe("Flag", () => {
   it("should be a SHA256 HMAC from plain text and given secret key", () => {

@@ -5,46 +5,24 @@
 
 import { it, describe, beforeEach } from 'node:test'
 import assert from 'node:assert/strict'
-const generateData = require('../../lib/generators/ctfd')
-import options from '../../lib/options'
+import generateData from '../../lib/generators/ctfd'
+import { options as juiceShopOptions } from '../../lib/options'
+import { BaseExportSettings, CtfdChallengeData } from '../../lib/types/types'
+import { Challenge } from '../../lib/types/types'
 
-interface CtfdChallenge {
-  name: string
-  description: string
-  category: string
-  value: number
-  type: string
-  state: string
-  max_attempts: number
-  flags: string
-  tags: string
-  hints: string
-  type_data: string
-}
-
-const defaultOptions = { insertHints: options.noTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} }
+const defaultOptions: BaseExportSettings = { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} }
 
 describe('Generated CTFd data', () => {
   let challenges: Record<string, Challenge>
 
-interface Challenge {
-  id: number
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  category: string
-  tags: string | null
-  hint?: string
-  hintUrl?: string
-}
+
   beforeEach(() => {
     challenges = {
-      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1', tags: 'foo,bar' },
-      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2', tags: null },
-      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2', tags: 'foo' },
-      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3', tags: null },
-      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1', tags: 'foo,bar,baz' }
+      c1: { id: 1, key: 'k1', name: 'c1', description: 'C1', difficulty: 1, category: '1', tags: 'foo,bar', hasCodingChallenge: false },
+      c2: { id: 2, key: 'k2', name: 'c2', description: 'C2', difficulty: 2, category: '2', tags: null, hasCodingChallenge: false },
+      c3: { id: 3, key: 'k3', name: 'c3', description: 'C3', difficulty: 3, category: '2', tags: 'foo', hasCodingChallenge: false },
+      c4: { id: 4, key: 'k4', name: 'c4', description: 'C4', difficulty: 4, category: '3', tags: null, hasCodingChallenge: false },
+      c5: { id: 5, key: 'k5', name: 'c5', description: 'C5', difficulty: 5, category: '1', tags: 'foo,bar,baz', hasCodingChallenge: false }
     }
   })
 
@@ -65,50 +43,62 @@ interface Challenge {
   })
 
   it('should log generator error to console', async () => {
-    await assert.rejects(() => generateData({ c1: undefined }, defaultOptions), /Failed to generate challenge data! Cannot read properties of undefined/)
-  })
+    const invalidChallenge = { } as Challenge
+    await assert.rejects(() => generateData({ c1: invalidChallenge }, defaultOptions), /Failed to generate challenge data!/  )})
 
   it('should fill the hint property for a single text hint defined on a challenge', async () => {
     challenges.c3.hint = 'hint'
-    const free = await generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.ok(free.some((c: CtfdChallenge) => c.hints.includes('"hint"') && c.hints.includes('0')))
+    const free = await generateData(challenges, { insertHints: juiceShopOptions.freeTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    assert.ok(free.some((c: CtfdChallengeData) => c.hints.includes('"hint"') && c.hints.includes('0')))
 
-    const paid = await generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.noHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.ok(paid.some((c: CtfdChallenge) => c.hints.includes('"hint"') && c.hints.includes('45')))
+    const paid = await generateData(challenges, { insertHints: juiceShopOptions.paidTextHints, insertHintUrls: juiceShopOptions.noHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    assert.ok(paid.some((c: CtfdChallengeData) => c.hints.includes('"hint"') && c.hints.includes('45')))
   })
 
   it('should fill the hint property for a single hint URL defined on a challenge', async () => {
     challenges.c3.hintUrl = 'hintUrl'
-    const free = await generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.ok(free.some((c: CtfdChallenge) => c.hints.includes('"hintUrl"') && c.hints.includes('0')))
-    const paid = await generateData(challenges, { insertHints: options.noTextHints, insertHintUrls: options.paidHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.ok(paid.some((c: CtfdChallenge) => c.hints.includes('"hintUrl"') && c.hints.includes('90')))
+    const free = await generateData(challenges, { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    assert.ok(free.some((c: CtfdChallengeData) => c.hints.includes('"hintUrl"') && c.hints.includes('0')))
+    const paid = await generateData(challenges, { insertHints: juiceShopOptions.noTextHints, insertHintUrls: juiceShopOptions.paidHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    assert.ok(paid.some((c: CtfdChallengeData) => c.hints.includes('"hintUrl"') && c.hints.includes('90')))
   })
 
   it('should push an object each into hints for challenge with both text and URL hint with prerequisite relationship', async () => {
     challenges.c3.hint = 'hint'
     challenges.c3.hintUrl = 'hintUrl'
 
-    const result1 = await generateData(challenges, { insertHints: options.freeTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.match(result1.find((c: CtfdChallenge) => c.name === 'c3').hints, /hint.*hintUrl/)
+    const result1 = await generateData(challenges, { insertHints: juiceShopOptions.freeTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    const challenge1 = result1.find((c: CtfdChallengeData) => c.name === 'c3')
+    assert.ok(challenge1, 'Challenge c3 should exist')
+    assert.match(challenge1.hints, /hint.*hintUrl/)
 
-    const result2 = await generateData(challenges, { insertHints: options.paidTextHints, insertHintUrls: options.freeHintUrls, ctfKey: '', vulnSnippets: {} })
-    assert.match(result2.find((c: CtfdChallenge) => c.name === 'c3').hints, /hint.*hintUrl/)
+    const result2 = await generateData(challenges, { insertHints: juiceShopOptions.paidTextHints, insertHintUrls: juiceShopOptions.freeHintUrls, insertHintSnippets: juiceShopOptions.noHintSnippets, ctfKey: '', outputLocation: '', vulnSnippets: {}, juiceShopUrl: '', countryMapping: {} })
+    const challenge2 = result2.find((c: CtfdChallengeData) => c.name === 'c3')
+    assert.ok(challenge2, 'Challenge c3 should exist')
+    assert.match(challenge2.hints, /hint.*hintUrl/)
   })
 
   it('should not insert a text hint when corresponding hint option is not chosen', async () => {
     challenges.c1.hint = 'hint'
     challenges.c2.hint = 'hint'
     const result = await generateData(challenges, defaultOptions)
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c1').hints, '')
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c2').hints, '')
+    const c1Result = result.find((c: CtfdChallengeData) => c.name === 'c1')
+    const c2Result = result.find((c: CtfdChallengeData) => c.name === 'c2')
+    assert.ok(c1Result, 'Challenge c1 should exist')
+    assert.ok(c2Result, 'Challenge c2 should exist')
+    assert.equal(c1Result.hints, '')
+    assert.equal(c2Result.hints, '')
   })
 
   it('should not insert a hint URL when corresponding hint option is not chosen', async () => {
     challenges.c1.hintUrl = 'hintUrl'
     challenges.c2.hintUrl = 'hintUrl'
     const result = await generateData(challenges, defaultOptions)
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c1').hints, '')
-    assert.equal(result.find((c: CtfdChallenge) => c.name === 'c2').hints, '')
+    const c1Result = result.find((c: CtfdChallengeData) => c.name === 'c1')
+    const c2Result = result.find((c: CtfdChallengeData) => c.name === 'c2')
+    assert.ok(c1Result, 'Challenge c1 should exist')
+    assert.ok(c2Result, 'Challenge c2 should exist')
+    assert.equal(c1Result.hints, '')
+    assert.equal(c2Result.hints, '')
   })
 })

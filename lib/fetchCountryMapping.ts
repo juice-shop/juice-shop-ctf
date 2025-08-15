@@ -3,19 +3,24 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as https from 'https'
-import { options } from 'joi'
-import * as yaml from 'js-yaml'
+import * as https from 'node:https';
+import yaml from 'js-yaml';
+import type { CountryMapping } from './types/types';
 
-async function fetchChallenges(challengeMapFile: string, ignoreSslWarnings: boolean) {
+async function fetchCountryMapping(
+  challengeMapFile?: string,
+  ignoreSslWarnings?: boolean,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
+): Promise<CountryMapping> {
   if (!challengeMapFile) {
-    return Promise.resolve()
+    return {};
   }
 
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
-
+  const options = { agent };
+ 
   try {
     const response = await fetch(challengeMapFile, options as any)
     const text = await response.text()
@@ -26,4 +31,4 @@ async function fetchChallenges(challengeMapFile: string, ignoreSslWarnings: bool
   }
 }
 
-export = fetchChallenges
+export default fetchCountryMapping;

@@ -5,47 +5,42 @@
 
 import assert from "node:assert";
 import { describe, it } from "node:test";
-import rewire from "rewire";
+import fetchCodeSnippets from "../../lib/fetchCodeSnippets";
 
-const fetchCodeSnippets = rewire('../../lib/fetchCodeSnippets').default || rewire('../../lib/fetchCodeSnippets');
-
-const sleep = (ms:number) => new Promise((resolve) => setTimeout(resolve, ms));
+const sleep = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms));
 
 describe('Code snippets', () => {
   it('should be fetched from the given URL', async () => {
-    fetchCodeSnippets.__set__({
-      fetch: async (url:string) => {
-        if (url === 'http://localhost:3000/snippets') {
-          return {
-            ok: true,
-            json: async () => ({ challenges: ['c1'] })
-          };
+    const snippet = await fetchCodeSnippets({ juiceShopUrl: 'http://localhost:3000' }, {
+      fetch: async (url: RequestInfo | URL) => {
+        if (url === 'http://localhost:3000/api/challenges') {
+          return new Response(JSON.stringify({ data: [{ key: 'c1', hasCodingChallenge: true }, { key: 'c2', hasCodingChallenge: false }] }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
         } else if (url === 'http://localhost:3000/snippets/c1') {
           await sleep(10); 
-          return {
-            ok: true,
-            json: async () => ({ snippet: 'function c1 () {}' })
-          };
+          return new Response(JSON.stringify({ snippet: 'function c1 () {}' }), {
+            status: 200,
+            headers: { 'Content-Type': 'application/json' }
+          });
         } else {
           throw new Error('Unexpected request: ' + url);
         }
       }
     });
     
-    const snippet = await fetchCodeSnippets('http://localhost:3000');
     assert.deepEqual(snippet, { c1: 'function c1 () {}' });
   });
 
   it('should log retrieval error to console', async () => {
-    fetchCodeSnippets.__set__({
-      fetch: async () => {
-        throw new Error('Argh!');
-      }
-    });
-    
     await assert.rejects(
-      () => fetchCodeSnippets('http://localh_%&$§rst:3000'),
+      () => fetchCodeSnippets({ juiceShopUrl: 'http://localh_%&$§rst:3000' }, {
+        fetch: async (_: RequestInfo | URL) => {
+          throw new Error('Argh!');
+        }
+      }),
       /Failed to fetch snippet from API! Argh!/  
     );
   });
-});
+}); 

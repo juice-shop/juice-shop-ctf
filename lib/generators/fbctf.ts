@@ -7,12 +7,10 @@ import 'colors'
 import calculateHintCost from '../calculateHintCost'
 import calculateScore from '../calculateScore'
 import FBCTF_TEMPLATE from '../../data/fbctfImportTemplate.json'
-
-const { hash } = require('bcryptjs')
-const { readFile } = require('fs')
-const path = require('path')
-const fbctfOptions = require('../options')
-const hmac = require('../hmac')
+import { hash } from 'bcryptjs'
+import { options as juiceShopOptions } from '../options'
+import hmacSha1 from '../hmac'
+import type { BaseExportSettings, Challenge, FbctfTemplate } from '../types/types'
 
 interface GenerateRandomString {
   (length: number): string
@@ -42,38 +40,7 @@ async function createDummyUser () {
   }
 }
 
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  difficulty: number
-  hint: string
-  hintUrl: string
-}
-
-interface Country {
-  code: string
-}
-
-interface FbctfExportOptions {
-  insertHints: string
-  insertHintUrls: string
-  insertHintSnippets: string
-  ctfKey: string
-  countryMapping: Record<string, Country>
-  vulnSnippets: Record<string, string>
-}
-
-interface FbctfTemplate {
-  teams: {
-    teams: any[]
-  }
-  levels: {
-    levels: any[]
-  }
-}
-
-async function createFbctfExport (
+async function createFbctfExport(
   challenges: Challenge[],
   {
     insertHints,
@@ -81,8 +48,8 @@ async function createFbctfExport (
     insertHintSnippets,
     ctfKey,
     countryMapping,
-    vulnSnippets
-  }: FbctfExportOptions
+    vulnSnippets = {}
+  }: BaseExportSettings
 ): Promise<FbctfTemplate> {
   const fbctfTemplate: FbctfTemplate = FBCTF_TEMPLATE
 
@@ -97,13 +64,13 @@ async function createFbctfExport (
     }
 
     const hintText: string[] = []
-    if (insertHints !== fbctfOptions.noTextHints) {
-      hintText.push(hint)
+    if (insertHints !== juiceShopOptions.noTextHints) {
+      hintText.push(hint ?? '')
     }
-    if (insertHintUrls !== fbctfOptions.noHintUrls) {
-      hintText.push(hintUrl)
+    if (insertHintUrls !== juiceShopOptions.noHintUrls) {
+      hintText.push(hintUrl ?? '')
     }
-    if (insertHintSnippets !== fbctfOptions.noHintSnippets && vulnSnippets[key]) {
+    if (insertHintSnippets !== juiceShopOptions.noHintSnippets && vulnSnippets[key]) {
       hintText.push(vulnSnippets[key])
     }
 
@@ -118,7 +85,7 @@ async function createFbctfExport (
       bonus: 0,
       bonus_dec: 0,
       bonus_fix: 0,
-      flag: hmac(ctfKey, name),
+      flag: hmacSha1(ctfKey, name),
       hint: hintText.join('\n\n'),
       penalty: calculateHintCost({ difficulty }, insertHints) + calculateHintCost({ difficulty }, insertHintUrls) + calculateHintCost({ difficulty }, insertHintSnippets),
       links: [],
@@ -129,4 +96,4 @@ async function createFbctfExport (
   return fbctfTemplate
 }
 
-export = createFbctfExport
+export default createFbctfExport

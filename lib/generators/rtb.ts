@@ -8,36 +8,18 @@ import TurndownService from 'turndown'
 import calculateScore from "../calculateScore"
 import calculateHintCost from "../calculateHintCost"
 import INITIAL_RTB_TEMPLATE from '../../data/rtbImportTemplate.json'
+import { Challenge, BaseExportSettings } from '../types/types'
 
 const turndownService = new TurndownService()
-const hmacSha1 = require('../hmac')
-import * as juiceShopOptions from '../options'
-
-const { readFileSync } = require('fs')
-const path = require('path')
+import hmacSha1 from "../hmac"
+import { options as juiceShopOptions } from '../options'
+import { readFileSync } from "node:fs"
+import * as path from "node:path"
 let rtbTemplate: { categories: { [key: string]: any }, configuration?: any } = { ...INITIAL_RTB_TEMPLATE }
 
-interface Challenge {
-  key: string
-  name: string
-  description: string
-  category: string
-  difficulty: number
-  hint?: string
-  hintUrl?: string
-}
-
-interface RtbExportOptions {
-    insertHints: string
-    insertHintUrls: string
-    insertHintSnippets: string
-    ctfKey: string
-    vulnSnippets: Record<string, string>
-  }
-
-function createRtbExport (
+function createRtbExport(
   challenges: Record<string, Challenge>,
-  options: RtbExportOptions
+  options: BaseExportSettings
 ) {
   const {
     insertHints,
@@ -175,7 +157,7 @@ function createRtbExport (
       for (const challenge of challenges) {
         if (category === challenge.category) {
           i += 1
-          insertFlag(challenge as ChallengeForFlag, flags, i)
+          insertFlag(challenge as Challenge, flags, i)
         }
       }
       flags.att({ count: i.toString() })
@@ -197,18 +179,8 @@ function createRtbExport (
     ele: (name: string, attributes?: Record<string, any>) => any
   }
 
-  interface ChallengeForFlag {
-    name: string
-    description: string
-    difficulty: number
-    key: string
-    hint?: string
-    hintUrl?: string
-    category: string
-  }
-
 function insertFlag(
-  challenge: ChallengeForFlag,
+  challenge: Challenge,
   flags: FlagElement,
   order: number
 ): void {
@@ -326,7 +298,7 @@ function insertCategories(
 
   function loadTemplate() {
   const template = readFileSync(path.join(__dirname, '../../data/rtbImportTemplate.json'))
-  return JSON.parse(template)
+  return JSON.parse(template.toString())
 }
 
 return new Promise((resolve, reject) => {
@@ -355,4 +327,5 @@ return new Promise((resolve, reject) => {
 })
 }
 
-export = createRtbExport
+export default createRtbExport
+

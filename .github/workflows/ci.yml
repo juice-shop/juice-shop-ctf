@@ -28,7 +28,7 @@ jobs:
           node-version: 22
           cache: npm
       - name: "Install application"
-        run: npm install --ignore-scripts
+        run: npm ci --ignore-scripts
       - name: "Lint code"
         run: npm run lint
   test:
@@ -58,7 +58,7 @@ jobs:
             ${{ runner.OS }}-node-
             ${{ runner.OS }}-
       - name: "Install application"
-        run: npm install && npm run build
+        run: npm ci && npm run build
       - name: "Execute unit tests"
         uses: nick-invision/retry@v3
         with:

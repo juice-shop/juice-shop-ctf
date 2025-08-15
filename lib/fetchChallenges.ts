@@ -1,15 +1,15 @@
-import * as https from "https";
+/*
+ * Copyright (c) 2016-2025 Bjoern Kimminich & the OWASP Juice Shop contributors.
+ * SPDX-License-Identifier: MIT
+ */
 
-interface Challenge {
-  name: string;
-  description: string;
-  category: string;
-  difficulty: number;
-}
+import * as https from "node:https";
+import type { Challenge } from "./types/types";
 
 async function fetchChallenges(
   juiceShopUrl: string,
-  ignoreSslWarnings: boolean
+  ignoreSslWarnings: boolean,
+  { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<Challenge[]> {
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
@@ -34,4 +34,6 @@ async function fetchChallenges(
   }
 }
 
-export = fetchChallenges;
+
+export default fetchChallenges;
+
