@@ -3,14 +3,14 @@
  * SPDX-License-Identifier: MIT
  */
 
-import calculateScore from "../calculateScore"
-import calculateHintCost from "../calculateHintCost"
-import hmacSha1 from "../hmac"
+import calculateScore from '../calculateScore'
+import calculateHintCost from '../calculateHintCost'
+import hmacSha1 from '../hmac'
 import { options as juiceShopOptions } from '../options'
-import { Challenge, BaseExportSettings, CtfdChallengeData } from '../types/types'
+import { type Challenge, type BaseExportSettings, type CtfdChallengeData } from '../types/types'
 
-function createCtfdExport(
-  challenges: { [key: string]: Challenge },
+async function createCtfdExport (
+  challenges: Record<string, Challenge>,
   { insertHints, insertHintUrls, insertHintSnippets, ctfKey, vulnSnippets }: BaseExportSettings
 ): Promise<CtfdChallengeData[]> {
   function insertChallengeHints (challenge: Challenge): string[] {
@@ -44,33 +44,33 @@ function createCtfdExport(
   //  In the flags section of the returned data we iterate through the result of string splitting by comma, and compute the hash of the single flag key + challenge name.
   //  Format expected is: challenge3,challenge description,category3,100,dynamic,visible,0,"flag1,flag2,flag3","tag1,tag2,tag3","hint1,hint2,hint3","{""initial"":100, ""minimum"":10, ""decay"":10}"
   //  If we provide a single key with no commas, we do not incapsulate the output in a "" pair.
-  return new Promise<CtfdChallengeData[]>((resolve, reject) => {
+  return await new Promise<CtfdChallengeData[]>((resolve, reject) => {
     try {
       const data: CtfdChallengeData[] = []
       for (const key in challenges) {
         if (Object.prototype.hasOwnProperty.call(challenges, key)) {
-        const challenge = challenges[key]
+          const challenge = challenges[key]
           const row: CtfdChallengeData = {
-          name: challenge.name,
+            name: challenge.name,
             description: `"${challenge.description.replace(/"/g, '""')} (Difficulty Level: ${challenge.difficulty})"`,
-          category: challenge.category,
-          value: calculateScore(challenge.difficulty),
-          type: 'standard',
-          state: 'visible',
-          max_attempts: 0,
+            category: challenge.category,
+            value: calculateScore(challenge.difficulty),
+            type: 'standard',
+            state: 'visible',
+            max_attempts: 0,
             flags: ctfKey.split(',').length === 1 ? hmacSha1(ctfKey, challenge.name) : `"${ctfKey.split(',').map(key => `${hmacSha1(key, challenge.name)}`).join(',')}"`,
-          tags: challenge.tags ? `"${challenge.tags}"` : '',
+            tags: challenge.tags ? `"${challenge.tags}"` : '',
             hints_raw: insertChallengeHints(challenge),
             hint_cost: insertChallengeHintCosts(challenge),
             type_data: '',
             hints: ''
           }
-          const hints: { content: string, cost: number }[] = []
+          const hints: Array<{ content: string, cost: number }> = []
           if (row.hints_raw && row.hints_raw.length !== 0) {
             for (let index = 0; index < row.hints_raw.length; index++) {
               const hint = {
                 content: row.hints_raw[index],
-                cost: row.hint_cost && row.hint_cost[index] !== undefined ? row.hint_cost[index] : 0
+                cost: row.hint_cost?.[index] !== undefined ? row.hint_cost[index] : 0
               }
               hints.push(hint)
             }

@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import writeToCtfdZip from '../writeToCtfdCsv'
+import writeToCtfdZip, { type CtfdCsvRow } from '../writeToCtfdCsv'
 import writeToFbctfJson from '../writeToFbctfJson'
 import writeToRtbXml from '../writeToRtbXml'
 import colors from 'colors'
@@ -12,14 +12,13 @@ import { options as juiceShopOptions } from '../options'
 import createCtfdExport from './ctfd'
 import createRtbExport from './rtb'
 import createFbctfExport from './fbctf'
-import { Challenge, BaseExportSettings } from '../types/types'
-import { CtfdCsvRow } from '../writeToCtfdCsv'
+import { type Challenge, type BaseExportSettings } from '../types/types'
 
 type CtfFramework = string
 type ExportSettings = BaseExportSettings & {
   vulnSnippets?: Record<string, string>
   outputLocation: string
-  countryMapping?: Record<string, {code: string, name?: string}>
+  countryMapping?: Record<string, { code: string, name?: string }>
 }
 
 async function generateCTFExport (
@@ -28,8 +27,8 @@ async function generateCTFExport (
   settings: ExportSettings
 ): Promise<void> {
   settings.vulnSnippets = settings.vulnSnippets || {}
-  
-  async function ctfdExport(): Promise<void> {
+
+  async function ctfdExport (): Promise<void> {
     const challengeObject: Record<string, Challenge> = {}
     challenges.forEach((challenge, index) => {
       challengeObject[`c${index + 1}`] = challenge
@@ -43,7 +42,7 @@ async function generateCTFExport (
     console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_ctfd'.bold)
   }
 
-  async function fbctfExport(): Promise<void> {
+  async function fbctfExport (): Promise<void> {
     const fbctfData = await createFbctfExport(challenges, settings)
     const fbctfFile: string = await writeToFbctfJson(fbctfData, settings.outputLocation)
 
@@ -53,7 +52,7 @@ async function generateCTFExport (
     console.log('https://pwning.owasp-juice.shop/companion-guide/latest/part4/ctf.html#_running_fbctf'.bold)
   }
 
-  async function rtbExport(): Promise<void> {
+  async function rtbExport (): Promise<void> {
     try {
       const challengeObject: Record<string, Challenge> = {}
       challenges.forEach((challenge, index) => {

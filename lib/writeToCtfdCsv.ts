@@ -3,46 +3,42 @@
  * SPDX-License-Identifier: MIT
  */
 
-import dateFormat from "dateformat";
-import fs from "node:fs/promises";
-import * as path from "node:path";
+import dateFormat from 'dateformat'
+import fs from 'node:fs/promises'
+import * as path from 'node:path'
 
-export interface CtfdCsvRow {
-  [key: string]: string | number | boolean | null | undefined;
-}
+export type CtfdCsvRow = Record<string, string | number | boolean | null | undefined>
 
- async function writeToCtfdCsv(
+async function writeToCtfdCsv (
   data: CtfdCsvRow[],
   desiredFileName?: string
 ): Promise<string> {
   const fileName =
     desiredFileName ||
-    "OWASP_Juice_Shop." + dateFormat(new Date(), "yyyy-mm-dd") + ".CTFd.csv";
+    'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd.csv'
 
   try {
-    const csvContent = convertToCSV(data);
-    await fs.writeFile(fileName, csvContent, { encoding: "utf8" });
-    return path.resolve(fileName);
+    const csvContent = convertToCSV(data)
+    await fs.writeFile(fileName, csvContent, { encoding: 'utf8' })
+    return path.resolve(fileName)
   } catch (error) {
     throw new Error(
-      "Failed to write output to file! " + (error as Error)?.message
-    );
+      'Failed to write output to file! ' + (error as Error)?.message
+    )
   }
 }
 
-interface CsvRow {
-  [key: string]: string | number | boolean | null | undefined;
-}
+type CsvRow = Record<string, string | number | boolean | null | undefined>
 
-function convertToCSV(arr: CsvRow[]): string {
-  if (arr.length === 0) return "";
-  const header = Object.keys(arr[0]);
+function convertToCSV (arr: CsvRow[]): string {
+  if (arr.length === 0) return ''
+  const header = Object.keys(arr[0])
   const rows = arr.map((row) =>
-    header.map((field) => String(row[field] ?? ""))
-  );
-  const array = [header, ...rows];
+    header.map((field) => String(row[field] ?? ''))
+  )
+  const array = [header, ...rows]
 
-  return array.map((it: string[]) => it.toString()).join("\n");
+  return array.map((it: string[]) => it.toString()).join('\n')
 }
 
-export default writeToCtfdCsv;
+export default writeToCtfdCsv

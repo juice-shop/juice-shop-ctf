@@ -7,5 +7,4 @@ function isUrl (text: string): boolean {
   return text.match(/^(http|localhost|[0-9][0-9]?[0-9]?\.)/) !== null
 }
 
-
 export default isUrl

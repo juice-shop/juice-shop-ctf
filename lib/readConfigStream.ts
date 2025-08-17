@@ -30,8 +30,8 @@ interface ConfigDoc {
   insertHintSnippets?: string | keyof typeof hintSnippetsMap
 }
 
-function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
-  return new Promise((resolve, reject) => {
+async function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigDoc> {
+  return await new Promise((resolve, reject) => {
     let data = ''
     stream.on('data', (chunk: Buffer | string) => {
       data = data + chunk

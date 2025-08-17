@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { options } from "../options"
+import { type options } from '../options'
 
 export interface Challenge {
   key: string
@@ -30,12 +30,10 @@ export interface BaseExportSettings {
   countryMapping: CountryMapping
 }
 
-export interface CountryMapping {
-  [key: string]: { 
-    code: string
-    name?: string 
-  }
-}
+export type CountryMapping = Record<string, {
+  code: string
+  name?: string
+}>
 
 export interface CtfdChallengeData {
   name: string
@@ -61,4 +59,3 @@ export interface FbctfTemplate {
     levels: any[]
   }
 }
-

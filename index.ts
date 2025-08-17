@@ -103,12 +103,12 @@ interface Argv {
   [key: string]: any
 }
 
-function getConfig (
+async function getConfig (
   argv: Argv,
   questions: Array<Record<string, any>>
 ): Promise<ConfigAnswers> {
   if (argv.config) {
-    return readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
+    return await readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
       ctfFramework: config.ctfFramework ?? juiceShopOptions.ctfdFramework,
       juiceShopUrl: config.juiceShopUrl,
       ctfKey: config.ctfKey,
@@ -118,10 +118,10 @@ function getConfig (
       insertHintSnippets: config.insertHintSnippets
     }))
   }
-  return inquirer.prompt(questions)
+  return await inquirer.prompt(questions)
 }
 
-export default async function juiceShopCtfCli() {
+export default async function juiceShopCtfCli () {
   console.log()
   console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${juiceShopOptions.ctfdFramework.bold}, ${juiceShopOptions.fbctfFramework.bold} or ${juiceShopOptions.rtbFramework.bold} score server`)
 
@@ -151,12 +151,12 @@ export default async function juiceShopCtfCli() {
         insertHints: answers.insertHints,
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
-        ctfKey: fetchedSecretKey as string || '',
-        countryMapping: countryMapping,
-        vulnSnippets: vulnSnippets,
+        ctfKey: fetchedSecretKey! || '',
+        countryMapping,
+        vulnSnippets,
         outputLocation: argv.output || ''
       }
-    );
+    )
   } catch (err) {
     console.log('Failed to write output to file!', err)
   }

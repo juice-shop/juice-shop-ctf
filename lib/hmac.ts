@@ -3,11 +3,9 @@
  * SPDX-License-Identifier: MIT
  */
 
-import jsSHA from "jssha"
+import jsSHA from 'jssha'
 
-interface HmacSha1 {
-  (secretKey: string, text: string): string
-}
+type HmacSha1 = (secretKey: string, text: string) => string
 
 const hmacSha1: HmacSha1 = (secretKey, text) => {
   const shaObj = new jsSHA('SHA-1', 'TEXT') // eslint-disable-line new-cap

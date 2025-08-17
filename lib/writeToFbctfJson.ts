@@ -8,8 +8,7 @@ import fs from 'node:fs/promises'
 import dateFormat from 'dateformat'
 import 'colors'
 
-
-async function writeToFbctfJson(
+async function writeToFbctfJson (
   report: any,
   desiredFileName?: string
 ): Promise<string> {
