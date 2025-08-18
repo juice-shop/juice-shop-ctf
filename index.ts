@@ -15,6 +15,12 @@ import * as fs from 'fs'
 import generateCtfExport from './lib/generators/'
 import yargs from 'yargs'
 
+interface Argv {
+  config?: string
+  output?: string
+  ignoreSslWarnings?: boolean
+}
+
 const argv = yargs
   .option('config', {
     alias: 'c',
@@ -96,13 +102,6 @@ interface ConfigAnswers {
   insertHintSnippets: typeof juiceShopOptions.freeHintSnippets | typeof juiceShopOptions.paidHintSnippets | typeof juiceShopOptions.noHintSnippets
 }
 
-interface Argv {
-  config?: string
-  output?: string
-  ignoreSslWarnings?: boolean
-  [key: string]: any
-}
-
 async function getConfig (
   argv: Argv,
   questions: Array<Record<string, any>>
@@ -121,13 +120,16 @@ async function getConfig (
   return await inquirer.prompt(questions)
 }
 
+function bold (str: string): string {
+  return `\x1b[1m${str}\x1b[22m`
+}
+
 export default async function juiceShopCtfCli (): Promise<void> {
   console.log()
-  // Convert to string before accessing .bold to avoid unbound method errors
-  const ctfdFrameworkString = String(juiceShopOptions.ctfdFramework).bold()
-  const fbctfFrameworkString = String(juiceShopOptions.fbctfFramework).bold()
-  const rtbFrameworkString = String(juiceShopOptions.rtbFramework).bold()
-  console.log(`Generate ${String('OWASP Juice Shop').bold()} challenge archive for setting up ${ctfdFrameworkString}, ${fbctfFrameworkString} or ${rtbFrameworkString} score server`)
+  const ctfdFrameworkString = juiceShopOptions.ctfdFramework.bold
+  const fbctfFrameworkString = juiceShopOptions.fbctfFramework.bold
+  const rtbFrameworkString = juiceShopOptions.rtbFramework.bold
+  console.log(`Generate ${bold('OWASP Juice Shop')} challenge archive for setting up ${bold(juiceShopOptions.ctfdFramework)}, ${bold(juiceShopOptions.fbctfFramework)}, or ${bold(juiceShopOptions.rtbFramework)} score server`)
 
   try {
     const answers = await getConfig(argv, questions)
@@ -161,6 +163,7 @@ export default async function juiceShopCtfCli (): Promise<void> {
       }
     )
   } catch (err) {
-    console.log('Failed to write output to file!', err)
+    const message = err instanceof Error ? err.message : String(err)
+    console.log('Failed to write output to file!'.red, message.red)
   }
 }
