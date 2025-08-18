@@ -19,8 +19,8 @@ async function fetchChallenges (
 
   try {
     const response = await fetch(
-      `${juiceShopUrl}/api/Challenges`,
-      options as any
+  `${juiceShopUrl}/api/Challenges`,
+  options as RequestInit | undefined
     )
 
     if (!response.ok) {

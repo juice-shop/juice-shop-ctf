@@ -31,7 +31,7 @@ async function fetchCodeSnippets (
   const fetchOptions: { agent: https.Agent | undefined } = { agent }
 
   try {
-    const challengesResponse = await fetch(`${juiceShopUrl}/api/challenges`, fetchOptions as any)
+    const challengesResponse = await fetch(`${juiceShopUrl}/api/challenges`, fetchOptions as RequestInit)
 
     if (!challengesResponse.ok) {
       throw new Error(`Snippets API returned status ${challengesResponse.status}`)
@@ -39,7 +39,7 @@ async function fetchCodeSnippets (
 
     const { data: challenges } = await challengesResponse.json() as { data: Challenge[] }
 
-    if (!challenges || !Array.isArray(challenges)) {
+    if (challenges == null || !Array.isArray(challenges)) {
       throw new Error('Invalid challenges format in response')
     }
 
@@ -49,13 +49,13 @@ async function fetchCodeSnippets (
 
     // Fetch each snippet
     for (const challenge of challengesWithSnippets) {
-      const snippetResponse = await fetch(`${juiceShopUrl}/snippets/${challenge.key}`, fetchOptions as any)
+      const snippetResponse = await fetch(`${juiceShopUrl}/snippets/${challenge.key}`, fetchOptions as RequestInit)
       if (!snippetResponse.ok) {
         continue
       }
       const snippetData = await snippetResponse.json() as SnippetApiResponse
 
-      if (snippetData.snippet) {
+      if (snippetData.snippet !== undefined && snippetData.snippet !== '') {
         snippets[challenge.key] = snippetData.snippet
       }
     }

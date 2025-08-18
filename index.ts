@@ -107,7 +107,7 @@ async function getConfig (
   argv: Argv,
   questions: Array<Record<string, any>>
 ): Promise<ConfigAnswers> {
-  if (argv.config) {
+  if (argv.config != null && argv.config !== '') {
     return await readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
       ctfFramework: config.ctfFramework ?? juiceShopOptions.ctfdFramework,
       juiceShopUrl: config.juiceShopUrl,
@@ -121,9 +121,13 @@ async function getConfig (
   return await inquirer.prompt(questions)
 }
 
-export default async function juiceShopCtfCli () {
+export default async function juiceShopCtfCli (): Promise<void> {
   console.log()
-  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${juiceShopOptions.ctfdFramework.bold}, ${juiceShopOptions.fbctfFramework.bold} or ${juiceShopOptions.rtbFramework.bold} score server`)
+  // Convert to string before accessing .bold to avoid unbound method errors
+  const ctfdFrameworkString = String(juiceShopOptions.ctfdFramework).bold()
+  const fbctfFrameworkString = String(juiceShopOptions.fbctfFramework).bold()
+  const rtbFrameworkString = String(juiceShopOptions.rtbFramework).bold()
+  console.log(`Generate ${String('OWASP Juice Shop').bold()} challenge archive for setting up ${ctfdFrameworkString}, ${fbctfFrameworkString} or ${rtbFrameworkString} score server`)
 
   try {
     const answers = await getConfig(argv, questions)
@@ -137,24 +141,23 @@ export default async function juiceShopCtfCli () {
     const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
-      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false),
-      fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
+      fetchCountryMapping(answers.countryMapping !== undefined && answers.countryMapping !== '' ? answers.countryMapping : '', argv.ignoreSslWarnings ?? false), fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
     ] as const
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
 
     await generateCtfExport(
-      answers.ctfFramework || juiceShopOptions.ctfdFramework,
+      answers.ctfFramework ?? juiceShopOptions.ctfdFramework,
       challenges,
       {
         juiceShopUrl: answers.juiceShopUrl,
         insertHints: answers.insertHints,
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
-        ctfKey: fetchedSecretKey! || '',
+        ctfKey: fetchedSecretKey ?? '',
         countryMapping,
         vulnSnippets,
-        outputLocation: argv.output || ''
+        outputLocation: argv.output ?? ''
       }
     )
   } catch (err) {

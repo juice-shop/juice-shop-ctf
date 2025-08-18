@@ -12,17 +12,17 @@ async function fetchCountryMapping (
   ignoreSslWarnings?: boolean,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<CountryMapping> {
-  if (!challengeMapFile) {
+  if (challengeMapFile === undefined || challengeMapFile === '') {
     return {}
   }
 
-  const agent = ignoreSslWarnings
+  const agent = ignoreSslWarnings === true
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
   const options = { agent }
 
   try {
-    const response = await fetch(challengeMapFile, options as any)
+    const response = await fetch(challengeMapFile, options as RequestInit | undefined)
     const text = await response.text()
     const data = yaml.loadAll(text) as any[]
     return data[0].ctf.countryMapping
