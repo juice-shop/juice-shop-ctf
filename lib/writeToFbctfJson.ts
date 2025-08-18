@@ -12,8 +12,9 @@ async function writeToFbctfJson (
   report: any,
   desiredFileName?: string
 ): Promise<string> {
-  const fileName: string = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.FBCTF.json'
-
+  const fileName: string = (desiredFileName !== undefined && desiredFileName !== null && desiredFileName !== '')
+  ? desiredFileName
+  : 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.FBCTF.json'
   try {
     await fs.writeFile(fileName, JSON.stringify(report, null, 2), { encoding: 'utf8' })
     return path.resolve(fileName)
