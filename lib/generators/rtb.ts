@@ -20,7 +20,7 @@ let rtbTemplate: { categories: Record<string, any>, configuration?: any } = { ..
 async function createRtbExport (
   challenges: Record<string, Challenge>,
   options: BaseExportSettings
-) {
+): Promise<string> {
   const {
     insertHints,
     insertHintUrls,
@@ -121,7 +121,7 @@ async function createRtbExport (
     }
   }
 
-  function formatHintURL (challenge: ChallengeWithAll) {
+  function formatHintURL (challenge: ChallengeWithAll): string {
     let hintText = challenge.description
     if (challenge.hintUrl && challenge.hintUrl.includes('#')) {
       const hintUrl = challenge.hintUrl
@@ -294,7 +294,7 @@ async function createRtbExport (
     return sorted
   }
 
-  function loadTemplate () {
+  function loadTemplate (): typeof rtbTemplate {
     const template = readFileSync(path.join(__dirname, '../../data/rtbImportTemplate.json'))
     return JSON.parse(template.toString())
   }

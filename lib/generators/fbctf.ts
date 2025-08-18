@@ -23,7 +23,17 @@ const generateRandomString: GenerateRandomString = function (length: number): st
   return text
 }
 
-async function createDummyUser () {
+async function createDummyUser (): Promise<{
+  name: string
+  active: boolean
+  admin: boolean
+  protected: boolean
+  visible: boolean
+  password_hash: string
+  points: number
+  logo: string
+  data: Record<string, unknown>
+}> {
   const SALT_ROUNDS = 12
   return {
     name: generateRandomString(32),
