@@ -10,14 +10,14 @@ async function fetchSecretKey (
   origin: string | undefined | null,
   ignoreSslWarnings: boolean,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
-) {
+): Promise<string | null | undefined> {
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
 
-  if (origin && isUrl(origin)) {
+  if (origin !== null && origin !== undefined && isUrl(origin)) {
     try {
-      const response = await fetch(origin, { agent } as any)
+      const response = await fetch(origin, { agent } as RequestInit | undefined)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`)

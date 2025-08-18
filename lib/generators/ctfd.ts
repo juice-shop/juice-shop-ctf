@@ -15,27 +15,29 @@ async function createCtfdExport (
 ): Promise<CtfdChallengeData[]> {
   function insertChallengeHints (challenge: Challenge): string[] {
     const hints: string[] = []
-    if (challenge.hint && insertHints !== juiceShopOptions.noTextHints) {
+    if (challenge.hint != null && challenge.hint !== '' && insertHints !== juiceShopOptions.noTextHints) {
       hints.push(challenge.hint.replace(/"/g, '""').replace(/,/g, '٬'))
     }
-    if (challenge.hintUrl && insertHintUrls !== juiceShopOptions.noHintUrls) {
+    if (challenge.hintUrl != null && challenge.hintUrl !== '' && insertHintUrls !== juiceShopOptions.noHintUrls) {
       hints.push(challenge.hintUrl)
     }
-    if (vulnSnippets && vulnSnippets[challenge.key] && insertHintSnippets !== juiceShopOptions.noHintSnippets) {
-      hints.push('<pre><code>' + vulnSnippets[challenge.key].replace(/"/g, '""').replace(/,/g, '٬') + '</code></pre>')
+    const snippet = vulnSnippets?.[challenge.key]
+    if (snippet != null && snippet !== '' && insertHintSnippets !== juiceShopOptions.noHintSnippets) {
+      hints.push('<pre><code>' + snippet.replace(/"/g, '""').replace(/,/g, '٬') + '</code></pre>')
     }
     return hints
   }
 
   function insertChallengeHintCosts (challenge: Challenge): number[] {
     const hintCosts: number[] = []
-    if (challenge.hint) {
+    if (challenge.hint != null && challenge.hint !== '') {
       hintCosts.push(calculateHintCost(challenge, insertHints))
     }
-    if (challenge.hintUrl) {
+    if (challenge.hintUrl != null && challenge.hintUrl !== '') {
       hintCosts.push(calculateHintCost(challenge, insertHintUrls))
     }
-    if (vulnSnippets && vulnSnippets[challenge.key]) {
+    const snippet = vulnSnippets?.[challenge.key]
+    if (snippet != null && snippet !== '') {
       hintCosts.push(calculateHintCost(challenge, insertHintSnippets))
     }
     return hintCosts
@@ -59,18 +61,18 @@ async function createCtfdExport (
             state: 'visible',
             max_attempts: 0,
             flags: ctfKey.split(',').length === 1 ? hmacSha1(ctfKey, challenge.name) : `"${ctfKey.split(',').map(key => `${hmacSha1(key, challenge.name)}`).join(',')}"`,
-            tags: challenge.tags ? `"${challenge.tags}"` : '',
+            tags: (challenge.tags != null && challenge.tags !== '') ? `"${challenge.tags}"` : '',
             hints_raw: insertChallengeHints(challenge),
             hint_cost: insertChallengeHintCosts(challenge),
             type_data: '',
             hints: ''
           }
           const hints: Array<{ content: string, cost: number }> = []
-          if (row.hints_raw && row.hints_raw.length !== 0) {
+          if (Array.isArray(row.hints_raw) && row.hints_raw.length > 0) {
             for (let index = 0; index < row.hints_raw.length; index++) {
               const hint = {
                 content: row.hints_raw[index],
-                cost: row.hint_cost?.[index] !== undefined ? row.hint_cost[index] : 0
+                cost: Array.isArray(row.hint_cost) && row.hint_cost[index] !== undefined ? row.hint_cost[index] : 0
               }
               hints.push(hint)
             }
@@ -86,7 +88,8 @@ async function createCtfdExport (
       }
       resolve(data)
     } catch (error) {
-      reject(new Error(`Failed to generate challenge data! ${error}`))
+      const message = error instanceof Error ? error.message : String(error)
+      reject(new Error(`Failed to generate challenge data! ${message}`))
     }
   })
 }
