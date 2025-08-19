@@ -15,8 +15,8 @@ async function writeToCtfdCsv (
 ): Promise<string> {
   const fileName =
     desiredFileName !== undefined && desiredFileName !== null && desiredFileName !== ''
-    ? desiredFileName
-    : 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd.csv'
+      ? desiredFileName
+      : 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.CTFd.csv'
 
   try {
     const csvContent = convertToCSV(data)

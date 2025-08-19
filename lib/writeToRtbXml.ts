@@ -12,9 +12,9 @@ async function writeToRtbXml (
   report: string | object,
   desiredFileName?: string
 ): Promise<string> {
-  const fileName: strconst fileName: string = (desiredFileName !== undefined && desiredFileName !== null && desiredFileName !== '')
-  ? desiredFileName
-  : 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'ing = desiredFileName || 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
+  const fileName: string = (desiredFileName !== undefined && desiredFileName !== null && desiredFileName !== '')
+    ? desiredFileName
+    : 'OWASP_Juice_Shop.' + dateFormat(new Date(), 'yyyy-mm-dd') + '.RTB.xml'
 
   const xmlContent: string = typeof report === 'string' ? report : JSON.stringify(report, null, 2)
 
