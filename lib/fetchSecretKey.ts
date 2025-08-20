@@ -17,7 +17,8 @@ async function fetchSecretKey (
 
   if (origin !== null && origin !== undefined && isUrl(origin)) {
     try {
-      const response = await fetch(origin, { agent } as RequestInit | undefined)
+      const options = { agent }
+      const response = await fetch(origin, options as RequestInit | undefined)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch: ${response.status}`)
