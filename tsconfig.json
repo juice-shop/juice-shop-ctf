@@ -9,7 +9,8 @@
     "forceConsistentCasingInFileNames": true,
     "downlevelIteration": true,
     "skipLibCheck": true,
-    "resolveJsonModule": true
+    "resolveJsonModule": true,
+    "erasableSyntaxOnly": true
   },
   "include": ["index.ts", "bin", "lib", "test/**/*.ts", "data/*.json"]
 }
