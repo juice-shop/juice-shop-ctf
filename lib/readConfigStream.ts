@@ -34,20 +34,40 @@ async function readConfigStream (stream: NodeJS.ReadableStream): Promise<ConfigD
   return await new Promise((resolve, reject) => {
     let data = ''
     stream.on('data', (chunk: Buffer | string) => {
-      data = data + chunk
+      data += chunk.toString()
     })
     stream.on('end', () => {
       try {
         yaml.loadAll(data, (doc: unknown) => {
           const validation = schema.validate(doc)
-          if (validation.error) {
+          if (validation.error !== undefined && validation.error !== null) {
             reject(validation.error)
-          } else {
+          } else if (validation.value !== undefined && validation.value !== null) {
             const result = validation.value as ConfigDoc
-            result.insertHints = hintsMap[result.insertHints as keyof typeof hintsMap]
-            result.insertHintUrls = result.insertHintUrls ? hintUrlsMap[result.insertHintUrls as keyof typeof hintUrlsMap] : options.noHintUrls
-            result.insertHintSnippets = result.insertHintSnippets ? hintSnippetsMap[result.insertHintSnippets as keyof typeof hintSnippetsMap] : options.noHintSnippets
+            result.insertHints =
+              result.insertHints !== undefined &&
+              result.insertHints !== null &&
+              result.insertHints !== ''
+                ? hintsMap[result.insertHints as keyof typeof hintsMap]
+                : options.noTextHints
+
+            result.insertHintUrls =
+              result.insertHintUrls !== undefined &&
+              result.insertHintUrls !== null &&
+              result.insertHintUrls !== ''
+                ? hintUrlsMap[result.insertHintUrls as keyof typeof hintUrlsMap]
+                : options.noHintUrls
+
+            result.insertHintSnippets =
+              result.insertHintSnippets !== undefined &&
+              result.insertHintSnippets !== null &&
+              result.insertHintSnippets !== ''
+                ? hintSnippetsMap[result.insertHintSnippets as keyof typeof hintSnippetsMap]
+                : options.noHintSnippets
+
             resolve(result)
+          } else {
+            reject(new Error('Config validation returned null or undefined'))
           }
         })
       } catch (error) {
