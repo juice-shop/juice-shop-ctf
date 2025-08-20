@@ -55,7 +55,7 @@ async function createRtbExport (
   }
 
   function getDescription (category: string): string {
-    if (!rtbTemplate.categories[category]) {
+    if (rtbTemplate.categories[category] === undefined || rtbTemplate.categories[category] === null) {
       return category
     }
     return (rtbTemplate.categories[category] as CategoryTemplate).description
@@ -67,7 +67,7 @@ async function createRtbExport (
   }
 
   function getImage (category: string): string {
-    if (!rtbTemplate.categories[category]) {
+    if (rtbTemplate.categories[category] === undefined || rtbTemplate.categories[category] === null) {
       category = 'Miscellaneous'
     }
     return (rtbTemplate.categories[category] as Category).image
@@ -75,6 +75,7 @@ async function createRtbExport (
 
   interface FlagElement {
     ele: (name: string, attributes?: Record<string, any>) => any
+    att: (name: string, value: string) => any
   }
 
   interface ChallengeWithAll extends Challenge {
@@ -100,7 +101,9 @@ async function createRtbExport (
       let count = 0
       if (includeHint) {
         const hint = hints.ele('hint')
-        hint.ele('description', turndownService.turndown(challenge.hint!))
+        if (typeof challenge.hint === 'string') {
+          hint.ele('description', turndownService.turndown(challenge.hint))
+        }
         hint.ele('price', calculateHintCost(challenge, insertHints))
         count += 1
       }
@@ -123,7 +126,7 @@ async function createRtbExport (
 
   function formatHintURL (challenge: ChallengeWithAll): string {
     let hintText = challenge.description
-    if (challenge.hintUrl && challenge.hintUrl.includes('#')) {
+    if (challenge.hintUrl !== undefined && challenge.hintUrl !== null && challenge.hintUrl !== '' && challenge.hintUrl.includes('#')) {
       const hintUrl = challenge.hintUrl
       hintText = hintUrl.substring(hintUrl.lastIndexOf('#') + 1, hintUrl.length).replace(/-/g, ' ')
       hintText = hintText.replace(/\b[a-z]|['_][a-z]|\B[A-Z]/g, function (x) {
@@ -152,7 +155,7 @@ async function createRtbExport (
     box.ele('category', category)
     box.ele('description', getDescription(category))
     box.ele('avatar', getImage(category))
-    const flags = box.ele('flags')
+    const flags = box.ele('flags') as FlagElement
     let i = 0
     for (const challenge of challenges) {
       if (category === challenge.category) {
@@ -160,7 +163,7 @@ async function createRtbExport (
         insertFlag(challenge as Challenge, flags, i)
       }
     }
-    flags.att({ count: i.toString() })
+    flags.att('count', i.toString())
   }
 
   type DifficultyText = (value: number) => string
@@ -193,7 +196,7 @@ async function createRtbExport (
     flag.ele('token', hmacSha1(ctfKey, challenge.name))
     flag.ele('value', calculateScore(challenge.difficulty))
     flag.ele('order', order.toString())
-    insertHint(challenge, flag)
+    insertHint(challenge, flag as FlagElement)
   }
 
   interface ChallengeCategory {
@@ -216,9 +219,8 @@ async function createRtbExport (
     }
     if (categories.size > 0) {
       const categoriesXml = xmlRTB.ele('categories', { count: categories.size })
-      // Convert to Array first
       Array.from(categories).forEach(category => {
-        categoriesXml.ele('category').ele('category', category as any)
+        categoriesXml.ele('category').ele('category', { name: category })
       })
       categoriesXml.up()
     }
