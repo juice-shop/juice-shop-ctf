@@ -66,7 +66,7 @@ async function createFbctfExport (
   // Add all challenges
   fbctfTemplate.levels.levels = challenges.map(({ key, name, description, difficulty, hint, hintUrl }) => {
     const country = countryMapping[key]
-    if (!country) {
+    if (country === undefined || country === null) {
       console.warn(`Challenge "${name}" does not have a country mapping and will not appear in the CTF game!`.yellow)
       return false
     }
@@ -78,7 +78,10 @@ async function createFbctfExport (
     if (insertHintUrls !== juiceShopOptions.noHintUrls) {
       hintText.push(hintUrl ?? '')
     }
-    if (insertHintSnippets !== juiceShopOptions.noHintSnippets && vulnSnippets[key]) {
+    if (insertHintSnippets !== juiceShopOptions.noHintSnippets &&
+      typeof vulnSnippets[key] === 'string' &&
+      vulnSnippets[key] !== ''
+    ) {
       hintText.push(vulnSnippets[key])
     }
 
