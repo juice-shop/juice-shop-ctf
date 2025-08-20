@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'colors' // no assignment necessary as this module extends the String prototype
+import colors from 'colors' // no assignment necessary as this module extends the String prototype
 import inquirer from 'inquirer'
 import fetchSecretKey from './lib/fetchSecretKey'
 import fetchChallenges from './lib/fetchChallenges'
@@ -40,7 +40,7 @@ const argv = yargs
   .help()
   .argv as Argv
 
-const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
+const DEFAULT_JUICE_SHOP_URL = 'http://localhost:3000/'
 
 const questions = [
   {
@@ -120,16 +120,9 @@ async function getConfig (
   return await inquirer.prompt(questions)
 }
 
-function bold (str: string): string {
-  return `\x1b[1m${str}\x1b[22m`
-}
-
 export default async function juiceShopCtfCli (): Promise<void> {
   console.log()
-  const ctfdFrameworkString = juiceShopOptions.ctfdFramework.bold
-  const fbctfFrameworkString = juiceShopOptions.fbctfFramework.bold
-  const rtbFrameworkString = juiceShopOptions.rtbFramework.bold
-  console.log(`Generate ${bold('OWASP Juice Shop')} challenge archive for setting up ${bold(juiceShopOptions.ctfdFramework)}, ${bold(juiceShopOptions.fbctfFramework)}, or ${bold(juiceShopOptions.rtbFramework)} score server`)
+  console.log(`Generate ${colors.bold('OWASP Juice Shop')} challenge archive for setting up ${colors.bold(juiceShopOptions.ctfdFramework)}, ${colors.bold(juiceShopOptions.fbctfFramework)}, or ${colors.bold(juiceShopOptions.rtbFramework)} score server`)
 
   try {
     const answers = await getConfig(argv, questions)
