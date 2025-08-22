@@ -7,4 +7,4 @@
 
 import juiceShopCtfCli from '../index'
 
-juiceShopCtfCli()
+void juiceShopCtfCli()

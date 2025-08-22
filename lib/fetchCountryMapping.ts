@@ -3,26 +3,26 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as https from 'node:https';
-import yaml from 'js-yaml';
-import type { CountryMapping } from './types/types';
+import * as https from 'node:https'
+import yaml from 'js-yaml'
+import type { CountryMapping } from './types/types'
 
-async function fetchCountryMapping(
+async function fetchCountryMapping (
   challengeMapFile?: string,
   ignoreSslWarnings?: boolean,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<CountryMapping> {
-  if (!challengeMapFile) {
-    return {};
+  if (challengeMapFile === undefined || challengeMapFile === '') {
+    return {}
   }
 
-  const agent = ignoreSslWarnings
+  const agent = ignoreSslWarnings === true
     ? new https.Agent({ rejectUnauthorized: false })
     : undefined
-  const options = { agent };
- 
+  const options = { agent }
+
   try {
-    const response = await fetch(challengeMapFile, options as any)
+    const response = await fetch(challengeMapFile, options as RequestInit | undefined)
     const text = await response.text()
     const data = yaml.loadAll(text) as any[]
     return data[0].ctf.countryMapping
@@ -31,4 +31,4 @@ async function fetchCountryMapping(
   }
 }
 
-export default fetchCountryMapping;
+export default fetchCountryMapping

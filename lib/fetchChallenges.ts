@@ -3,37 +3,35 @@
  * SPDX-License-Identifier: MIT
  */
 
-import * as https from "node:https";
-import type { Challenge } from "./types/types";
+import * as https from 'node:https'
+import type { Challenge } from './types/types'
 
-async function fetchChallenges(
+async function fetchChallenges (
   juiceShopUrl: string,
   ignoreSslWarnings: boolean,
   { fetch = globalThis.fetch } = { fetch: globalThis.fetch }
 ): Promise<Challenge[]> {
   const agent = ignoreSslWarnings
     ? new https.Agent({ rejectUnauthorized: false })
-    : undefined;
+    : undefined
 
-  const options = { agent };
+  const options = { agent }
 
   try {
     const response = await fetch(
-      `${juiceShopUrl}/api/Challenges`,
-      options as any
-    );
+  `${juiceShopUrl}/api/Challenges`,
+  options as RequestInit | undefined
+    )
 
     if (!response.ok) {
-      throw new Error(`HTTP error! status: ${response.status}`);
+      throw new Error(`HTTP error! status: ${response.status}`)
     }
 
-    const json = (await response.json()) as { data: Challenge[] };
-    return json.data;
+    const json = (await response.json()) as { data: Challenge[] }
+    return json.data
   } catch (err: any) {
-    throw new Error("Failed to fetch challenges from API! Argh!" + err.message);
+    throw new Error('Failed to fetch challenges from API! Argh!' + err.message)
   }
 }
 
-
-export default fetchChallenges;
-
+export default fetchChallenges

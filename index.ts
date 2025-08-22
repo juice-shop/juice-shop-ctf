@@ -3,7 +3,7 @@
  * SPDX-License-Identifier: MIT
  */
 
-import 'colors' // no assignment necessary as this module extends the String prototype
+import colors from 'colors' // no assignment necessary as this module extends the String prototype
 import inquirer from 'inquirer'
 import fetchSecretKey from './lib/fetchSecretKey'
 import fetchChallenges from './lib/fetchChallenges'
@@ -14,6 +14,12 @@ import { options as juiceShopOptions } from './lib/options'
 import * as fs from 'fs'
 import generateCtfExport from './lib/generators/'
 import yargs from 'yargs'
+
+interface Argv {
+  config?: string
+  output?: string
+  ignoreSslWarnings?: boolean
+}
 
 const argv = yargs
   .option('config', {
@@ -34,7 +40,7 @@ const argv = yargs
   .help()
   .argv as Argv
 
-const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
+const DEFAULT_JUICE_SHOP_URL = 'http://localhost:3000/'
 
 const questions = [
   {
@@ -96,19 +102,12 @@ interface ConfigAnswers {
   insertHintSnippets: typeof juiceShopOptions.freeHintSnippets | typeof juiceShopOptions.paidHintSnippets | typeof juiceShopOptions.noHintSnippets
 }
 
-interface Argv {
-  config?: string
-  output?: string
-  ignoreSslWarnings?: boolean
-  [key: string]: any
-}
-
-function getConfig (
+async function getConfig (
   argv: Argv,
   questions: Array<Record<string, any>>
 ): Promise<ConfigAnswers> {
-  if (argv.config) {
-    return readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
+  if (argv.config != null && argv.config !== '') {
+    return await readConfigStream(fs.createReadStream(argv.config)).then((config: any) => ({
       ctfFramework: config.ctfFramework ?? juiceShopOptions.ctfdFramework,
       juiceShopUrl: config.juiceShopUrl,
       ctfKey: config.ctfKey,
@@ -118,12 +117,12 @@ function getConfig (
       insertHintSnippets: config.insertHintSnippets
     }))
   }
-  return inquirer.prompt(questions)
+  return await inquirer.prompt(questions)
 }
 
-export default async function juiceShopCtfCli() {
+export default async function juiceShopCtfCli (): Promise<void> {
   console.log()
-  console.log(`Generate ${'OWASP Juice Shop'.bold} challenge archive for setting up ${juiceShopOptions.ctfdFramework.bold}, ${juiceShopOptions.fbctfFramework.bold} or ${juiceShopOptions.rtbFramework.bold} score server`)
+  console.log(`Generate ${colors.bold('OWASP Juice Shop')} challenge archive for setting up ${colors.bold(juiceShopOptions.ctfdFramework)}, ${colors.bold(juiceShopOptions.fbctfFramework)}, or ${colors.bold(juiceShopOptions.rtbFramework)} score server`)
 
   try {
     const answers = await getConfig(argv, questions)
@@ -137,27 +136,27 @@ export default async function juiceShopCtfCli() {
     const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
-      fetchCountryMapping(answers.countryMapping ?? '', argv.ignoreSslWarnings ?? false),
-      fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
+      fetchCountryMapping(answers.countryMapping !== undefined && answers.countryMapping !== '' ? answers.countryMapping : '', argv.ignoreSslWarnings ?? false), fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
     ] as const
 
     const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
 
     await generateCtfExport(
-      answers.ctfFramework || juiceShopOptions.ctfdFramework,
+      answers.ctfFramework ?? juiceShopOptions.ctfdFramework,
       challenges,
       {
         juiceShopUrl: answers.juiceShopUrl,
         insertHints: answers.insertHints,
         insertHintUrls: answers.insertHintUrls,
         insertHintSnippets: answers.insertHintSnippets,
-        ctfKey: fetchedSecretKey as string || '',
-        countryMapping: countryMapping,
-        vulnSnippets: vulnSnippets,
-        outputLocation: argv.output || ''
+        ctfKey: fetchedSecretKey ?? '',
+        countryMapping,
+        vulnSnippets,
+        outputLocation: argv.output ?? ''
       }
-    );
+    )
   } catch (err) {
-    console.log('Failed to write output to file!', err)
+    const message = err instanceof Error ? err.message : String(err)
+    console.log('Failed to write output to file!'.red, message.red)
   }
 }

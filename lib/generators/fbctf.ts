@@ -12,9 +12,7 @@ import { options as juiceShopOptions } from '../options'
 import hmacSha1 from '../hmac'
 import type { BaseExportSettings, Challenge, FbctfTemplate } from '../types/types'
 
-interface GenerateRandomString {
-  (length: number): string
-}
+type GenerateRandomString = (length: number) => string
 
 const generateRandomString: GenerateRandomString = function (length: number): string {
   let text = ''
@@ -25,7 +23,17 @@ const generateRandomString: GenerateRandomString = function (length: number): st
   return text
 }
 
-async function createDummyUser () {
+async function createDummyUser (): Promise<{
+  name: string
+  active: boolean
+  admin: boolean
+  protected: boolean
+  visible: boolean
+  password_hash: string
+  points: number
+  logo: string
+  data: Record<string, unknown>
+}> {
   const SALT_ROUNDS = 12
   return {
     name: generateRandomString(32),
@@ -40,7 +48,7 @@ async function createDummyUser () {
   }
 }
 
-async function createFbctfExport(
+async function createFbctfExport (
   challenges: Challenge[],
   {
     insertHints,
@@ -58,7 +66,7 @@ async function createFbctfExport(
   // Add all challenges
   fbctfTemplate.levels.levels = challenges.map(({ key, name, description, difficulty, hint, hintUrl }) => {
     const country = countryMapping[key]
-    if (!country) {
+    if (country === undefined || country === null) {
       console.warn(`Challenge "${name}" does not have a country mapping and will not appear in the CTF game!`.yellow)
       return false
     }
@@ -70,7 +78,10 @@ async function createFbctfExport(
     if (insertHintUrls !== juiceShopOptions.noHintUrls) {
       hintText.push(hintUrl ?? '')
     }
-    if (insertHintSnippets !== juiceShopOptions.noHintSnippets && vulnSnippets[key]) {
+    if (insertHintSnippets !== juiceShopOptions.noHintSnippets &&
+      typeof vulnSnippets[key] === 'string' &&
+      vulnSnippets[key] !== ''
+    ) {
       hintText.push(vulnSnippets[key])
     }
 
