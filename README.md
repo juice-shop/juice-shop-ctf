@@ -25,7 +25,7 @@ you to populate a CTF game server in a matter of minutes.
 The following open source CTF frameworks are supported by
 `juice-shop-ctf-cli`:
 
-* [CTFd](https://github.com/CTFd/CTFd) (3.6 or higher)
+* [CTFd](https://github.com/CTFd/CTFd) (3.7 or higher)
 * [RootTheBox](https://github.com/moloch--/RootTheBox) (3.3 or higher)
 * [FBCTF](https://github.com/facebook/fbctf)
 
