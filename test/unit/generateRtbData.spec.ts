@@ -77,7 +77,7 @@ describe('Generated RTB data', () => {
     assert.ok(typeof free === 'string')
     assert.match(free, /<flag type="static">\s{15}<name>c3<\/name>[^]*<hints count="1">\s{17}<hint>\s{19}<description>h3a<\/description>\s{19}<price>0<\/price>/)
 
-    const paid = await generateData(challenges, {
+    const paid = await generateData(challenges, [{ id: 4, ChallengeId: 3, order: 1, text: 'h3a', unlocked: false}], {
       insertHints: juiceShopOptions.paidHints,
       ctfKey: ''
     })

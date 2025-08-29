@@ -81,7 +81,7 @@ async function createFbctfExport (
       bonus_dec: 0,
       bonus_fix: 0,
       flag: hmacSha1(ctfKey, name),
-      hint: insertHints !== juiceShopOptions.noHints ? hints.filter(hint => hint.ChallengeId === id).join('\n\n') : '',
+      hint: insertHints !== juiceShopOptions.noHints ? hints.filter(hint => hint.ChallengeId === id).map(hint => hint.text).join('\n\n') : '',
       penalty: calculateHintCost({ difficulty }, insertHints) * hints.filter(hint => hint.ChallengeId === id).length,
       links: [],
       attachments: []

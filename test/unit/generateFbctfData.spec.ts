@@ -29,7 +29,8 @@ interface ChallengeMapping {
   attachments: any[]
 }
 
-const createChallenge = (key: string, name: string, difficulty: number): Challenge => ({
+const createChallenge = (id: number, key: string, name: string, difficulty: number): Challenge => ({
+  id,
   key,
   name,
   description: name.toUpperCase(),
@@ -81,8 +82,8 @@ const createOptions = (overrides: Partial<BaseExportSettings> = {}): BaseExportS
 })
 
 describe('Generated FBCTF data', () => {
-  const challenge1 = createChallenge('key1', 'c1', 1)
-  const challenge2 = createChallenge('key2', 'c2', 3)
+  const challenge1 = createChallenge(1, 'key1', 'c1', 1)
+  const challenge2 = createChallenge(2, 'key2', 'c2', 3)
 
   const hint1a = { ChallengeId: 1, text: 'h1a', id: 1, order: 1, unlocked: false }
   const hint1b = { ChallengeId: 1, text: 'h1b', id: 1, order: 2, unlocked: false }
@@ -96,7 +97,7 @@ describe('Generated FBCTF data', () => {
   })
 
   it('should not add challenges without a country mapping', async () => {
-    const unmapped = createChallenge('unmapped', 'c3', 2)
+    const unmapped = createChallenge(1, 'unmapped', 'c3', 2)
 
     const result = await generateData([challenge1, unmapped], [], createOptions())
     assert.deepEqual(result.levels.levels, [mapping1])
