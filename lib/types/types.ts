@@ -11,21 +11,24 @@ export interface Challenge {
   description: string
   difficulty: number
   category: string
-  hint?: string
-  hintUrl?: string
   tags?: string | null
   id?: number
   hasCodingChallenge: boolean
   [key: string]: any
 }
 
+export interface Hint {
+  ChallengeId: number
+  id: number
+  text: string
+  order: number
+  unlocked: boolean
+}
+
 export interface BaseExportSettings {
-  insertHints: typeof options.freeTextHints | typeof options.paidTextHints | typeof options.noTextHints
-  insertHintUrls: typeof options.freeHintUrls | typeof options.paidHintUrls | typeof options.noHintUrls
-  insertHintSnippets: typeof options.freeHintSnippets | typeof options.paidHintSnippets | typeof options.noHintSnippets
+  insertHints: typeof options.freeHints | typeof options.paidHints | typeof options.noHints
   ctfKey: string
   outputLocation: string
-  vulnSnippets: Record<string, string>
   juiceShopUrl: string
   countryMapping: CountryMapping
 }

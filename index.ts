@@ -7,8 +7,8 @@ import colors from 'colors' // no assignment necessary as this module extends th
 import inquirer from 'inquirer'
 import fetchSecretKey from './lib/fetchSecretKey'
 import fetchChallenges from './lib/fetchChallenges'
+import fetchHints from './lib/fetchHints'
 import fetchCountryMapping from './lib/fetchCountryMapping'
-import fetchCodeSnippets from './lib/fetchCodeSnippets'
 import readConfigStream from './lib/readConfigStream'
 import { options as juiceShopOptions } from './lib/options'
 import * as fs from 'fs'
@@ -72,22 +72,8 @@ const questions = [
   {
     type: 'list',
     name: 'insertHints',
-    message: 'Insert a text hint along with each challenge?',
-    choices: [juiceShopOptions.noTextHints, juiceShopOptions.freeTextHints, juiceShopOptions.paidTextHints],
-    default: 0
-  },
-  {
-    type: 'list',
-    name: 'insertHintUrls',
-    message: 'Insert a hint URL along with each challenge?',
-    choices: [juiceShopOptions.noHintUrls, juiceShopOptions.freeHintUrls, juiceShopOptions.paidHintUrls],
-    default: 0
-  },
-  {
-    type: 'list',
-    name: 'insertHintSnippets',
-    message: 'Insert a code snippet as hint for each challenge?',
-    choices: [juiceShopOptions.noHintSnippets, juiceShopOptions.freeHintSnippets, juiceShopOptions.paidHintSnippets],
+    message: 'Insert a list of hints along with each challenge?',
+    choices: [juiceShopOptions.noHints, juiceShopOptions.freeHints, juiceShopOptions.paidHints],
     default: 0
   }
 ]
@@ -97,9 +83,7 @@ interface ConfigAnswers {
   juiceShopUrl: string
   ctfKey: string
   countryMapping?: string
-  insertHints: typeof juiceShopOptions.freeTextHints | typeof juiceShopOptions.paidTextHints | typeof juiceShopOptions.noTextHints
-  insertHintUrls: typeof juiceShopOptions.freeHintUrls | typeof juiceShopOptions.paidHintUrls | typeof juiceShopOptions.noHintUrls
-  insertHintSnippets: typeof juiceShopOptions.freeHintSnippets | typeof juiceShopOptions.paidHintSnippets | typeof juiceShopOptions.noHintSnippets
+  insertHints: typeof juiceShopOptions.freeHints | typeof juiceShopOptions.paidHints | typeof juiceShopOptions.noHints
 }
 
 async function getConfig (
@@ -112,9 +96,7 @@ async function getConfig (
       juiceShopUrl: config.juiceShopUrl,
       ctfKey: config.ctfKey,
       countryMapping: config.countryMapping,
-      insertHints: config.insertHints,
-      insertHintUrls: config.insertHintUrls,
-      insertHintSnippets: config.insertHintSnippets
+      insertHints: config.insertHints
     }))
   }
   return await inquirer.prompt(questions)
@@ -129,29 +111,28 @@ export default async function juiceShopCtfCli (): Promise<void> {
 
     console.log()
 
-    // Only fetch snippets if user wants them
-    const shouldFetchSnippets = answers.insertHintSnippets !== juiceShopOptions.noHintSnippets
+    // Only fetch hints if user wants them
+    const shouldFetchHints = answers.insertHints !== juiceShopOptions.noHints
 
     // Prepare fetch operations
     const fetchOperations = [
       fetchSecretKey(answers.ctfKey, argv.ignoreSslWarnings ?? false),
       fetchChallenges(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false),
-      fetchCountryMapping(answers.countryMapping !== undefined && answers.countryMapping !== '' ? answers.countryMapping : '', argv.ignoreSslWarnings ?? false), fetchCodeSnippets({ juiceShopUrl: answers.juiceShopUrl, ignoreSslWarnings: argv.ignoreSslWarnings ?? false, skip: !shouldFetchSnippets })
+      fetchHints(answers.juiceShopUrl, argv.ignoreSslWarnings ?? false, !shouldFetchHints),
+      fetchCountryMapping(answers.countryMapping !== undefined && answers.countryMapping !== '' ? answers.countryMapping : '', argv.ignoreSslWarnings ?? false)
     ] as const
 
-    const [fetchedSecretKey, challenges, countryMapping, vulnSnippets] = await Promise.all(fetchOperations)
+    const [fetchedSecretKey, challenges, hints, countryMapping] = await Promise.all(fetchOperations)
 
     await generateCtfExport(
       answers.ctfFramework ?? juiceShopOptions.ctfdFramework,
       challenges,
+      hints,
       {
         juiceShopUrl: answers.juiceShopUrl,
         insertHints: answers.insertHints,
-        insertHintUrls: answers.insertHintUrls,
-        insertHintSnippets: answers.insertHintSnippets,
         ctfKey: fetchedSecretKey ?? '',
         countryMapping,
-        vulnSnippets,
         outputLocation: argv.output ?? ''
       }
     )

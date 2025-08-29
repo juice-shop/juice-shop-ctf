@@ -12,11 +12,10 @@ import { options as juiceShopOptions } from '../options'
 import createCtfdExport from './ctfd'
 import createRtbExport from './rtb'
 import createFbctfExport from './fbctf'
-import { type Challenge, type BaseExportSettings } from '../types/types'
+import { type Challenge, type BaseExportSettings, type Hint } from '../types/types'
 
 type CtfFramework = string
 type ExportSettings = BaseExportSettings & {
-  vulnSnippets?: Record<string, string>
   outputLocation: string
   countryMapping?: Record<string, { code: string, name?: string }>
 }
@@ -24,17 +23,16 @@ type ExportSettings = BaseExportSettings & {
 async function generateCTFExport (
   ctfFramework: CtfFramework,
   challenges: Challenge[],
+  hints: Hint[],
   settings: ExportSettings
 ): Promise<void> {
-  settings.vulnSnippets = settings.vulnSnippets ?? {}
-
   async function ctfdExport (): Promise<void> {
     const challengeObject: Record<string, Challenge> = {}
     challenges.forEach((challenge, index) => {
       challengeObject[`c${index + 1}`] = challenge
     })
 
-    const ctfdData = await createCtfdExport(challengeObject, settings)
+    const ctfdData = await createCtfdExport(challengeObject, hints, settings)
     const ctfdFile: string = await writeToCtfdZip(ctfdData as unknown as CtfdCsvRow[], settings.outputLocation)
     console.log('Backup archive written to ' + colors.green(ctfdFile))
     console.log()
@@ -43,7 +41,7 @@ async function generateCTFExport (
   }
 
   async function fbctfExport (): Promise<void> {
-    const fbctfData = await createFbctfExport(challenges, settings)
+    const fbctfData = await createFbctfExport(challenges, hints, settings)
     const fbctfFile: string = await writeToFbctfJson(fbctfData, settings.outputLocation)
 
     console.log('Full Game Export written to ' + colors.green(fbctfFile))
@@ -58,7 +56,7 @@ async function generateCTFExport (
       challenges.forEach((challenge, index) => {
         challengeObject[`c${index + 1}`] = challenge
       })
-      const rtbData = await createRtbExport(challengeObject, { ...settings, vulnSnippets: settings.vulnSnippets ?? {} })
+      const rtbData = await createRtbExport(challengeObject, hints, { ...settings })
       if (
         rtbData === undefined ||
         rtbData === null ||

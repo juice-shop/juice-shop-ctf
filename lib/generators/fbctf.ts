@@ -10,7 +10,7 @@ import FBCTF_TEMPLATE from '../../data/fbctfImportTemplate.json'
 import { hash } from 'bcryptjs'
 import { options as juiceShopOptions } from '../options'
 import hmacSha1 from '../hmac'
-import type { BaseExportSettings, Challenge, FbctfTemplate } from '../types/types'
+import type { BaseExportSettings, Challenge, FbctfTemplate, Hint } from '../types/types'
 
 type GenerateRandomString = (length: number) => string
 
@@ -50,13 +50,11 @@ async function createDummyUser (): Promise<{
 
 async function createFbctfExport (
   challenges: Challenge[],
+  hints: Hint[],
   {
     insertHints,
-    insertHintUrls,
-    insertHintSnippets,
     ctfKey,
-    countryMapping,
-    vulnSnippets = {}
+    countryMapping
   }: BaseExportSettings
 ): Promise<FbctfTemplate> {
   const fbctfTemplate: FbctfTemplate = FBCTF_TEMPLATE
@@ -64,25 +62,11 @@ async function createFbctfExport (
   fbctfTemplate.teams.teams.push(await createDummyUser())
 
   // Add all challenges
-  fbctfTemplate.levels.levels = challenges.map(({ key, name, description, difficulty, hint, hintUrl }) => {
+  fbctfTemplate.levels.levels = challenges.map(({ id, key, name, description, difficulty }) => {
     const country = countryMapping[key]
     if (country === undefined || country === null) {
       console.warn(`Challenge "${name}" does not have a country mapping and will not appear in the CTF game!`.yellow)
       return false
-    }
-
-    const hintText: string[] = []
-    if (insertHints !== juiceShopOptions.noTextHints) {
-      hintText.push(hint ?? '')
-    }
-    if (insertHintUrls !== juiceShopOptions.noHintUrls) {
-      hintText.push(hintUrl ?? '')
-    }
-    if (insertHintSnippets !== juiceShopOptions.noHintSnippets &&
-      typeof vulnSnippets[key] === 'string' &&
-      vulnSnippets[key] !== ''
-    ) {
-      hintText.push(vulnSnippets[key])
     }
 
     return {
@@ -97,8 +81,8 @@ async function createFbctfExport (
       bonus_dec: 0,
       bonus_fix: 0,
       flag: hmacSha1(ctfKey, name),
-      hint: hintText.join('\n\n'),
-      penalty: calculateHintCost({ difficulty }, insertHints) + calculateHintCost({ difficulty }, insertHintUrls) + calculateHintCost({ difficulty }, insertHintSnippets),
+      hint: insertHints !== juiceShopOptions.noHints ? hints.filter(hint => hint.ChallengeId === id).join('\n\n') : '',
+      penalty: calculateHintCost({ difficulty }, insertHints) * hints.filter(hint => hint.ChallengeId === id).length,
       links: [],
       attachments: []
     }

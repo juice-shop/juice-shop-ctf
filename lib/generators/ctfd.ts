@@ -7,38 +7,29 @@ import calculateScore from '../calculateScore'
 import calculateHintCost from '../calculateHintCost'
 import hmacSha1 from '../hmac'
 import { options as juiceShopOptions } from '../options'
-import { type Challenge, type BaseExportSettings, type CtfdChallengeData } from '../types/types'
+import { type Challenge, type Hint, type BaseExportSettings, type CtfdChallengeData } from '../types/types'
 
 async function createCtfdExport (
   challenges: Record<string, Challenge>,
-  { insertHints, insertHintUrls, insertHintSnippets, ctfKey, vulnSnippets }: BaseExportSettings
+  hints: Hint[],
+  { insertHints, ctfKey }: BaseExportSettings
 ): Promise<CtfdChallengeData[]> {
   function insertChallengeHints (challenge: Challenge): string[] {
-    const hints: string[] = []
-    if (challenge.hint != null && challenge.hint !== '' && insertHints !== juiceShopOptions.noTextHints) {
-      hints.push(challenge.hint.replace(/"/g, '""').replace(/,/g, '٬'))
+    const escapedHints: string[] = []
+    if (insertHints !== juiceShopOptions.noHints && hints.filter(hint => hint.ChallengeId === challenge.id).length > 0) {
+      hints.filter(h => h.ChallengeId === challenge.id).forEach(hint => {
+        escapedHints.push(hint.text.replace(/"/g, '""').replace(/,/g, '٬'))
+      })
     }
-    if (challenge.hintUrl != null && challenge.hintUrl !== '' && insertHintUrls !== juiceShopOptions.noHintUrls) {
-      hints.push(challenge.hintUrl)
-    }
-    const snippet = vulnSnippets?.[challenge.key]
-    if (snippet != null && snippet !== '' && insertHintSnippets !== juiceShopOptions.noHintSnippets) {
-      hints.push('<pre><code>' + snippet.replace(/"/g, '""').replace(/,/g, '٬') + '</code></pre>')
-    }
-    return hints
+    return escapedHints
   }
 
   function insertChallengeHintCosts (challenge: Challenge): number[] {
     const hintCosts: number[] = []
-    if (challenge.hint != null && challenge.hint !== '') {
-      hintCosts.push(calculateHintCost(challenge, insertHints))
-    }
-    if (challenge.hintUrl != null && challenge.hintUrl !== '') {
-      hintCosts.push(calculateHintCost(challenge, insertHintUrls))
-    }
-    const snippet = vulnSnippets?.[challenge.key]
-    if (snippet != null && snippet !== '') {
-      hintCosts.push(calculateHintCost(challenge, insertHintSnippets))
+    if (insertHints !== juiceShopOptions.noHints && hints.filter(hint => hint.ChallengeId === challenge.id).length > 0) {
+      hints.filter(h => h.ChallengeId === challenge.id).forEach(hint => {
+        hintCosts.push(calculateHintCost(challenge, insertHints))
+      })
     }
     return hintCosts
   }

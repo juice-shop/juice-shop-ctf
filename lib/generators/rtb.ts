@@ -8,7 +8,7 @@ import TurndownService from 'turndown'
 import calculateScore from '../calculateScore'
 import calculateHintCost from '../calculateHintCost'
 import INITIAL_RTB_TEMPLATE from '../../data/rtbImportTemplate.json'
-import { type Challenge, type BaseExportSettings } from '../types/types'
+import { type Challenge, type Hint, type BaseExportSettings } from '../types/types'
 import hmacSha1 from '../hmac'
 import { options as juiceShopOptions } from '../options'
 import { readFileSync } from 'node:fs'
@@ -19,35 +19,13 @@ let rtbTemplate: { categories: Record<string, any>, configuration?: any } = { ..
 
 async function createRtbExport (
   challenges: Record<string, Challenge>,
+  hints: Hint[],
   options: BaseExportSettings
 ): Promise<string> {
   const {
     insertHints,
-    insertHintUrls,
-    insertHintSnippets,
-    ctfKey,
-    vulnSnippets
+    ctfKey
   } = options
-
-  function checkHints (challenge: Challenge): boolean {
-    return (typeof challenge.hint === 'string' && challenge.hint.trim().length > 0 && insertHints !== juiceShopOptions.noTextHints)
-  }
-
-  interface ChallengeWithHintUrl extends Challenge {
-    hintUrl?: string
-  }
-
-  function checkHintsURL (challenge: ChallengeWithHintUrl): boolean {
-    return (typeof challenge.hintUrl === 'string' && challenge.hintUrl.trim().length > 0 && insertHintUrls !== juiceShopOptions.noHintUrls)
-  }
-
-  interface ChallengeWithKey {
-    key: string
-  }
-
-  function checkHintsSnippet (challenge: ChallengeWithKey): boolean {
-    return (typeof vulnSnippets[challenge.key] === 'string' && vulnSnippets[challenge.key].trim().length > 0 && insertHintSnippets !== juiceShopOptions.noHintSnippets)
-  }
 
   interface CategoryTemplate {
     description: string
@@ -78,62 +56,22 @@ async function createRtbExport (
     att: (name: string, value: string) => any
   }
 
-  interface ChallengeWithAll extends Challenge {
-    hint?: string
-    hintUrl?: string
-    key: string
-    difficulty: number
-    name: string
-    description: string
-    category: string
-  }
-
-  function insertHint (
-    challenge: ChallengeWithAll,
+  function insertHintsEle (
+    challenge: Challenge,
+    hints: Hint[],
     flag: FlagElement
   ): void {
-    const includeHint: boolean = checkHints(challenge)
-    const includeHintUrl: boolean = checkHintsURL(challenge)
-    const includeHintSnippet: boolean = checkHintsSnippet(challenge)
-
-    if (includeHint || includeHintUrl || includeHintSnippet) {
-      const hints = flag.ele('hints')
+    if (insertHints !== juiceShopOptions.noHints && hints.filter(h => h.ChallengeId === challenge.id).length > 0) {
+      const hintsEle = flag.ele('hints')
       let count = 0
-      if (includeHint) {
-        const hint = hints.ele('hint')
-        if (typeof challenge.hint === 'string') {
-          hint.ele('description', turndownService.turndown(challenge.hint))
-        }
-        hint.ele('price', calculateHintCost(challenge, insertHints))
+      hints.filter(h => h.ChallengeId === challenge.id).forEach(hint => {
+        const hintEle = hintsEle.ele('hint')
+        hintEle.ele('description', turndownService.turndown(hint.text))
+        hintEle.ele('price', calculateHintCost(challenge, insertHints))
         count += 1
-      }
-      if (includeHintUrl) {
-        const hint = hints.ele('hint')
-        hint.ele('description', '[' + formatHintURL(challenge) +
-          '](' + challenge.hintUrl + ')')
-        hint.ele('price', calculateHintCost(challenge, insertHintUrls))
-        count += 1
-      }
-      if (includeHintSnippet) {
-        const hint = hints.ele('hint')
-        hint.ele('description', turndownService.turndown(vulnSnippets[challenge.key]))
-        hint.ele('price', calculateHintCost(challenge, insertHintSnippets))
-        count += 1
-      }
-      hints.att({ count })
-    }
-  }
-
-  function formatHintURL (challenge: ChallengeWithAll): string {
-    let hintText = challenge.description
-    if (challenge.hintUrl !== undefined && challenge.hintUrl !== null && challenge.hintUrl !== '' && challenge.hintUrl.includes('#')) {
-      const hintUrl = challenge.hintUrl
-      hintText = hintUrl.substring(hintUrl.lastIndexOf('#') + 1, hintUrl.length).replace(/-/g, ' ')
-      hintText = hintText.replace(/\b[a-z]|['_][a-z]|\B[A-Z]/g, function (x) {
-        return x[0] === "'" || x[0] === '_' ? x : String.fromCharCode(x.charCodeAt(0) ^ 32)
       })
+      hintsEle.att({ count })
     }
-    return hintText
   }
 
   interface BoxesElement {
@@ -196,7 +134,7 @@ async function createRtbExport (
     flag.ele('token', hmacSha1(ctfKey, challenge.name))
     flag.ele('value', calculateScore(challenge.difficulty))
     flag.ele('order', order.toString())
-    insertHint(challenge, flag as FlagElement)
+    insertHintsEle(challenge, hints, flag as FlagElement)
   }
 
   interface ChallengeCategory {

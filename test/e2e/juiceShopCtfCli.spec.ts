@@ -3,17 +3,18 @@
  * SPDX-License-Identifier: MIT
  */
 
-import { describe, it, beforeEach, after } from 'node:test';
-import assert from 'node:assert';
-import util from 'node:util';
+import { describe, it, beforeEach, after } from 'node:test'
+import assert from 'node:assert'
+import util from 'node:util'
 import * as fs from 'fs'
-import { execFile } from 'node:child_process';
-import path from 'node:path';
+import { execFile } from 'node:child_process'
+import path from 'node:path'
 // @ts-expect-error FIXME due to non-existing type definitions for inquirer-test
-import inquirer from 'inquirer-test';
-import df from 'dateformat';
+import inquirer from 'inquirer-test'
+import df from 'dateformat'
 
-const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
+// FIXME Change back to https://juice-shop.herokuapp.com after release of v19.0.0 of Juice Shop main app
+const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop-staging.herokuapp.com'
 
 const execFilePromise = util.promisify(execFile)
 
@@ -42,50 +43,38 @@ describe('juice-shop-ctf', () => {
   after(cleanup)
 
   it('should accept defaults for all input questions', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER], 2000)
     assert.match(output, /Backup archive written to /i)
-    assert.match(output, /Insert a text hint along with each challenge\? No text hints/i)
-    assert.match(output, /Insert a hint URL along with each challenge\? No hint URLs/i)
-    assert.match(output, /Insert a code snippet as hint for each challenge\? No hint snippets/i)
+    assert.match(output, /Insert a list of hints along with each challenge\? No hints/i)
   })
 
   it('should insert free hints when chosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER, ENTER, ENTER], 2000)
-    assert.match(output, /Insert a text hint along with each challenge\? Free text hints/i)
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, ENTER], 2000)
+    assert.match(output, /Insert a list of hints along with each challenge\? Free hints/i)
   })
 
   it('should insert paid hints when chosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER, ENTER], 2000)
-    assert.match(output, /Insert a text hint along with each challenge\? Paid text hints/i)
-  })
-
-  it('should insert free hint URLs when chosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, ENTER, ENTER], 2000)
-    assert.match(output, /Insert a hint URL along with each challenge\? Free hint URLs/i)
-  })
-
-  it('should insert paid hint URLs when chosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, DOWN, DOWN, ENTER, ENTER], 2000)
-    assert.match(output, /Insert a hint URL along with each challenge\? Paid hint URLs/i)
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, DOWN, DOWN, ENTER], 2000)
+    assert.match(output, /Insert a list of hints along with each challenge\? Paid hints/i)
   })
 
   it('should fail on invalid Juice Shop URL', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, 'localhorst', ENTER, ENTER, ENTER, ENTER, ENTER], 2000)
+    const output = await run(juiceShopCtfCli, [ENTER, 'localhorst', ENTER, ENTER, ENTER], 2000)
     assert.match(output, /Failed to fetch challenges from API!/i)
   })
 
   it('should fail on invalid ctf.key URL', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER, ENTER, ENTER], 2000)
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, 'httpx://invalid/ctf-key', ENTER, ENTER], 2000)
     assert.match(output, /Failed to fetch secret key from URL!/i)
   })
 
   it('should generate a FBCTF export when choosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)
+    const output = await run(juiceShopCtfCli, [DOWN, ENTER, ENTER, ENTER, ENTER], 2000)
     assert.match(output, /CTF framework to generate data for\? FBCTF/i)
   })
 
   it('should generate a RootTheBox export when choosen', { timeout: TIMEOUT }, async () => {
-    const output = await run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 1500)
+    const output = await run(juiceShopCtfCli, [DOWN, DOWN, ENTER, ENTER, ENTER, ENTER], 1500)
     assert.match(output, /CTF framework to generate data for\? RootTheBox/i)
   })
 
@@ -93,9 +82,7 @@ describe('juice-shop-ctf', () => {
     fs.writeFileSync(configFile, `
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
+insertHints: paid`)
     const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile])
     assert.match(stdout, /Backup archive written to /i)
   })
@@ -104,39 +91,34 @@ insertHintSnippets: paid`)
     fs.writeFileSync(configFile, `
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
+insertHints: paid`)
     const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--ignoreSslWarnings'])
     assert.match(stdout, /Backup archive written to /i)
   })
 
-it('should fail when the config file cannot be parsed', { timeout: TIMEOUT }, async () => {
+  it('should fail when the config file cannot be parsed', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 insertHints`)
-    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]);
-    assert.match(stdout, /can not read/i, 'stdout should mention a parsing error');
-});
+    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile])
+    assert.match(stdout, /can not read/i, 'stdout should mention a parsing error')
+  })
 
-it('should fail when the config file contains invalid values', { timeout: TIMEOUT }, async () => {
-  fs.writeFileSync(configFile, `
+  it('should fail when the config file contains invalid values', { timeout: TIMEOUT }, async () => {
+    fs.writeFileSync(configFile, `
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: invalidValue
-insertHintSnippets: paid`);
-    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile]);
-    assert.match(stdout, /"insertHintUrls" must be one of/i, 'stdout should mention an invalid value');});
+insertHints: invalidValue`)
+    const { stdout } = await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile])
+    assert.match(stdout, /"insertHints" must be one of/i, 'stdout should mention an invalid value')
+  })
 
   it('should write the output file to the specified location', { timeout: TIMEOUT }, async () => {
     fs.writeFileSync(configFile, `
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
+insertHints: paid`)
     await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
     assert.ok(fs.existsSync(desiredCtfdOutputFile), 'Output file should have been created')
   })
@@ -146,9 +128,7 @@ insertHintSnippets: paid`)
 ctfFramework: CTFd
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
+insertHints: paid`)
     await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredCtfdOutputFile])
     assert.ok(fs.existsSync(desiredCtfdOutputFile), 'CTFd output file should have been created')
   })
@@ -159,32 +139,27 @@ ctfFramework: FBCTF
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
 countryMapping: https://raw.githubusercontent.com/juice-shop/juice-shop/master/config/fbctf.yml
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
+insertHints: paid`)
     await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredFbctfOutputFile])
     assert.ok(fs.existsSync(desiredFbctfOutputFile), 'FBCTF output file should have been created')
   })
 
-it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
-  fs.writeFileSync(configFile, `
+  it('should be possible to create a RootTheBox export with a config file', { timeout: TIMEOUT }, async () => {
+    fs.writeFileSync(configFile, `
 ctfFramework: RootTheBox
 juiceShopUrl: ${DEFAULT_JUICE_SHOP_URL}
 ctfKey: https://raw.githubusercontent.com/juice-shop/juice-shop/master/ctf.key
-insertHints: paid
-insertHintUrls: paid
-insertHintSnippets: paid`)
-  await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
-  assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
-})
+insertHints: paid`)
+    await execFilePromise('node', [juiceShopCtfCli[0], '--config', configFile, '--output', desiredRtbOutputFile])
+    assert.ok(fs.existsSync(desiredRtbOutputFile), 'RootTheBox output file should have been created')
+  })
 
- it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
+  it('should fail when output file cannot be written', { timeout: TIMEOUT }, async () => {
     // Create the output file first
-    fs.writeFileSync(outputFile, '');
+    fs.writeFileSync(outputFile, '')
     // Set read-only permissions (no write permission)
-    fs.chmodSync(outputFile, 0o444); 
-    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000);
-      assert.match(output, /Failed to write output to file!/i);
-   
-  });
+    fs.chmodSync(outputFile, 0o444)
+    const output = await run(juiceShopCtfCli, [ENTER, ENTER, ENTER, ENTER, ENTER, ENTER], 2000)
+    assert.match(output, /Failed to write output to file!/i)
+  })
 })
