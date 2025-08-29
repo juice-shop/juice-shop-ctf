@@ -116,7 +116,7 @@ describe('Generated FBCTF data', () => {
     ])
   })
 
-  it('should merge hints together (considering hint text bur keeping single penalty)', async () => {
+  it('should merge hints together (considering hint texts and accumulated penalty)', async () => {
     const result = await generateData([challenge1], [hint1a, hint1b], createOptions({
       insertHints: juiceShopOptions.paidHints,
     }))
@@ -125,7 +125,7 @@ describe('Generated FBCTF data', () => {
       {
         ...mapping1,
         hint: 'h1a\n\nh1b',
-        penalty: 10
+        penalty: 20
       }
     ])
   })
