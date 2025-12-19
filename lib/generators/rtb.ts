@@ -52,7 +52,7 @@ async function createRtbExport (
   }
 
   interface FlagElement {
-    ele: (name: string, attributes?: Record<string, any>) => any
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => any
     att: (name: string, value: string) => any
   }
 
@@ -75,7 +75,7 @@ async function createRtbExport (
   }
 
   interface BoxesElement {
-    ele: (name: string, attributes?: Record<string, any>) => any
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => any
   }
 
   interface ChallengeWithCategory {
@@ -114,10 +114,6 @@ async function createRtbExport (
     return difficulty
   }
 
-  interface FlagElement {
-    ele: (name: string, attributes?: Record<string, any>) => any
-  }
-
   function insertFlag (
     challenge: Challenge,
     flags: FlagElement,
@@ -143,7 +139,7 @@ async function createRtbExport (
   }
 
   interface XmlElement {
-    ele: (name: string, attributes?: Record<string, any>) => XmlElement
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => XmlElement
     up: () => XmlElement
   }
 
@@ -158,7 +154,7 @@ async function createRtbExport (
     if (categories.size > 0) {
       const categoriesXml = xmlRTB.ele('categories', { count: categories.size })
       Array.from(categories).forEach(category => {
-        categoriesXml.ele('category').ele('category', { name: category })
+        categoriesXml.ele('category').ele('category', category)
       })
       categoriesXml.up()
     }
@@ -166,16 +162,16 @@ async function createRtbExport (
   }
 
   interface XmlRTBElement {
-    ele: (name: string, attributes?: Record<string, any>) => XmlRTBElement
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => XmlRTBElement
     up: () => XmlRTBElement
   }
 
   interface CorporationElement {
-    ele: (name: string, attributes?: Record<string, any>) => CorporationElement
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => CorporationElement
   }
 
   interface BoxesElementReturn {
-    ele: (name: string, attributes?: Record<string, any>) => BoxesElementReturn
+    ele: (name: string, attributesOrText?: Record<string, any> | string | number) => BoxesElementReturn
   }
 
   function insertCorporation (
