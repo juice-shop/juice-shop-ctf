@@ -91,18 +91,44 @@ if [ -z "$IMPORT_NONCE" ]; then
     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'value="\K[^"]+(?=" name="nonce")' | head -1)
 fi
 if [ -z "$IMPORT_NONCE" ]; then
+    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce': \"\K[^\"]+" | head -1)
+fi
+if [ -z "$IMPORT_NONCE" ]; then
     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
 fi
 
 if [ -z "$IMPORT_NONCE" ]; then
     echo "Could not find nonce in admin config page"
+    echo "--- ADMIN CONFIG PAGE CONTENT START ---"
+    echo "$IMPORT_PAGE"
+    echo "--- ADMIN CONFIG PAGE CONTENT END ---"
     # Try backup page specifically
+    echo "Trying backup page..."
     IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/config#backup)
     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
+
+    if [ -z "$IMPORT_NONCE" ]; then
+         # Try to extract from script tag if it's there
+         IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
+    fi
 fi
 
 if [ -z "$IMPORT_NONCE" ]; then
      echo "Still could not find nonce for import"
+     # One last try: check the /admin/import/csv page directly if it exists
+     echo "Trying /admin/import/csv page..."
+     IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/import/csv)
+     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
+     if [ -z "$IMPORT_NONCE" ]; then
+         IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
+     fi
+fi
+
+if [ -z "$IMPORT_NONCE" ]; then
+     echo "FATAL: Could not find nonce for import after multiple attempts"
+     echo "--- LAST PAGE CONTENT START ---"
+     echo "$IMPORT_PAGE"
+     echo "--- LAST PAGE CONTENT END ---"
      exit 1
 fi
 echo "Found import nonce: $IMPORT_NONCE"
