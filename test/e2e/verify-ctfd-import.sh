@@ -141,20 +141,24 @@ IMPORT_RESPONSE=$(curl -s -b $COOKIE_FILE -X POST \
   -F "nonce=$IMPORT_NONCE" \
   $CTFD_URL/admin/import/csv)
 
+echo "Import response: $IMPORT_RESPONSE"
+
 # Wait a bit for import to process
-sleep 10
+echo "Waiting for challenges to be processed..."
+sleep 20
 echo "Import response received."
 
 # 6. Verify challenges exist
 echo "Verifying challenges..."
-# Try up to 3 times to account for background processing
-for i in {1..3}; do
+# Try more times to account for background processing
+for i in {1..6}; do
     CHALLENGES_PAGE=$(curl -s -b $COOKIE_FILE $CTFD_URL/api/v1/challenges)
     CHALLENGE_COUNT=$(echo "$CHALLENGES_PAGE" | grep -o '"id"' | wc -l)
     if [ "$CHALLENGE_COUNT" -gt 0 ]; then
         break
     fi
     echo "No challenges found yet, waiting... (attempt $i)"
+    echo "Current API Response: $CHALLENGES_PAGE"
     sleep 10
 done
 
