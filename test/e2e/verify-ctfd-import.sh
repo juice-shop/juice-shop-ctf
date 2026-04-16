@@ -22,19 +22,9 @@ COOKIE_FILE=$(mktemp)
 SETUP_PAGE=$(curl -s -L -c $COOKIE_FILE $CTFD_URL/setup)
 NONCE=$(echo "$SETUP_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
 
-# Fallback: some versions might use different quoting or attributes
+# Fallback: extract from script tag (standard in CTFd)
 if [ -z "$NONCE" ]; then
-    NONCE=$(echo "$SETUP_PAGE" | grep -oP "name='nonce' value='\K[^']+" | head -1)
-fi
-if [ -z "$NONCE" ]; then
-    NONCE=$(echo "$SETUP_PAGE" | grep -oP 'value="\K[^"]+(?=" name="nonce")' | head -1)
-fi
-if [ -z "$NONCE" ]; then
-    # Try to extract from script tag if it's there (common in some CTFd versions)
-    NONCE=$(echo "$SETUP_PAGE" | grep -oP "csrfNonce': \"\K[^\"]+" | head -1)
-fi
-if [ -z "$NONCE" ]; then
-    NONCE=$(echo "$SETUP_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
+    NONCE=$(echo "$SETUP_PAGE" | grep -oP "(csrfNonce|'nonce'): \"\K[^\"]+" | head -1)
 fi
 
 if [ -z "$NONCE" ]; then
@@ -83,45 +73,9 @@ echo "Fetching admin config page for CSRF token..."
 IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/config)
 IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
 
-# Fallback for import nonce
+# Fallback: extract from script tag (standard in CTFd)
 if [ -z "$IMPORT_NONCE" ]; then
-    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "name='nonce' value='\K[^']+" | head -1)
-fi
-if [ -z "$IMPORT_NONCE" ]; then
-    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'value="\K[^"]+(?=" name="nonce")' | head -1)
-fi
-if [ -z "$IMPORT_NONCE" ]; then
-    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce': \"\K[^\"]+" | head -1)
-fi
-if [ -z "$IMPORT_NONCE" ]; then
-    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
-fi
-
-if [ -z "$IMPORT_NONCE" ]; then
-    echo "Could not find nonce in admin config page"
-    echo "--- ADMIN CONFIG PAGE CONTENT START ---"
-    echo "$IMPORT_PAGE"
-    echo "--- ADMIN CONFIG PAGE CONTENT END ---"
-    # Try backup page specifically
-    echo "Trying backup page..."
-    IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/config#backup)
-    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
-
-    if [ -z "$IMPORT_NONCE" ]; then
-         # Try to extract from script tag if it's there
-         IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
-    fi
-fi
-
-if [ -z "$IMPORT_NONCE" ]; then
-     echo "Still could not find nonce for import"
-     # One last try: check the /admin/import/csv page directly if it exists
-     echo "Trying /admin/import/csv page..."
-     IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/import/csv)
-     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
-     if [ -z "$IMPORT_NONCE" ]; then
-         IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
-     fi
+    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "(csrfNonce|'nonce'): \"\K[^\"]+" | head -1)
 fi
 
 if [ -z "$IMPORT_NONCE" ]; then
@@ -135,13 +89,29 @@ echo "Found import nonce: $IMPORT_NONCE"
 
 # 5. Import the CSV
 echo "Importing challenges CSV into CTFd..."
-IMPORT_RESPONSE=$(curl -s -b $COOKIE_FILE -X POST \
+# Capture full output and headers for debugging
+IMPORT_DEBUG_FILE=$(mktemp)
+IMPORT_RESPONSE=$(curl -v -L -b $COOKIE_FILE -c $COOKIE_FILE -X POST \
   -F "file=@test-export.csv" \
-  -F "type=challenges" \
+  -F "csv_type=challenges" \
   -F "nonce=$IMPORT_NONCE" \
-  $CTFD_URL/admin/import/csv)
+  $CTFD_URL/admin/import/csv 2> $IMPORT_DEBUG_FILE)
+
+IMPORT_STATUS=$?
+echo "Import curl exit code: $IMPORT_STATUS"
 
 echo "Import response: $IMPORT_RESPONSE"
+if [ $IMPORT_STATUS -ne 0 ] || echo "$IMPORT_RESPONSE" | grep -q "400 Bad Request"; then
+    echo "--- IMPORT DEBUG LOG (stderr) START ---"
+    cat $IMPORT_DEBUG_FILE
+    echo "--- IMPORT DEBUG LOG (stderr) END ---"
+    # Dump the import page source to find the correct fields
+    echo "--- IMPORT PAGE SOURCE (to find fields) START ---"
+    curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/import/csv
+    echo "--- IMPORT PAGE SOURCE (to find fields) END ---"
+    exit 1
+fi
+rm $IMPORT_DEBUG_FILE
 
 # Wait a bit for import to process
 echo "Waiting for challenges to be processed..."
