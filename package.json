@@ -108,7 +108,7 @@
     "typescript": "^5.8.3"
   },
   "engines": {
-    "node": "20 - 24"
+    "node": "22 - 25"
   },
   "preferGlobal": true,
   "standard": {
