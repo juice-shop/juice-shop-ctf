@@ -19,11 +19,33 @@ echo "CTFd is up!"
 # 1. Get CSRF token for setup
 echo "Fetching setup page for CSRF token..."
 COOKIE_FILE=$(mktemp)
-SETUP_PAGE=$(curl -s -c $COOKIE_FILE $CTFD_URL/setup)
+SETUP_PAGE=$(curl -s -L -c $COOKIE_FILE $CTFD_URL/setup)
 NONCE=$(echo "$SETUP_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
+
+# Fallback: some versions might use different quoting or attributes
+if [ -z "$NONCE" ]; then
+    NONCE=$(echo "$SETUP_PAGE" | grep -oP "name='nonce' value='\K[^']+" | head -1)
+fi
+if [ -z "$NONCE" ]; then
+    NONCE=$(echo "$SETUP_PAGE" | grep -oP 'value="\K[^"]+(?=" name="nonce")' | head -1)
+fi
+if [ -z "$NONCE" ]; then
+    # Try to extract from script tag if it's there (common in some CTFd versions)
+    NONCE=$(echo "$SETUP_PAGE" | grep -oP "csrfNonce': \"\K[^\"]+" | head -1)
+fi
+if [ -z "$NONCE" ]; then
+    NONCE=$(echo "$SETUP_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
+fi
 
 if [ -z "$NONCE" ]; then
     echo "Could not find nonce in setup page"
+    echo "--- SETUP PAGE CONTENT START ---"
+    echo "$SETUP_PAGE"
+    echo "--- SETUP PAGE CONTENT END ---"
+    # Check if we are already set up (maybe redirected to /)
+    if echo "$SETUP_PAGE" | grep -q "Challenges"; then
+        echo "CTFd seems to be already set up."
+    fi
     exit 1
 fi
 echo "Found nonce: $NONCE"
@@ -58,13 +80,24 @@ echo "Export generated successfully."
 
 # 4. Get CSRF token for import
 echo "Fetching admin config page for CSRF token..."
-IMPORT_PAGE=$(curl -s -b $COOKIE_FILE $CTFD_URL/admin/config)
+IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/config)
 IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
+
+# Fallback for import nonce
+if [ -z "$IMPORT_NONCE" ]; then
+    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "name='nonce' value='\K[^']+" | head -1)
+fi
+if [ -z "$IMPORT_NONCE" ]; then
+    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'value="\K[^"]+(?=" name="nonce")' | head -1)
+fi
+if [ -z "$IMPORT_NONCE" ]; then
+    IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP "csrfNonce: \"\K[^\"]+" | head -1)
+fi
 
 if [ -z "$IMPORT_NONCE" ]; then
     echo "Could not find nonce in admin config page"
     # Try backup page specifically
-    IMPORT_PAGE=$(curl -s -b $COOKIE_FILE $CTFD_URL/admin/config#backup)
+    IMPORT_PAGE=$(curl -s -L -b $COOKIE_FILE $CTFD_URL/admin/config#backup)
     IMPORT_NONCE=$(echo "$IMPORT_PAGE" | grep -oP 'name="nonce" value="\K[^"]+' | head -1)
 fi
 
