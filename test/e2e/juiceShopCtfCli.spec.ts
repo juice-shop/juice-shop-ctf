@@ -13,8 +13,7 @@ import path from 'node:path'
 import inquirer from 'inquirer-test'
 import df from 'dateformat'
 
-// FIXME Change back to https://juice-shop.herokuapp.com after release of v19.0.0 of Juice Shop main app
-const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop-staging.herokuapp.com'
+const DEFAULT_JUICE_SHOP_URL = process.env.DEFAULT_JUICE_SHOP_URL ?? 'https://juice-shop.herokuapp.com'
 
 const execFilePromise = util.promisify(execFile)
 
