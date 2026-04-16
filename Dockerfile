@@ -1,16 +1,16 @@
-FROM node:24-alpine AS installer
+FROM node:24 AS installer
 WORKDIR /juice-shop-ctf
 COPY package*.json .
 RUN npm ci --omit=dev --no-fund --ignore-scripts
 
-FROM node:24-alpine AS builder
+FROM node:24 AS builder
 WORKDIR /juice-shop-ctf
 COPY package*.json .
 RUN npm ci --no-fund --ignore-scripts
 COPY . .
 RUN npm run build
 
-FROM node:24-alpine
+FROM gcr.io/distroless/nodejs24-debian13
 WORKDIR /juice-shop-ctf
 ARG BUILD_DATE
 ARG VCS_REF
