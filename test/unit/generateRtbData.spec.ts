@@ -61,6 +61,15 @@ describe('Generated RTB data', () => {
     assert.match(result, /<categories count="3">/)
   })
 
+  it('should generate categories with text content not attributes (RootTheBox import format)', async () => {
+    const result = await generateData(challenges, [], defaultOptions)
+    assert.ok(typeof result === 'string')
+    assert.match(result, /<category>\s*<category>1<\/category>\s*<\/category>/)
+    assert.match(result, /<category>\s*<category>2<\/category>\s*<\/category>/)
+    assert.match(result, /<category>\s*<category>3<\/category>\s*<\/category>/)
+    assert.doesNotMatch(result, /<category name="/)
+  })
+
   it('should put each given challenge as a <flag> into the matching category <box>', async () => {
     const result = await generateData(challenges, [], defaultOptions)
     assert.ok(typeof result === 'string')
